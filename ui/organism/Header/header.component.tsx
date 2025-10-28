@@ -2,119 +2,125 @@
 
 import {
   Navbar,
-  Divider,
-  NavbarMenu,
+  Button,
+  Dropdown,
   NavbarItem,
   NavbarBrand,
+  DropdownMenu,
+  DropdownItem,
   NavbarContent,
-  NavbarMenuItem,
-  NavbarMenuToggle,
+  DropdownTrigger,
 } from "@heroui/react";
-import Image from "next/image";
-import { Link } from "@/ui/atoms";
-import { useState } from "react";
-import { navItems } from "./header.properties";
-import { motion, AnimatePresence } from "framer-motion";
-import { usePathname, useRouter } from "next/navigation";
+import { Search, Instagram, Facebook, Youtube } from "lucide-react";
 
-export function HeaderComponent() {
-  const router = useRouter();
-  const pathname = usePathname();
-
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const handleClick = () => {
-    router.push("/home");
-  };
-
-  const menuVariants = {
-    hidden: { opacity: 0, y: -30 },
-    visible: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -20 },
-  };
-
+export const HeaderComponent = () => {
   return (
-    <Navbar
-      maxWidth="xl"
-      disableAnimation
-      onMenuOpenChange={setIsMenuOpen}
-      isMenuOpen={isMenuOpen}
-      className="backdrop-blur-md shadow-sm"
-    >
-      <NavbarBrand>
-        <Image
-          width={160}
-          height={160}
-          alt="nexa code Logo"
-          onClick={handleClick}
-          src={"/public/favicon.png"}
-          className="cursor-pointer"
-        />
-      </NavbarBrand>
+    <header className="w-full">
+      {/* Barra superior GOV.CO */}
+      <div className="bg-[#0B2D6B] text-white flex items-center justify-start px-8 py-2">
+        <img src="/govco-logo.png" alt="GOV.CO" className="h-6" />
+      </div>
 
-      <NavbarContent justify="end">
-        <div className="sm:hidden">
-          <NavbarMenuToggle
-            aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          />
-        </div>
+      {/* Navbar principal */}
+      <Navbar className="bg-white text-[#0B2D6B] px-8 shadow-sm">
+        {/* Logo */}
+        <NavbarContent justify="start" className="gap-6">
+          <NavbarBrand className="flex items-center gap-2">
+            <img
+              src="/logo-prodesarrollo.png"
+              alt="ProDesarrollo"
+              className="h-10"
+            />
+          </NavbarBrand>
+        </NavbarContent>
 
-        <div className="hidden sm:flex gap-6 items-center">
-          {navItems.map((item) => (
-            <NavbarItem key={item.href} isActive={pathname === item.href}>
-              <Link
-                href={item.href}
-                text={item.label}
-                className={`font-medium transition-colors ${
-                  pathname === item.href
-                    ? "text-primary font-semibold"
-                    : "hover:text-primary"
-                }`}
-              />
-            </NavbarItem>
-          ))}
-        </div>
-      </NavbarContent>
+        {/* Enlaces principales */}
+        <NavbarContent justify="center" className="gap-6">
+          <NavbarItem>
+            <Button
+              variant="light"
+              className="text-[#0B2D6B] font-semibold relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-[#0B2D6B] after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
+            >
+              Inicio
+            </Button>
+          </NavbarItem>
 
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            key="mobile-menu"
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            variants={menuVariants}
-            transition={{ duration: 0.35, ease: "easeInOut" }}
-            className="absolute top-full left-0 w-full z-50"
+          <Dropdown>
+            <DropdownTrigger>
+              <Button variant="light" className="text-[#0B2D6B] font-semibold">
+                Nosotros
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu aria-label="Nosotros">
+              <DropdownItem>Quiénes somos</DropdownItem>
+              <DropdownItem>Misión y visión</DropdownItem>
+              <DropdownItem>Equipo</DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+
+          <NavbarItem>
+            <Button variant="light" className="text-[#0B2D6B] font-semibold">
+              Transparencia
+            </Button>
+          </NavbarItem>
+
+          <Dropdown>
+            <DropdownTrigger>
+              <Button variant="light" className="text-[#0B2D6B] font-semibold">
+                Convocatorias
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu aria-label="Convocatorias">
+              <DropdownItem>Abiertas</DropdownItem>
+              <DropdownItem>Cerradas</DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+
+          <NavbarItem>
+            <Button variant="light" className="text-[#0B2D6B] font-semibold">
+              Noticias
+            </Button>
+          </NavbarItem>
+
+          <NavbarItem>
+            <Button variant="light" className="text-[#0B2D6B] font-semibold">
+              PQRS
+            </Button>
+          </NavbarItem>
+        </NavbarContent>
+
+        {/* Íconos redes sociales */}
+        <NavbarContent justify="end" className="gap-3">
+          <Button
+            isIconOnly
+            variant="light"
+            className="rounded-full bg-[#F5F6FA] hover:bg-[#E1E3EC]"
           >
-            <NavbarMenu className="px-6 py-8 flex flex-col gap-6 bg-gradient-to-b from-white to-purple-50 dark:from-gray-900 dark:to-gray-800 rounded-b-2xl shadow-lg">
-              <div className="flex flex-col gap-4 text-center">
-                {navItems.map((item) => (
-                  <NavbarMenuItem
-                    key={item.label}
-                    isActive={pathname === item.href}
-                  >
-                    <Link
-                      size="lg"
-                      text={item.label}
-                      href={item.href}
-                      onClick={() => setIsMenuOpen(false)}
-                      className={`text-lg font-medium ${
-                        pathname === item.href
-                          ? "text-primary font-semibold"
-                          : "hover:text-primary"
-                      }`}
-                    />
-                  </NavbarMenuItem>
-                ))}
-              </div>
-
-              <Divider className="my-4" />
-            </NavbarMenu>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </Navbar>
+            <Search className="h-5 w-5 text-[#0B2D6B]" />
+          </Button>
+          <Button
+            isIconOnly
+            variant="light"
+            className="rounded-full bg-[#F5F6FA] hover:bg-[#E1E3EC]"
+          >
+            <Instagram className="h-5 w-5 text-[#0B2D6B]" />
+          </Button>
+          <Button
+            isIconOnly
+            variant="light"
+            className="rounded-full bg-[#F5F6FA] hover:bg-[#E1E3EC]"
+          >
+            <Facebook className="h-5 w-5 text-[#0B2D6B]" />
+          </Button>
+          <Button
+            isIconOnly
+            variant="light"
+            className="rounded-full bg-[#F5F6FA] hover:bg-[#E1E3EC]"
+          >
+            <Youtube className="h-5 w-5 text-[#0B2D6B]" />
+          </Button>
+        </NavbarContent>
+      </Navbar>
+    </header>
   );
-}
+};
