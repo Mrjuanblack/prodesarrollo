@@ -12,11 +12,11 @@ import {
 import Image from "next/image";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { Container } from "@/ui/molecules";
 import { useRouter } from "next/navigation";
 import colombia_logo from "@/public/colombia.png";
 import pro_desarrollo_logo from "@/public/favicon.png";
 import { menuItems, socialItems } from "./header.properties";
-import { Container } from "@/ui/molecules";
 
 export const HeaderComponent = () => {
   const router = useRouter();

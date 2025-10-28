@@ -1,6 +1,6 @@
 // Core
-import { ColorsBtn, TypesBtn, VariantsBtn } from "@/types";
 import { PressEvent } from "@heroui/react";
+import { ColorsBtn, TypesBtn, VariantsBtn } from "@/types";
 
 export interface ButtonProperties {
   text: string;

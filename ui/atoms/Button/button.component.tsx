@@ -1,5 +1,5 @@
 // Core
-import React, { JSX } from "react";
+import { JSX } from "react";
 import { Button, PressEvent } from "@heroui/react";
 
 // Properties
