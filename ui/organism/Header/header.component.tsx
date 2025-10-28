@@ -1,124 +1,125 @@
-"use client";
-
 import {
-  Navbar,
   Button,
+  Navbar,
   Dropdown,
   NavbarItem,
   NavbarBrand,
-  DropdownMenu,
   DropdownItem,
+  DropdownMenu,
   NavbarContent,
   DropdownTrigger,
 } from "@heroui/react";
-import { Search, Instagram, Facebook, Youtube } from "lucide-react";
+import Image from "next/image";
+import { useState } from "react";
+import { ChevronDown } from "lucide-react";
+import { useRouter } from "next/navigation";
+import colombia_logo from "@/public/colombia.png";
+import pro_desarrollo_logo from "@/public/favicon.png";
+import { menuItems, socialItems } from "./header.properties";
+import { Container } from "@/ui/molecules";
 
 export const HeaderComponent = () => {
+  const router = useRouter();
+  const [activeItem, setActiveItem] = useState<string>("Inicio");
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+
   return (
     <header className="w-full">
-      {/* Barra superior GOV.CO */}
-      <div className="bg-[#0B2D6B] text-white flex items-center justify-start px-8 py-2">
-        <img src="/govco-logo.png" alt="GOV.CO" className="h-6" />
+      <div className="bg-primary flex items-center justify-start py-1">
+        <Container>
+          <Image src={colombia_logo} alt="GOV.CO" className="h-9 w-[154px]" />
+        </Container>
       </div>
 
-      {/* Navbar principal */}
-      <Navbar className="bg-white text-[#0B2D6B] px-8 shadow-sm">
-        {/* Logo */}
-        <NavbarContent justify="start" className="gap-6">
-          <NavbarBrand className="flex items-center gap-2">
-            <img
-              src="/logo-prodesarrollo.png"
+      <Navbar className="text-primary py-3" maxWidth="2xl">
+        <NavbarContent justify="start">
+          <NavbarBrand>
+            <Image
               alt="ProDesarrollo"
-              className="h-10"
+              src={pro_desarrollo_logo}
+              className="h-auto w-[156px]"
             />
           </NavbarBrand>
         </NavbarContent>
 
-        {/* Enlaces principales */}
         <NavbarContent justify="center" className="gap-6">
-          <NavbarItem>
-            <Button
-              variant="light"
-              className="text-[#0B2D6B] font-semibold relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-[#0B2D6B] after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
-            >
-              Inicio
-            </Button>
-          </NavbarItem>
+          {menuItems.map((item) =>
+            item.type === "dropdown" ? (
+              <Dropdown
+                key={item.label}
+                onOpenChange={(isOpen) =>
+                  setOpenDropdown(isOpen ? item.label : null)
+                }
+              >
+                <DropdownTrigger>
+                  <Button
+                    disableRipple
+                    variant="light"
+                    onClick={() => setActiveItem(item.label)}
+                    className={`font-semibold relative bg-transparent flex items-center gap-1 ${
+                      activeItem === item.label
+                        ? "text-primary font-bold after:content-[''] after:absolute after:bottom-[-4px] after:left-1/2 after:-translate-x-1/2 after:w-2 after:h-2 after:bg-primary after:rounded-full"
+                        : "text-gray-500 hover:text-primary"
+                    }`}
+                  >
+                    {item.label}
+                    <ChevronDown
+                      size={18}
+                      className={`transition-transform text-gray-400 ${
+                        openDropdown === item.label ? "rotate-180" : ""
+                      }`}
+                    />
+                  </Button>
+                </DropdownTrigger>
 
-          <Dropdown>
-            <DropdownTrigger>
-              <Button variant="light" className="text-[#0B2D6B] font-semibold">
-                Nosotros
-              </Button>
-            </DropdownTrigger>
-            <DropdownMenu aria-label="Nosotros">
-              <DropdownItem>Quiénes somos</DropdownItem>
-              <DropdownItem>Misión y visión</DropdownItem>
-              <DropdownItem>Equipo</DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-
-          <NavbarItem>
-            <Button variant="light" className="text-[#0B2D6B] font-semibold">
-              Transparencia
-            </Button>
-          </NavbarItem>
-
-          <Dropdown>
-            <DropdownTrigger>
-              <Button variant="light" className="text-[#0B2D6B] font-semibold">
-                Convocatorias
-              </Button>
-            </DropdownTrigger>
-            <DropdownMenu aria-label="Convocatorias">
-              <DropdownItem>Abiertas</DropdownItem>
-              <DropdownItem>Cerradas</DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-
-          <NavbarItem>
-            <Button variant="light" className="text-[#0B2D6B] font-semibold">
-              Noticias
-            </Button>
-          </NavbarItem>
-
-          <NavbarItem>
-            <Button variant="light" className="text-[#0B2D6B] font-semibold">
-              PQRS
-            </Button>
-          </NavbarItem>
+                <DropdownMenu aria-label={item.label}>
+                  {item.items.map((subItem) => (
+                    <DropdownItem
+                      key={subItem.label}
+                      onClick={() => {
+                        setActiveItem(item.label);
+                        router.push(subItem.href);
+                      }}
+                    >
+                      {subItem.label}
+                    </DropdownItem>
+                  ))}
+                </DropdownMenu>
+              </Dropdown>
+            ) : (
+              <NavbarItem key={item.label}>
+                <Button
+                  disableRipple
+                  variant="light"
+                  onClick={() => {
+                    setActiveItem(item.label);
+                    if (item.href) router.push(item.href);
+                  }}
+                  className={`font-semibold relative bg-transparent after:transition-transform ${
+                    activeItem === item.label
+                      ? "text-primary font-bold after:absolute after:bottom-[-4px] after:left-1/2 after:-translate-x-1/2 after:w-2 after:h-2 after:bg-primary after:rounded-full"
+                      : "text-gray-500 hover:text-primary"
+                  }`}
+                >
+                  {item.label}
+                </Button>
+              </NavbarItem>
+            )
+          )}
         </NavbarContent>
 
-        {/* Íconos redes sociales */}
         <NavbarContent justify="end" className="gap-3">
-          <Button
-            isIconOnly
-            variant="light"
-            className="rounded-full bg-[#F5F6FA] hover:bg-[#E1E3EC]"
-          >
-            <Search className="h-5 w-5 text-[#0B2D6B]" />
-          </Button>
-          <Button
-            isIconOnly
-            variant="light"
-            className="rounded-full bg-[#F5F6FA] hover:bg-[#E1E3EC]"
-          >
-            <Instagram className="h-5 w-5 text-[#0B2D6B]" />
-          </Button>
-          <Button
-            isIconOnly
-            variant="light"
-            className="rounded-full bg-[#F5F6FA] hover:bg-[#E1E3EC]"
-          >
-            <Facebook className="h-5 w-5 text-[#0B2D6B]" />
-          </Button>
-          <Button
-            isIconOnly
-            variant="light"
-            className="rounded-full bg-[#F5F6FA] hover:bg-[#E1E3EC]"
-          >
-            <Youtube className="h-5 w-5 text-[#0B2D6B]" />
-          </Button>
+          {socialItems.map(({ icon: Icon, label }) => (
+            <Button
+              key={label}
+              isIconOnly
+              variant="light"
+              aria-label={label}
+              className="rounded-full bg-primary-50 hover:bg-primary-200"
+            >
+              <Icon className="h-5 w-5 text-primary" strokeWidth="2.5" />
+            </Button>
+          ))}
         </NavbarContent>
       </Navbar>
     </header>

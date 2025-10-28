@@ -27,7 +27,7 @@ export default function NotFound() {
         text="Lo sentimos, la página que buscas no existe o fue movida."
       />
 
-      <Button text="Volver al inicio" onClick={handleClick} />
+      <Button text="Volver al inicio" onClick={handleClick} className="w-fit" />
     </div>
   );
 }
