@@ -25,7 +25,7 @@ export const ButtonComponent = (properties: ButtonProperties): JSX.Element => {
   return (
     <Button
       size="lg"
-      radius="lg"
+      radius="full"
       onPress={handlePress}
       isLoading={isLoading}
       type={type ?? "button"}
@@ -33,7 +33,7 @@ export const ButtonComponent = (properties: ButtonProperties): JSX.Element => {
       isDisabled={isDisabled}
       color={color ?? "primary"}
       variant={variant ?? "solid"}
-      className={`w-full px-6 py-3 ${className}`}
+      className={`w-full px-6 py-3 pointer text-primary ${className}`}
     >
       {text}
     </Button>
