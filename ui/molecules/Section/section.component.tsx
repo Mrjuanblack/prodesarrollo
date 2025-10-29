@@ -17,7 +17,7 @@ export const SectionComponent: FC<SectionProps> = ({
         ref={ref}
         initial={{ opacity: 0, y: 50 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className={`py-18 flex justify-center px-7 md:py-24 ${className}`}
+        className={`w-full flex justify-center ${className}`}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       >
         {children}
@@ -26,7 +26,7 @@ export const SectionComponent: FC<SectionProps> = ({
   }
 
   return (
-    <section className={`py-18 flex justify-center px-7 md:py-24 ${className}`}>
+    <section className={`w-full flex justify-center ${className}`}>
       {children}
     </section>
   );

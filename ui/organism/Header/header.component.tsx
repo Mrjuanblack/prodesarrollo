@@ -14,9 +14,9 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { Container } from "@/ui/molecules";
 import { useRouter } from "next/navigation";
-import colombia_logo from "@/public/colombia.png";
-import pro_desarrollo_logo from "@/public/favicon.png";
+import colombia_logo from "@/public/gov-co-logo.svg";
 import { menuItems, socialItems } from "./header.properties";
+import pro_desarrollo_logo from "@/public/pro-desarrollo-logo.svg";
 
 export const HeaderComponent = () => {
   const router = useRouter();

@@ -1,11 +1,11 @@
 import Image from "next/image";
-import { Button, Text, Title } from "@/ui/atoms";
 import { Container } from "@/ui/molecules";
-import manos_unidas from "@/public/haz_parte_cambio.png";
+import { Button, Text, Title } from "@/ui/atoms";
+import manos_unidas from "@/public/haz-parte-cambio.svg";
 
 export const CallToActionSection = () => {
   return (
-    <section className="bg-default-100 py-16 flex justify-center">
+    <section className="w-full bg-default-100 py-16 flex justify-center">
       <Container className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
         <div className="relative w-50 h-50 md:w-70 md:h-70 flex items-center justify-center">
           <div className="absolute w-30 h-30 shadow-md md:w-56 md:h-56 rounded-full bg-secondary-200" />

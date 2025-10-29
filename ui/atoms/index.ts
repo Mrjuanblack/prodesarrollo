@@ -1,5 +1,6 @@
 "use client";
 
+export * from "./Cards";
 export { TextComponent as Text } from "./Text/text.component";
 export { SpanComponent as Span } from "./Span/span.component";
 export { LinkComponent as Link } from "./Link/link.component";

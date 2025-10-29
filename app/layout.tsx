@@ -26,8 +26,8 @@ export const metadata: Metadata = {
   icons: [
     {
       rel: "icon",
-      type: "image/png",
-      url: "/favicon.png",
+      type: "image/svg+xml",
+      url: "/pro-desarrollo-logo.svg",
     },
   ],
 };

@@ -1,15 +1,15 @@
 import Image from "next/image";
-import gov_logo from "@/public/colombia.png";
-import { Phone, MapPin } from "lucide-react";
-import { socialLinks } from "./footer.properties";
-import pro_desarrollo_logo from "@/public/pro_desarrollo_white.png";
 import { Container } from "@/ui/molecules";
+import { Phone, MapPin } from "lucide-react";
+import gov_logo from "@/public/gov-co-logo.svg";
+import { socialLinks } from "./footer.properties";
+import pro_desarrollo_logo from "@/public/pro-desarrollo-logo-white.svg";
 
 export const FooterComponent = () => {
   return (
     <footer className="bg-primary text-white py-20 relative overflow-hidden">
       <div
-        className="absolute top-0 right-0 w-[380px] h-[380px] bg-white overflow-hidden z-0"
+        className="absolute top-0 right-0 w-[380px] h-[380px] bg-default-100 overflow-hidden z-0"
         style={{
           transform: "rotate(-90deg)",
         }}

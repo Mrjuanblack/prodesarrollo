@@ -63,7 +63,6 @@ export interface SocialItem {
 }
 
 export const socialItems: SocialItem[] = [
-  { icon: Search, label: "Buscar", href: "#" },
   { icon: Instagram, label: "Instagram", href: "#" },
   { icon: FacebookIcon, label: "Facebook", href: "#" },
   { icon: LucideYoutube, label: "YouTube", href: "#" },
