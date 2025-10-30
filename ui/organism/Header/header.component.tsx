@@ -31,7 +31,7 @@ export const HeaderComponent = () => {
         </Container>
       </div>
 
-      <Navbar className="text-primary py-3" maxWidth="2xl">
+      <Navbar className="text-primary py-5" maxWidth="2xl">
         <NavbarContent justify="start">
           <NavbarBrand>
             <Image
@@ -56,16 +56,16 @@ export const HeaderComponent = () => {
                     disableRipple
                     variant="light"
                     onClick={() => setActiveItem(item.label)}
-                    className={`font-semibold relative bg-transparent flex items-center gap-1 ${
+                    className={`text-[18px] font-semibold relative bg-transparent flex items-center gap-1 ${
                       activeItem === item.label
-                        ? "text-primary font-bold after:content-[''] after:absolute after:bottom-[-4px] after:left-1/2 after:-translate-x-1/2 after:w-2 after:h-2 after:bg-primary after:rounded-full"
-                        : "text-gray-500 hover:text-primary"
+                        ? "text-primary font-bold after:content-[''] after:absolute after:-bottom-1.5 after:left-1/2 after:-translate-x-1/2 after:w-3 after:h-3 after:bg-secondary after:rounded-full"
+                        : "text-gray-600 hover:text-primary"
                     }`}
                   >
                     {item.label}
                     <ChevronDown
                       size={18}
-                      className={`transition-transform text-gray-400 ${
+                      className={`transition-transform text-gray-600 ${
                         openDropdown === item.label ? "rotate-180" : ""
                       }`}
                     />
@@ -81,7 +81,7 @@ export const HeaderComponent = () => {
                         router.push(subItem.href);
                       }}
                     >
-                      {subItem.label}
+                      <p className="text-[18px]">{subItem.label}</p>
                     </DropdownItem>
                   ))}
                 </DropdownMenu>
@@ -95,10 +95,10 @@ export const HeaderComponent = () => {
                     setActiveItem(item.label);
                     if (item.href) router.push(item.href);
                   }}
-                  className={`font-semibold relative bg-transparent after:transition-transform ${
+                  className={`text-[18px] font-semibold relative bg-transparent after:transition-transform ${
                     activeItem === item.label
-                      ? "text-primary font-bold after:absolute after:bottom-[-4px] after:left-1/2 after:-translate-x-1/2 after:w-2 after:h-2 after:bg-primary after:rounded-full"
-                      : "text-gray-500 hover:text-primary"
+                      ? "text-primary font-bold after:absolute after:-bottom-1.5 after:left-1/2 after:-translate-x-1/2 after:w-3 after:h-3 after:bg-secondary after:rounded-full"
+                      : "text-gray-600 hover:text-primary"
                   }`}
                 >
                   {item.label}
@@ -115,9 +115,9 @@ export const HeaderComponent = () => {
               isIconOnly
               variant="light"
               aria-label={label}
-              className="rounded-full bg-primary-50 hover:bg-primary-200"
+              className="rounded-full h-[50px] w-[50px] bg-primary-50 hover:bg-primary-200"
             >
-              <Icon className="h-5 w-5 text-primary" strokeWidth="2.5" />
+              <Icon className="h-7 w-7 text-primary" strokeWidth="2" />
             </Button>
           ))}
         </NavbarContent>

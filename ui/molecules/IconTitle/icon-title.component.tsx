@@ -8,21 +8,24 @@ export const IconTitleComponent: FC<IconTitleProps> = ({
   highlightFirstLetter,
   className = "",
   iconColor = "text-primary",
-  titleColor = "text-primary",
   iconBgColor = "bg-secondary-200",
+  classNameTitle = "text-md md:text-[25px] text-primary",
 }) => {
   return (
     <div className={`flex items-center ${className}`}>
       <div
-        className={`flex items-center justify-center w-4 h-4 rounded-full shrink-0 mr-3 ${iconBgColor}`}
+        className={`flex items-center justify-center w-[25px] h-[25px] rounded-full shrink-0 mr-4 ${iconBgColor}`}
       >
-        <Icon strokeWidth="1" className={`w-4 h-4 ${iconColor} -mr-2 -mb-1`} />
+        <Icon
+          strokeWidth="1.5"
+          className={`w-7 h-7 ${iconColor} -mr-4 -mb-3`}
+        />
       </div>
 
       <Title
         text={title}
         highlightFirstLetter={highlightFirstLetter}
-        className={`text-md md:text-lg leading-none ${titleColor}`}
+        className={`leading-none ${classNameTitle}`}
       />
     </div>
   );

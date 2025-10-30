@@ -38,10 +38,10 @@ export const InstitutionalFooterSection = () => {
 
           <Text
             text="00:00:00"
-            className="text-4xl md:text-5xl font-extrabold lg:font-extrabold tracking-wide mx-4 md:mx-6 lg:mx-12 text-white"
+            className="lg:font-extrabold tracking-wide mx-4 md:mx-6 lg:mx-12 text-white text-[45px]"
           />
 
-          <div className="text-left text-white text-sm md:text-lg font-light">
+          <div className="text-left text-white text-[20px] font-light">
             <div>HORA LEGAL</div>
             <div>REPÚBLICA DE COLOMBIA</div>
           </div>

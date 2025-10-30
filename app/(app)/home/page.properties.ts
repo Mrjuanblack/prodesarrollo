@@ -12,7 +12,6 @@ import proyectoExample from "@/public/proyecto-example.svg";
 import alcaldia from "@/public/alcaldia-san-alberto-logo.svg";
 import { NewsItem } from "@/ui/atoms/Cards/NewsCard/news-card.properties";
 import { ProjectItem } from "@/ui/atoms/Cards/ProjectCard/project-card.properties";
-import { ServiceItem } from "@/ui/atoms/Cards/ServiceCard/service-card.properties";
 import { BookOpen, Globe, HeartHandshake, User } from "lucide-react";
 
 export interface EntityObserved {
@@ -105,37 +104,6 @@ export const projects: ProjectItem[] = [
     date: "Septiembre 1 de 2024",
     title: "Desarrollo de Vivienda de Interés Social (VIS) en Cali",
     imageAlt: "Conjunto de viviendas terminadas con áreas verdes.",
-  },
-];
-
-export const services: ServiceItem[] = [
-  {
-    id: 1,
-    title: "Interventoría, supervisión y asistencia técnica",
-    description:
-      "Proveer servicios especializados de interventoría, supervisión, auditoría y estructuración de proyectos. Incluye la ejecución de inspecciones y la prestación de asistencia técnica integral para garantizar la calidad y eficiencia en los asuntos relacionados con el objeto social.",
-    icon: "Settings",
-  },
-  {
-    id: 2,
-    title: "Gestión de Proyectos e Inversiones",
-    description:
-      "Ofrecer acompañamiento estratégico en la formulación, evaluación y ejecución de proyectos de inversión pública y privada, maximizando el retorno social y económico. Nos enfocamos en la sostenibilidad y el impacto a largo plazo.",
-    icon: "TrendingUp",
-  },
-  {
-    id: 3,
-    title: "Asesoría Legal y Regulatoria",
-    description:
-      "Brindar soporte legal completo en materia contractual, regulatoria y administrativa para entidades públicas y empresas privadas. Aseguramos el cumplimiento normativo y minimizamos los riesgos jurídicos en cada etapa de su operación.",
-    icon: "Scale",
-  },
-  {
-    id: 4,
-    title: "Asesoría Legal y Regulatoria",
-    description:
-      "Brindar soporte legal completo en materia contractual, regulatoria y administrativa para entidades públicas y empresas privadas. Aseguramos el cumplimiento normativo y minimizamos los riesgos jurídicos en cada etapa de su operación.",
-    icon: "Scale",
   },
 ];
 

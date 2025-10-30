@@ -33,7 +33,7 @@ export const ButtonComponent = (properties: ButtonProperties): JSX.Element => {
       isDisabled={isDisabled}
       color={color ?? "primary"}
       variant={variant ?? "solid"}
-      className={`w-full px-6 py-3 pointer text-primary ${className}`}
+      className={`w-full px-6 py-3 pointer text-primary text-[20px] ${className}`}
     >
       {text}
     </Button>

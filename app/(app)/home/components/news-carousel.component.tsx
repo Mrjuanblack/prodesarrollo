@@ -26,7 +26,7 @@ export const NewsCarousel = () => {
   );
 
   return (
-    <Section className="py-12 bg-white" fadeIn={true}>
+    <Section className="pb-20 bg-white" fadeIn={true}>
       <Container className="flex flex-col items-center">
         <SectionHeader title="Noticias" icon={Newspaper} />
 
@@ -42,7 +42,6 @@ export const NewsCarousel = () => {
         </Carousel>
 
         <Button
-          color="primary"
           variant="bordered"
           text="Ver más noticias"
           className="font-semibold w-fit mt-10"

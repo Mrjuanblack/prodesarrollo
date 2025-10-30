@@ -8,23 +8,25 @@ import { IconTitle } from "@/ui/molecules";
 
 const ContentBlockCard: React.FC<{ item: ContentBlock }> = ({ item }) => {
   const iconColor = "text-white";
-  const titleColor = "text-white";
   const iconBgColor = "bg-secondary";
+  const classNameTitle = "text-md md:text-[20px] text-white";
 
   return (
-    <div className="flex flex-col h-full bg-primary/70 rounded-xl p-8">
+    <div className="flex flex-col h-full bg-primary/60 rounded-2xl p-8">
       <div className="flex items-start mb-3">
         <IconTitle
           Icon={item.icon}
           title={item.title}
           iconColor={iconColor}
-          titleColor={titleColor}
           iconBgColor={iconBgColor}
           highlightFirstLetter={false}
+          classNameTitle={classNameTitle}
         />
       </div>
 
-      <p className="text-white text-sm leading-relaxed">{item.description}</p>
+      <p className="text-white text-[20px] leading-relaxed">
+        {item.description}
+      </p>
     </div>
   );
 };
@@ -34,7 +36,7 @@ export const ContentSlideCardComponent: React.FC<ContentSlideProps> = ({
   items,
 }) => {
   return (
-    <div className="relative w-full h-[580px] overflow-hidden ">
+    <div className="relative w-full h-[580px] overflow-hidden">
       <div className="absolute inset-0 z-0">
         <Image
           src={img}
@@ -47,12 +49,10 @@ export const ContentSlideCardComponent: React.FC<ContentSlideProps> = ({
       </div>
 
       <div className="absolute inset-0 z-2 flex flex-col justify-end">
-        <div className="m-8 pb-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full h-auto">
-            {items.map((item) => (
-              <ContentBlockCard key={item.id} item={item} />
-            ))}
-          </div>
+        <div className="p-20 grid grid-cols-1 md:grid-cols-2 gap-12 w-full h-auto">
+          {items.map((item) => (
+            <ContentBlockCard key={item.id} item={item} />
+          ))}
         </div>
       </div>
     </div>

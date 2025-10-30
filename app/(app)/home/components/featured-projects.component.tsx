@@ -29,7 +29,7 @@ export const FeaturedProjects = () => {
   return (
     <Section
       fadeIn={true}
-      className="py-12 bg-linear-to-b from-[#EFF3FD] to-[#FFFFFF] w-full"
+      className="py-20 bg-linear-to-b from-[#EFF3FD] to-[#FFFFFF] w-full"
     >
       <Container className="flex flex-col items-center">
         <SectionHeader

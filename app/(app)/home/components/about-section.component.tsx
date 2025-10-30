@@ -19,46 +19,49 @@ export const AboutSection: FC<AboutSectionProps> = ({
   reverse = false,
 }) => {
   return (
-    <Section fadeIn={true}>
+    <Section fadeIn={true} className="mt-15">
       <Container
         className={`flex flex-col md:flex-row items-center justify-between ${
           reverse ? "md:flex-row-reverse" : ""
         }`}
       >
-        <div className="md:w-1/2 space-y-4">
-          <Title text={title} className="text-md md:text-lg leading-none" />
+        <div className="md:w-3/7 space-y-8 ">
+          <Title text={title} className="text-md md:text-[25px] leading-none" />
 
-          <p className="text-black leading-relaxed">{description}</p>
+          <p className="text-black text-[20px] leading-relaxed text-justify">
+            {description}
+          </p>
 
-          {children && <div className="mt-10">{children}</div>}
+          {children && (
+            <div className="mt-8 flex w-full justify-center">{children}</div>
+          )}
         </div>
 
-        <div className="relative md:w-1/2 flex justify-center items-center">
-          <div className="absolute right-0 top-0 w-full h-full flex justify-end items-end pointer-events-none">
-            <div className="grid grid-cols-6 gap-3 opacity-40 translate-x-8 translate-y-8">
-              {Array.from({ length: 36 }).map((_, i) => (
-                <div key={i} className="w-2 h-2 bg-primary rounded-full"></div>
-              ))}
-            </div>
+        <div className="relative md:w-3/7 flex justify-center items-center">
+          <div
+            className={`absolute ${
+              reverse ? "left-0" : "right-0"
+            } w-[136px] h-[370px] grid grid-cols-5 gap-3 opacity-40`}
+          >
+            {Array.from({ length: 50 }).map((_, i) => (
+              <div
+                key={i}
+                className="w-[7px] h-[7px] bg-primary rounded-full"
+              ></div>
+            ))}
           </div>
 
           <motion.div
             whileHover={{ scale: 1.02 }}
-            className="relative bg-white rounded-2xl shadow-lg overflow-hidden w-[90%] md:w-[400px]"
+            className="relative bg-white rounded-2xl shadow-md overflow-hidden w-[475px] h-[291px] aspect-video z-10"
           >
-            <video
-              muted
-              loop
-              playsInline
+            <iframe
+              width="100%"
+              height="100%"
               src={videoSrc}
-              className="w-full h-full object-cover"
-            />
-
-            <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-              <button className="bg-white text-primary rounded-full p-4 shadow-md">
-                ▶
-              </button>
-            </div>
+              title="Ven a Colombia, El País de la Belleza ✨"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            ></iframe>
           </motion.div>
         </div>
       </Container>

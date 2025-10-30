@@ -18,12 +18,12 @@ export const CallToActionSection = () => {
         </div>
 
         <div className="text-center md:text-left">
-          <Title text="Haz parte del cambio" className="mb-4" />
+          <Title text="Haz parte del cambio" className="mb-4 text-[30px]" />
 
           <Text
             text="Explora nuestros proyectos sociales con impacto real y conoce cómo
             puedes ayudar a financiarlos para su ejecución."
-            className="text-base md:text-lg mb-6 max-w-lg mx-auto md:mx-0"
+            className="text-[25px] mb-6 max-w-3xl mx-auto md:mx-0"
           />
 
           <Button

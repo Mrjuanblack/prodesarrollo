@@ -10,13 +10,13 @@ export const ProjectCardComponent: React.FC<ProjectCardProps> = ({ item }) => {
       className="bg-white rounded-xl shadow-md overflow-hidden transform transition-transform duration-200 hover:scale-105 cursor-pointer"
     >
       <div className="p-6">
-        <h3 className="text-xl font-semibold text-gray-800 leading-tight mb-2">
+        <h3 className="text-[18px] font-semibold text-black leading-tight mb-2">
           {title}
         </h3>
 
-        <p className="text-sm text-gray-500 mb-4">{date}</p>
+        <p className="text-[15px] text-gray-500 mb-4">{date}</p>
 
-        <div className="relative w-full h-48 rounded-lg overflow-hidden">
+        <div className="relative w-full h-[230px] rounded-lg overflow-hidden">
           <Image
             src={imageUrl}
             alt={imageAlt}

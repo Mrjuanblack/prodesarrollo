@@ -1,11 +1,72 @@
 import { useState } from "react";
 import { Settings } from "lucide-react";
 import { SectionHeader } from "@/ui/organism";
-import { services } from "../page.properties";
 import { Button, ServiceCard } from "@/ui/atoms";
 import { Carousel, Container, Section } from "@/ui/molecules";
+import { ServiceItem } from "@/ui/atoms/Cards/ServiceCard/service-card.properties";
 
 const SLIDES_PER_VIEW = 3;
+
+const services: ServiceItem[] = [
+  {
+    id: 1,
+    title: "Gestión integral de infraestructura estratégica",
+    description: (
+      <>
+        Ejecutar <strong>obras civiles de alto impacto social</strong>,
+        incluyendo infraestructura de vivienda, salud, educación, vías
+        principales y terciarias, y servicios públicos (acueductos,
+        alcantarillados, redes eléctricas) entre otras. Esto abarca la
+        construcción, el equipamiento, las adecuaciones y el mantenimiento
+        necesario
+        <strong> para el desarrollo integral de las comunidades.</strong>
+      </>
+    ),
+    icon: "Settings",
+  },
+  {
+    id: 2,
+    title: "Interventoría, supervisión y asistencia técnica",
+    description: (
+      <>
+        Proveer servicios especializados de interventoría, supervisión,
+        auditoría y estructuración de proyectos. Incluye la ejecución de
+        inspecciones y la prestación de asistencia técnica integral para
+        <strong> garantizar la calidad y eficiencia </strong> en los asuntos
+        relacionados con el objeto social.
+      </>
+    ),
+    icon: "TrendingUp",
+  },
+  {
+    id: 3,
+    title: "Movilización y fomento de recursos financieros",
+    description: (
+      <>
+        Promover las actividades necesarias para la consecución y ejecución de
+        recursos económicos, aportes e ingresos lícitos. Esta gestión
+        estratégica se enfoca en captar fondos nacionales e internacionales para
+        <strong> aumentar la competitividad</strong> y financiar los planes de
+        desarrollo.
+      </>
+    ),
+    icon: "Scale",
+  },
+  {
+    id: 4,
+    title: "Movilización y fomento de recursos financieros",
+    description: (
+      <>
+        Promover las actividades necesarias para la consecución y ejecución de
+        recursos económicos, aportes e ingresos lícitos. Esta gestión
+        estratégica se enfoca en captar fondos nacionales e internacionales para
+        <strong> aumentar la competitividad</strong> y financiar los planes de
+        desarrollo.
+      </>
+    ),
+    icon: "Scale",
+  },
+];
 
 export const AreasImpact = () => {
   const [startIndex, setStartIndex] = useState(0);
@@ -26,8 +87,8 @@ export const AreasImpact = () => {
   );
 
   return (
-    <Section className="py-12 bg-white" fadeIn={true}>
-      <Container className="flex flex-col items-center">
+    <Section className="py-20 bg-white" fadeIn={true}>
+      <Container className="flex flex-col items-center w-full">
         <SectionHeader
           icon={Settings}
           title="Áreas de Impacto"
@@ -46,9 +107,8 @@ export const AreasImpact = () => {
         </Carousel>
 
         <Button
-          color="primary"
-          variant="bordered"
           text="Ver más"
+          variant="bordered"
           className="font-semibold w-fit mt-10"
           onClick={() => console.log("Ver más")}
         />
