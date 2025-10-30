@@ -1,3 +1,3 @@
-import { SocialItem, socialItems } from "../Headers/header.properties";
+import { SocialItem, socialItems } from "../Header/header.properties";
 
 export const socialLinks: SocialItem[] = socialItems;

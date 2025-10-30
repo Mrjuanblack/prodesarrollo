@@ -4,6 +4,6 @@ export interface IconTitleProps {
   iconColor?: string;
   iconBgColor?: string;
   classNameTitle?: string;
-  Icon: React.ElementType;
+  Icon?: React.ElementType;
   highlightFirstLetter?: boolean;
 }

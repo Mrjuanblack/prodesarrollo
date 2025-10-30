@@ -13,14 +13,16 @@ export const IconTitleComponent: FC<IconTitleProps> = ({
 }) => {
   return (
     <div className={`flex items-center ${className}`}>
-      <div
-        className={`flex items-center justify-center w-[25px] h-[25px] rounded-full shrink-0 mr-4 ${iconBgColor}`}
-      >
-        <Icon
-          strokeWidth="1.5"
-          className={`w-7 h-7 ${iconColor} -mr-4 -mb-3`}
-        />
-      </div>
+      {Icon && (
+        <div
+          className={`flex items-center justify-center w-[25px] h-[25px] rounded-full shrink-0 mr-4 ${iconBgColor}`}
+        >
+          <Icon
+            strokeWidth="1.5"
+            className={`w-7 h-7 ${iconColor} -mr-4 -mb-3`}
+          />
+        </div>
+      )}
 
       <Title
         text={title}

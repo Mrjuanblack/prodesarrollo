@@ -17,7 +17,7 @@ export default function Home() {
       <AboutSection
         title="Sobre Nosotros"
         reverse={false}
-        videoSrc="https://www.youtube.com/embed/mn64ZdDpC6k"
+        videoSrc={["https://www.youtube.com/embed/mn64ZdDpC6k"]}
         description={
           <>
             PRO. DESARROLLO promueve la preservación y fortalecimiento de la
@@ -42,7 +42,7 @@ export default function Home() {
       <AboutSection
         reverse={true}
         title="Gestión integral para el desarrollo territorial y social"
-        videoSrc="https://www.youtube.com/embed/mn64ZdDpC6k"
+        videoSrc={["https://www.youtube.com/embed/mn64ZdDpC6k"]}
         description={
           <>
             En PRO. DESARROLLO entendemos que invertir en los territorios es

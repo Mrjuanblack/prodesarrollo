@@ -5,10 +5,12 @@ import { Container, Section } from "@/ui/molecules";
 
 interface AboutSectionProps {
   title: string;
-  videoSrc: string;
+  videoSrc: string[];
   reverse?: boolean;
-  description: React.ReactNode;
+  classNameDots?: string;
+  classNameVideo?: string;
   children?: React.ReactNode;
+  description: React.ReactNode;
 }
 
 export const AboutSection: FC<AboutSectionProps> = ({
@@ -17,6 +19,8 @@ export const AboutSection: FC<AboutSectionProps> = ({
   videoSrc,
   description,
   reverse = false,
+  classNameDots = "w-[136px] h-[370px]",
+  classNameVideo = "w-[475px] h-[291px]",
 }) => {
   return (
     <Section fadeIn={true} className="mt-15">
@@ -37,11 +41,11 @@ export const AboutSection: FC<AboutSectionProps> = ({
           )}
         </div>
 
-        <div className="relative md:w-3/7 flex justify-center items-center mt-10 lg:mt-0">
+        <div className="relative md:w-3/7 flex justify-center flex-col gap-5 items-center mt-10 lg:mt-0">
           <div
             className={`absolute ${
               reverse ? "left-0" : "right-0"
-            } w-[136px] h-[370px] grid grid-cols-5 gap-3 opacity-40`}
+            } ${classNameDots} grid grid-cols-5 gap-3 opacity-40`}
           >
             {Array.from({ length: 50 }).map((_, i) => (
               <div
@@ -51,18 +55,21 @@ export const AboutSection: FC<AboutSectionProps> = ({
             ))}
           </div>
 
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            className="relative bg-white rounded-2xl shadow-md overflow-hidden w-[475px] h-[291px] aspect-video z-10"
-          >
-            <iframe
-              width="100%"
-              height="100%"
-              src={videoSrc}
-              title="Ven a Colombia, El País de la Belleza ✨"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            ></iframe>
-          </motion.div>
+          {videoSrc.map((src, index) => (
+            <motion.div
+              key={index}
+              whileHover={{ scale: 1.02 }}
+              className={`relative bg-white rounded-2xl shadow-md overflow-hidden aspect-video z-10 ${classNameVideo}`}
+            >
+              <iframe
+                width="100%"
+                height="100%"
+                src={src}
+                title="Ven a Colombia, El País de la Belleza ✨"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              ></iframe>
+            </motion.div>
+          ))}
         </div>
       </Container>
     </Section>
