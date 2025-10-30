@@ -1,4 +1,4 @@
-import { Search, Instagram, FacebookIcon, LucideYoutube } from "lucide-react";
+import { Instagram, FacebookIcon, LucideYoutube } from "lucide-react";
 
 interface SubMenuItem {
   label: string;

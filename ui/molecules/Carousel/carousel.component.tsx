@@ -70,7 +70,7 @@ export const CarouselComponent: React.FC<CarouselProps> = ({
                 duration: 0.45,
                 ease: [0.43, 0.13, 0.23, 0.96],
               }}
-              className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-${slidesPerView} gap-8 w-full`}
+              className={`grid grid-cols-1 md:grid-cols-${slidesPerView} gap-8 w-full`}
             >
               {children}
             </motion.div>

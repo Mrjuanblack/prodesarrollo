@@ -16,7 +16,7 @@ export const InstitutionalFooterSection = () => {
           description="Entidades que nos supervisan"
         />
 
-        <div className="flex flex-row justify-center gap-30 h-[94px] mb-20">
+        <div className="flex flex-wrap lg:flex-row justify-center gap-30 lg:h-[94px] mb-20">
           {entitiesObserved.map((entity) => (
             <Image
               key={entity.alt}
@@ -27,7 +27,7 @@ export const InstitutionalFooterSection = () => {
           ))}
         </div>
 
-        <div className="flex items-center max-w-[774px] px-6 py-3 mb-10 md:px-8 bg-primary">
+        <div className="flex items-center flex-col lg:flex-row max-w-[774px] px-6 py-3 mb-10 md:px-8 bg-primary">
           <div className="flex items-center">
             <Image
               src={logo}
@@ -38,10 +38,10 @@ export const InstitutionalFooterSection = () => {
 
           <Text
             text="00:00:00"
-            className="lg:font-extrabold tracking-wide mx-4 md:mx-6 lg:mx-12 text-white text-[45px]"
+            className="lg:font-extrabold tracking-wide my-7 md:my-10 lg:mx-12 text-white text-[45px]"
           />
 
-          <div className="text-left text-white text-[20px] font-light">
+          <div className="text-center lg:text-left text-white text-[20px] font-light">
             <div>HORA LEGAL</div>
             <div>REPÚBLICA DE COLOMBIA</div>
           </div>

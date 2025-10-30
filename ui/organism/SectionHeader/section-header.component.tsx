@@ -19,7 +19,7 @@ export const SectionHeaderComponent: FC<SectionHeaderProps> = ({
       {description && (
         <Text
           text={description}
-          className={`text-sm md:text-[20px] mt-4 max-w-6xl text-center ${descriptionColor}`}
+          className={`text-md md:text-[20px] mt-4 max-w-6xl text-center ${descriptionColor}`}
         />
       )}
     </div>
