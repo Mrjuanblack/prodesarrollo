@@ -34,16 +34,28 @@ const PaginationDots: React.FC<PaginationProps> = ({
 export const CarouselComponent: React.FC<CarouselProps> = ({
   children,
   totalSlides,
-  slidesPerView = 3,
   currentIndex,
+  slidesPerView = 3,
   paginationPosition = "bottom",
   onPrev,
   onNext,
 }) => {
+  const colClassMap: Record<number, string> = {
+    1: "lg:grid-cols-1",
+    2: "lg:grid-cols-2",
+    3: "lg:grid-cols-3",
+    4: "lg:grid-cols-4",
+    5: "lg:grid-cols-5",
+    6: "lg:grid-cols-6",
+  };
+
   const isInside = paginationPosition === "inside";
 
   const buttonClass =
     "h-[77px] w-[77px] flex absolute top-1/2 -translate-y-1/2 z-30 backdrop-blur-sm shadow-md rounded-full transition-all duration-300";
+
+  const lgColsClass =
+    colClassMap[Math.min(Math.max(slidesPerView, 1), 6)] || "lg:grid-cols-3";
 
   return (
     <section className="relative w-full">
@@ -63,14 +75,14 @@ export const CarouselComponent: React.FC<CarouselProps> = ({
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
-              initial={{ opacity: 0, x: 60 }}
-              animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -60 }}
+              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, x: 60 }}
               transition={{
                 duration: 0.45,
                 ease: [0.43, 0.13, 0.23, 0.96],
               }}
-              className={`grid grid-cols-1 md:grid-cols-${slidesPerView} gap-8 w-full`}
+              className={`grid grid-cols-1 ${lgColsClass} gap-8 w-full`}
             >
               {children}
             </motion.div>

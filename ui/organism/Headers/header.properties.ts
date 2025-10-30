@@ -23,9 +23,9 @@ export const menuItems: MenuItem[] = [
     label: "Nosotros",
     type: "dropdown",
     items: [
-      { label: "Quiénes somos", href: "/about-us" },
-      { label: "Misión y visión", href: "/about-us" },
-      { label: "Equipo", href: "/about-us" },
+      { label: "Quiénes somos", href: "/about/about-us" },
+      { label: "Qué hacemos", href: "/about/what-we-do" },
+      { label: "Estructura organizacional", href: "/about/structure-team" },
     ],
   },
   {

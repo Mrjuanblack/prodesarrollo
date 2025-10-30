@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/ui/atoms";
+import { BackgroundSection, Button } from "@/ui/atoms";
 import { Hero } from "./components/hero.component";
 import { AreasImpact } from "./components/areas-impact.component";
 import { NewsCarousel } from "./components/news-carousel.component";
@@ -73,6 +73,7 @@ export default function Home() {
       <NewsCarousel />
       <InstitutionalFooterSection />
       <CallToActionSection />
+      <BackgroundSection background="bg-default-100" />
     </>
   );
 }
