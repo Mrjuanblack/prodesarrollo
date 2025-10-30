@@ -43,7 +43,7 @@ export const CarouselComponent: React.FC<CarouselProps> = ({
   const isInside = paginationPosition === "inside";
 
   const buttonClass =
-    "hidden h-[77px] w-[77px] lg:flex absolute top-1/2 -translate-y-1/2 z-30 backdrop-blur-sm shadow-md rounded-full transition-all duration-300";
+    "h-[77px] w-[77px] flex absolute top-1/2 -translate-y-1/2 z-30 backdrop-blur-sm shadow-md rounded-full transition-all duration-300";
 
   return (
     <section className="relative w-full">
@@ -70,7 +70,7 @@ export const CarouselComponent: React.FC<CarouselProps> = ({
                 duration: 0.45,
                 ease: [0.43, 0.13, 0.23, 0.96],
               }}
-              className={`grid grid-cols-1 md:grid-cols-${slidesPerView} gap-8 w-full`}
+              className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-${slidesPerView} gap-8 w-full`}
             >
               {children}
             </motion.div>
