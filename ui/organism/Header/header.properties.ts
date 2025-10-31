@@ -31,27 +31,31 @@ export const menuItems: MenuItem[] = [
   {
     label: "Transparencia",
     type: "link",
-    href: "/",
+    href: "/transparency",
     items: [],
   },
   {
     label: "Convocatorias",
     type: "dropdown",
-    items: [
-      { label: "Abiertas", href: "/" },
-      { label: "Cerradas", href: "/" },
-    ],
+    href: "/calls",
+    items: [],
+  },
+  {
+    label: "Participa",
+    type: "link",
+    href: "/participate",
+    items: [],
   },
   {
     label: "Noticias",
     type: "link",
-    href: "/",
+    href: "/news",
     items: [],
   },
   {
     label: "PQRS",
     type: "link",
-    href: "/",
+    href: "/pqrs",
     items: [],
   },
 ];

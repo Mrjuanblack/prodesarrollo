@@ -65,12 +65,12 @@ export const FooterComponent = () => {
           </h3>
 
           <div className="flex flex-col items-start gap-2 mt-1 font-semibold text-[18px]">
-            <a href="#">Nosotros</a>
-            <a href="#">Transparencia</a>
-            <a href="#">Convocatorias</a>
-            <a href="#">Participa</a>
-            <a href="#">Noticias</a>
-            <a href="#">PQRS</a>
+            <a href="/about/about-us">Nosotros</a>
+            <a href="/transparency">Transparencia</a>
+            <a href="/calls">Convocatorias</a>
+            <a href="/participate">Participa</a>
+            <a href="/news">Noticias</a>
+            <a href="/pqrs">PQRS</a>
           </div>
         </div>
       </Container>
