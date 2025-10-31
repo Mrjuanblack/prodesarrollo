@@ -10,6 +10,9 @@ import procuraduria from "@/public/procuraduria-logo.svg";
 import noticiaExample from "@/public/noticia-example.svg";
 import proyectoExample from "@/public/proyecto-example.svg";
 import alcaldia from "@/public/alcaldia-san-alberto-logo.svg";
+import presidencia from "@/public/presidencia-logo.svg";
+import gobierno_digital from "@/public/gobierno-digital-logo.svg";
+import cecop from "@/public/secop-logo.svg";
 import { BookOpen, Globe, HeartHandshake, User } from "lucide-react";
 import { NewsItem } from "@/ui/atoms/Cards/NewsCard/news-card.properties";
 import { ProjectItem } from "@/ui/atoms/Cards/ProjectCard/project-card.properties";
@@ -35,6 +38,18 @@ export const entitiesObserved: EntityObserved[] = [
   {
     img: alcaldia,
     alt: "Logo de Alcaldía",
+  },
+  {
+    img: presidencia,
+    alt: "Logo de Presidencia",
+  },
+  {
+    img: cecop,
+    alt: "Logo de SECOP II",
+  },
+  {
+    img: gobierno_digital,
+    alt: "Logo de Gobierno digital",
   },
 ];
 

@@ -16,7 +16,7 @@ export const InstitutionalFooterSection = () => {
           description="Entidades que nos supervisan"
         />
 
-        <div className="flex flex-wrap lg:flex-row justify-center gap-30 lg:h-[94px] mb-20">
+        <div className="grid grid-cols-3 lg:grid-cols-7 gap-10 mb-20 place-items-center">
           {entitiesObserved.map((entity) => (
             <Image
               key={entity.alt}
@@ -27,7 +27,20 @@ export const InstitutionalFooterSection = () => {
           ))}
         </div>
 
-        <div className="flex items-center flex-col lg:flex-row max-w-[774px] px-6 py-3 mb-10 md:px-8 bg-primary">
+        <div>
+          <iframe
+            src="https://horalegal.inm.gov.co/widget.html"
+            title="Hora Legal Colombia"
+            width="700px"
+            height="500px"
+            style={{
+              border: "none",
+              overflow: "hidden",
+            }}
+          />
+        </div>
+
+        {/* <div className="flex items-center flex-col lg:flex-row max-w-[774px] px-6 py-3 mb-10 md:px-8 bg-primary">
           <div className="flex items-center">
             <Image
               src={logo}
@@ -45,7 +58,7 @@ export const InstitutionalFooterSection = () => {
             <div>HORA LEGAL</div>
             <div>REPÚBLICA DE COLOMBIA</div>
           </div>
-        </div>
+        </div> */}
       </Container>
     </Section>
   );

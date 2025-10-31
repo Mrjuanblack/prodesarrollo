@@ -29,7 +29,7 @@ export const AboutSection: FC<AboutSectionProps> = ({
           reverse ? "md:flex-row-reverse" : ""
         }`}
       >
-        <div className="md:w-3/7 space-y-8 ">
+        <div className="md:w-[60%] space-y-8">
           <Title text={title} className="text-md md:text-[25px] leading-none" />
 
           <div className="text-black text-[20px] leading-relaxed text-justify">
@@ -41,7 +41,7 @@ export const AboutSection: FC<AboutSectionProps> = ({
           )}
         </div>
 
-        <div className="relative md:w-3/7 flex justify-center flex-col gap-5 items-center mt-10 lg:mt-0">
+        <div className="relative md:w-[35%] flex justify-center flex-col gap-5 items-center mt-10 lg:mt-0">
           <div
             className={`absolute ${
               reverse ? "left-0" : "right-0"

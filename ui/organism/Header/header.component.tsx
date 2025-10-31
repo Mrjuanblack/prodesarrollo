@@ -152,16 +152,15 @@ export const HeaderHomeComponent = () => {
         </NavbarContent>
 
         <NavbarContent justify="end" className="gap-3 hidden md:flex">
-          {socialItems.map(({ icon: Icon, label }) => (
-            <Button
+          {socialItems.map(({ icon: Icon, label, href }) => (
+            <a
               key={label}
-              isIconOnly
-              variant="light"
+              href={href}
               aria-label={label}
-              className="rounded-full h-[50px] w-[50px] bg-primary-50 hover:bg-primary-200"
+              className="flex justify-center items-center rounded-full h-[50px] w-[50px] bg-primary-50 hover:bg-primary-200"
             >
               <Icon className="h-7 w-7 text-primary" strokeWidth="2" />
-            </Button>
+            </a>
           ))}
         </NavbarContent>
 

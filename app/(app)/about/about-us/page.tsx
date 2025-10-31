@@ -76,7 +76,7 @@ export default function AboutUs() {
       </Section>
 
       <Section>
-        <Container className="flex gap-15">
+        <Container className="mt-20 flex gap-15">
           <MissionCardCard
             title="Misión"
             isRoundedLeft={true}
@@ -98,7 +98,7 @@ export default function AboutUs() {
       </Section>
 
       <Section>
-        <Container className="mt-10">
+        <Container className="my-20">
           <SectionHeader
             title="Valores Institucionales"
             description="En PRO. DESARROLLO orientamos nuestra gestión bajo principios éticos y técnicos que fortalecen la confianza pública, la cooperación y el desarrollo territorial. Nuestros valores guían cada acción, decisión y alianza institucional, promoviendo una cultura basada en la transparencia, la eficiencia y el compromiso con el bienestar colectivo."

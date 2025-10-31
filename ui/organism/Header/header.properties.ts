@@ -63,8 +63,24 @@ export interface SocialItem {
 }
 
 export const socialItems: SocialItem[] = [
-  { icon: Twitter, label: "Twitter", href: "#" },
-  { icon: Instagram, label: "Instagram", href: "#" },
-  { icon: FacebookIcon, label: "Facebook", href: "#" },
-  { icon: LucideYoutube, label: "YouTube", href: "#" },
+  {
+    icon: Twitter,
+    label: "Twitter",
+    href: "https://twitter.com",
+  },
+  {
+    icon: Instagram,
+    label: "Instagram",
+    href: "https://www.instagram.com",
+  },
+  {
+    icon: FacebookIcon,
+    label: "Facebook",
+    href: "https://www.facebook.com",
+  },
+  {
+    icon: LucideYoutube,
+    label: "YouTube",
+    href: "https://www.youtube.com",
+  },
 ];
