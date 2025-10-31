@@ -1,4 +1,4 @@
 export interface TextProperties {
-  text: string;
   className?: string;
+  text: string | React.ReactNode;
 }

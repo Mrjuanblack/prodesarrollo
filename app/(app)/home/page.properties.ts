@@ -5,12 +5,11 @@ import {
 import dnp from "@/public/dnp-logo.svg";
 import { StaticImageData } from "next/image";
 import header from "@/public/header-home.svg";
+import presidencia from "@/public/presidencia-logo.svg";
 import contraloria from "@/public/contraloria-logo.svg";
 import procuraduria from "@/public/procuraduria-logo.svg";
-import noticiaExample from "@/public/noticia-example.svg";
 import proyectoExample from "@/public/proyecto-example.svg";
 import alcaldia from "@/public/alcaldia-san-alberto-logo.svg";
-import presidencia from "@/public/presidencia-logo.svg";
 import gobierno_digital from "@/public/gobierno-digital-logo.svg";
 import cecop from "@/public/secop-logo.svg";
 import { BookOpen, Globe, HeartHandshake, User } from "lucide-react";
@@ -56,38 +55,33 @@ export const entitiesObserved: EntityObserved[] = [
 export const news: NewsItem[] = [
   {
     id: 1,
+    date: "23/11/2025",
     category: "Categoría",
     title: "Ejemplo título de noticia",
-    date: "23/11/2025",
-    image: noticiaExample,
   },
   {
     id: 2,
     category: "Categoría",
     title: "Ejemplo título de noticia",
     date: "23/11/2025",
-    image: noticiaExample,
   },
   {
     id: 3,
     category: "Categoría",
     title: "Ejemplo título de noticia",
     date: "23/11/2025",
-    image: noticiaExample,
   },
   {
     id: 4,
     category: "Categoría",
     title: "Otra noticia importante",
     date: "24/11/2025",
-    image: noticiaExample,
   },
   {
     id: 5,
     category: "Categoría",
     title: "Un quinto ejemplo",
     date: "25/11/2025",
-    image: noticiaExample,
   },
 ];
 

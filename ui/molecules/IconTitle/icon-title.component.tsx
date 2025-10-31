@@ -9,7 +9,7 @@ export const IconTitleComponent: FC<IconTitleProps> = ({
   className = "",
   iconColor = "text-primary",
   iconBgColor = "bg-secondary-200",
-  classNameTitle = "text-md md:text-[25px] text-primary",
+  classNameTitle = "text-md text-primary md:text-[25px]",
 }) => {
   return (
     <div className={`flex items-center ${className}`}>

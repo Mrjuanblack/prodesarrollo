@@ -1,10 +1,6 @@
-import { Download } from "lucide-react";
-import { laws } from "./page.properties";
-import { HelpSection, HeroSimple } from "@/ui/organism";
 import { BackgroundSection } from "@/ui/atoms";
 import hero_simple from "@/public/hero-simple.svg";
-import { Container, Section } from "@/ui/molecules";
-import { CallToActionSection } from "@/ui/organism/CallToActionSection/CallToActionSection";
+import { HelpSection, HeroSimple } from "@/ui/organism";
 
 export default function Participate() {
   return (

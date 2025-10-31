@@ -1,3 +1,6 @@
+import noticiaExample from "@/public/noticia-example.svg";
+import { NewsItem } from "@/ui/atoms/Cards/NewsCard/news-card.properties";
+
 export interface LawItem {
   id: number;
   title: string;
@@ -26,5 +29,48 @@ export const laws: LawItem[] = [
     description:
       "del 24 de Agosto de 2020 del Ministerio de Tecnologías de la información y las comunicaciones – “Por la cual se definen los estándares y directrices para publicar la información señalada en la Ley 1712 del 2014 y se definen los requisitos materia de acceso a la información pública, accesibilidad web, seguridad digital, y datos abiertos”",
     downloadUrl: "/docs/ley-1474-2011.pdf",
+  },
+];
+
+export const news: NewsItem[] = [
+  {
+    id: 1,
+    date: "23/11/2025",
+    category: "Categoría",
+    title: "Ejemplo título de noticia",
+    href: "/news/1",
+    image: noticiaExample,
+  },
+  {
+    id: 2,
+    category: "Categoría",
+    title: "Ejemplo título de noticia",
+    date: "23/11/2025",
+    href: "/news/1",
+    image: noticiaExample,
+  },
+  {
+    id: 3,
+    category: "Categoría",
+    title: "Ejemplo título de noticia",
+    date: "23/11/2025",
+    href: "/news/1",
+    image: noticiaExample,
+  },
+  {
+    id: 4,
+    category: "Categoría",
+    title: "Otra noticia importante",
+    date: "24/11/2025",
+    href: "/news/1",
+    image: noticiaExample,
+  },
+  {
+    id: 5,
+    category: "Categoría",
+    title: "Un quinto ejemplo",
+    date: "25/11/2025",
+    href: "/news/1",
+    image: noticiaExample,
   },
 ];

@@ -21,7 +21,7 @@ export default function AboutUs() {
       <HeroSimple title="¿Quiénes somos?" backgroundImage={hero_simple} />
 
       <Section>
-        <Container className="flex flex-col gap-15">
+        <Container className="mt-20 flex flex-col gap-15">
           <div className="flex justify-center w-full">
             <Image
               src={pro_desarrollo_logo}
