@@ -6,7 +6,7 @@ export const ContainerComponent: FC<ContainerProps> = ({
   className = "",
 }) => {
   return (
-    <div className={`max-w-[1500px] mx-auto w-full px-10 md:px-0 ${className}`}>
+    <div className={`max-w-[1500px] mx-auto w-full px-10 ${className}`}>
       {children}
     </div>
   );

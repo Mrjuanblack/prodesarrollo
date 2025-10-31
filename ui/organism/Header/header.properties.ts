@@ -1,4 +1,4 @@
-import { Instagram, FacebookIcon, LucideYoutube } from "lucide-react";
+import { Instagram, FacebookIcon, LucideYoutube, Twitter } from "lucide-react";
 
 interface SubMenuItem {
   label: string;
@@ -63,6 +63,7 @@ export interface SocialItem {
 }
 
 export const socialItems: SocialItem[] = [
+  { icon: Twitter, label: "Twitter", href: "#" },
   { icon: Instagram, label: "Instagram", href: "#" },
   { icon: FacebookIcon, label: "Facebook", href: "#" },
   { icon: LucideYoutube, label: "YouTube", href: "#" },

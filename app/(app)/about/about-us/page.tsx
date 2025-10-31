@@ -1,19 +1,19 @@
 "use client";
 
-import Image from "next/image";
-import { HeroSimple, SectionHeader } from "@/ui/organism";
-import hero_simple from "@/public/hero-simple.svg";
-import { Container, Section } from "@/ui/molecules";
 import {
-  BackgroundSection,
   InfoCard,
   MissionCardCard,
   TransparencyCard,
+  BackgroundSection,
 } from "@/ui/atoms";
-import pro_desarrollo_logo from "@/public/pro-desarrollo-logo.svg";
-import { CallToActionSection } from "@/ui/organism/CallToActionSection/CallToActionSection";
-import { AboutSection } from "../../home/components/about-section.component";
+import Image from "next/image";
+import hero_simple from "@/public/hero-simple.svg";
+import { Container, Section } from "@/ui/molecules";
+import { HeroSimple, SectionHeader } from "@/ui/organism";
 import { infos, transparencies } from "./page.properties";
+import pro_desarrollo_logo from "@/public/pro-desarrollo-logo.svg";
+import { AboutSection } from "../../home/components/about-section.component";
+import { CallToActionSection } from "@/ui/organism/CallToActionSection/CallToActionSection";
 
 export default function AboutUs() {
   return (

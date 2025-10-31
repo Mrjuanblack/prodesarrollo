@@ -10,9 +10,9 @@ import procuraduria from "@/public/procuraduria-logo.svg";
 import noticiaExample from "@/public/noticia-example.svg";
 import proyectoExample from "@/public/proyecto-example.svg";
 import alcaldia from "@/public/alcaldia-san-alberto-logo.svg";
+import { BookOpen, Globe, HeartHandshake, User } from "lucide-react";
 import { NewsItem } from "@/ui/atoms/Cards/NewsCard/news-card.properties";
 import { ProjectItem } from "@/ui/atoms/Cards/ProjectCard/project-card.properties";
-import { BookOpen, Globe, HeartHandshake, User } from "lucide-react";
 
 export interface EntityObserved {
   alt: string;

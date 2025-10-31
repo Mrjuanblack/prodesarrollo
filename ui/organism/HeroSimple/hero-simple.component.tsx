@@ -9,7 +9,7 @@ export const HeroSimpleComponent: FC<HeroTitleProps> = ({
 }) => {
   return (
     <Section fadeIn={true}>
-      <Container className="flex items-center justify-start relative h-[220px] md:h-[250px] overflow-hidden">
+      <div className="w-full flex items-center justify-start relative h-[220px] md:h-[250px] overflow-hidden">
         <Image
           fill
           priority
@@ -18,14 +18,17 @@ export const HeroSimpleComponent: FC<HeroTitleProps> = ({
           src={backgroundImage}
           className="object-cover object-center scale-110"
         />
+
         <div className="absolute inset-0 bg-black/30" />
 
         <div className="relative z-10 bg-primary/80 px-6 py-10 w-[721px] rounded-tr-4xl">
-          <h1 className="text-secondary text-center text-xl md:text-2xl font-semibold italic">
-            {title}
-          </h1>
+          <Container>
+            <h1 className="text-secondary text-center text-xl md:text-2xl font-semibold italic">
+              {title}
+            </h1>
+          </Container>
         </div>
-      </Container>
+      </div>
     </Section>
   );
 };

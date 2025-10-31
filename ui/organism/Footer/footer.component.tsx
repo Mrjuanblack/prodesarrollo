@@ -8,7 +8,7 @@ import pro_desarrollo_logo from "@/public/pro-desarrollo-logo-white.svg";
 export const FooterComponent = () => {
   return (
     <footer className="bg-primary h-[400px] relative overflow-hidden rounded-tr-full flex items-center -mt-[400px]">
-      <Container className="relative z-10 flex flex-col md:flex-row md:items-center gap-70">
+      <Container className="relative z-10 flex flex-col md:flex-row md:items-center gap-40">
         <div className="flex flex-col gap-3">
           <Image
             alt="ProDesarrollo"
@@ -56,6 +56,21 @@ export const FooterComponent = () => {
                 <Icon size={25} />
               </a>
             ))}
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-2 text-white">
+          <h3 className="text-[18px] font-semibold text-secondary-200">
+            Navegación
+          </h3>
+
+          <div className="flex flex-col items-start gap-2 mt-1 font-semibold text-[18px]">
+            <a href="#">Nosotros</a>
+            <a href="#">Transparencia</a>
+            <a href="#">Convocatorias</a>
+            <a href="#">Participa</a>
+            <a href="#">Noticias</a>
+            <a href="#">PQRS</a>
           </div>
         </div>
       </Container>
