@@ -1,11 +1,8 @@
-import { useState } from "react";
 import { Settings } from "lucide-react";
 import { SectionHeader } from "@/ui/organism";
 import { Button, ServiceCard } from "@/ui/atoms";
 import { Carousel, Container, Section } from "@/ui/molecules";
 import { ServiceItem } from "@/ui/atoms/Cards/ServiceCard/service-card.properties";
-
-const SLIDES_PER_VIEW = 3;
 
 const services: ServiceItem[] = [
   {
@@ -69,25 +66,8 @@ const services: ServiceItem[] = [
 ];
 
 export const AreasImpact = () => {
-  const [startIndex, setStartIndex] = useState(0);
-  const totalItems = services.length;
-  const totalSlides = Math.ceil(totalItems / SLIDES_PER_VIEW);
-
-  const handleNext = () => {
-    setStartIndex((prev) => (prev + 1) % totalSlides);
-  };
-
-  const handlePrev = () => {
-    setStartIndex((prev) => (prev - 1 + totalSlides) % totalSlides);
-  };
-
-  const currentAreas = services.slice(
-    startIndex * SLIDES_PER_VIEW,
-    (startIndex + 1) * SLIDES_PER_VIEW
-  );
-
   return (
-    <Section className="py-20 bg-white" fadeIn={true}>
+    <Section fadeIn={true}>
       <Container className="flex flex-col items-center w-full">
         <SectionHeader
           icon={Settings}
@@ -95,13 +75,8 @@ export const AreasImpact = () => {
           description="Celebramos y suscribimos convenios y contratos interadministrativos, civiles y comerciales con entidades públicas y privadas, orientados al fortalecimiento de la gestión pública y a la promoción eficiente del desarrollo territorial."
         />
 
-        <Carousel
-          currentIndex={startIndex}
-          totalSlides={totalSlides}
-          onPrev={handlePrev}
-          onNext={handleNext}
-        >
-          {currentAreas.map((services) => (
+        <Carousel>
+          {services.map((services) => (
             <ServiceCard key={services.id} item={services} />
           ))}
         </Carousel>

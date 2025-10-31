@@ -11,7 +11,7 @@ export default function Pqrs() {
     <>
       <HeroSimple title="PQRS" backgroundImage={hero_simple} />
 
-      <Section className="py-20">
+      <Section fadeIn={true}>
         <Container>
           {laws.map(({ title, description, downloadUrl, id }) => (
             <div

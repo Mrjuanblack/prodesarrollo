@@ -20,8 +20,8 @@ export default function AboutUs() {
     <>
       <HeroSimple title="¿Quiénes somos?" backgroundImage={hero_simple} />
 
-      <Section>
-        <Container className="mt-20 flex flex-col gap-15">
+      <Section fadeIn={true}>
+        <Container className="flex flex-col gap-15">
           <div className="flex justify-center w-full">
             <Image
               src={pro_desarrollo_logo}
@@ -75,8 +75,8 @@ export default function AboutUs() {
         </Container>
       </Section>
 
-      <Section>
-        <Container className="mt-20 flex gap-15">
+      <Section fadeIn={true}>
+        <Container className="flex gap-15">
           <MissionCardCard
             title="Misión"
             isRoundedLeft={true}
@@ -89,7 +89,7 @@ export default function AboutUs() {
         </Container>
       </Section>
 
-      <Section className="mt-40">
+      <Section fadeIn={true}>
         <Container className="gap-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
           {infos.map((info) => (
             <InfoCard key={info.id} item={info} />
@@ -97,8 +97,8 @@ export default function AboutUs() {
         </Container>
       </Section>
 
-      <Section>
-        <Container className="my-20">
+      <Section fadeIn={true}>
+        <Container>
           <SectionHeader
             title="Valores Institucionales"
             description="En PRO. DESARROLLO orientamos nuestra gestión bajo principios éticos y técnicos que fortalecen la confianza pública, la cooperación y el desarrollo territorial. Nuestros valores guían cada acción, decisión y alianza institucional, promoviendo una cultura basada en la transparencia, la eficiencia y el compromiso con el bienestar colectivo."

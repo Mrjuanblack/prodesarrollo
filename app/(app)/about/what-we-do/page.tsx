@@ -1,42 +1,22 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
 import { Settings } from "lucide-react";
 import { infos } from "./page.properties";
 import hero_simple from "@/public/hero-simple.svg";
 import crane_img from "@/public/crane-icono.svg";
-import { BackgroundSection, InfoCard, Title } from "@/ui/atoms";
 import { HeroSimple, SectionHeader } from "@/ui/organism";
 import { Carousel, Container, Section } from "@/ui/molecules";
+import { BackgroundSection, InfoCard, Title } from "@/ui/atoms";
 import { CallToActionSection } from "@/ui/organism/CallToActionSection/CallToActionSection";
 
-const SLIDES_PER_VIEW = 3;
-
 export default function WhatWeDo() {
-  const [startIndex, setStartIndex] = useState(0);
-  const totalItems = infos.length;
-  const totalSlides = Math.ceil(totalItems / SLIDES_PER_VIEW);
-
-  const handleNext = () => {
-    setStartIndex((prev) => (prev + 1) % totalSlides);
-  };
-
-  const handlePrev = () => {
-    setStartIndex((prev) => (prev - 1 + totalSlides) % totalSlides);
-  };
-
-  const currentInfos = infos.slice(
-    startIndex * SLIDES_PER_VIEW,
-    (startIndex + 1) * SLIDES_PER_VIEW
-  );
-
   return (
     <>
       <HeroSimple title="¿Qué hacemos?" backgroundImage={hero_simple} />
 
-      <Section>
-        <Container className="relative mt-20 h-[500px] flex flex-col md:flex-row items-center justify-center gap-15 bg-white">
+      <Section fadeIn={true}>
+        <Container className="relative h-[500px] flex flex-col md:flex-row items-center justify-center gap-15">
           <div className="absolute top-0 left-0 z-0 shrink-0 w-[500px] h-[500px] flex justify-center rounded-full bg-[#F5F8FF]"></div>
 
           <div className="shrink-0 z-1 ml-15 w-[266px] h-[266px]">
@@ -68,8 +48,8 @@ export default function WhatWeDo() {
         </Container>
       </Section>
 
-      <Section>
-        <Container className="my-20">
+      <Section fadeIn={true}>
+        <Container>
           <SectionHeader
             icon={Settings}
             title="Algunas de nuestras actividades"
@@ -78,13 +58,8 @@ export default function WhatWeDo() {
 
           <div className="mt-30"></div>
 
-          <Carousel
-            currentIndex={startIndex}
-            totalSlides={totalSlides}
-            onPrev={handlePrev}
-            onNext={handleNext}
-          >
-            {currentInfos.map((service) => (
+          <Carousel>
+            {infos.map((service) => (
               <InfoCard key={service.id} item={service} />
             ))}
           </Carousel>

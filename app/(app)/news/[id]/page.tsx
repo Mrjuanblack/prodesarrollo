@@ -1,39 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import Image from "next/image";
 import { imgs } from "./page.properties";
 import { HeroSimple } from "@/ui/organism";
 import hero_simple from "@/public/hero-simple.svg";
 import { BackgroundSection, StatusBadge, Text } from "@/ui/atoms";
 import { Carousel, Container, IconTitle, Section } from "@/ui/molecules";
 import { CallToActionSection } from "@/ui/organism/CallToActionSection/CallToActionSection";
-import Image from "next/image";
-
-const SLIDES_PER_VIEW = 3;
 
 export default function New() {
-  const [startIndex, setStartIndex] = useState(0);
-  const totalItems = imgs.length;
-  const totalSlides = Math.ceil(totalItems / SLIDES_PER_VIEW);
-
-  const handleNext = () => {
-    setStartIndex((prev) => (prev + 1) % totalSlides);
-  };
-
-  const handlePrev = () => {
-    setStartIndex((prev) => (prev - 1 + totalSlides) % totalSlides);
-  };
-
-  const currentImgs = imgs.slice(
-    startIndex * SLIDES_PER_VIEW,
-    (startIndex + 1) * SLIDES_PER_VIEW
-  );
-
   return (
     <>
       <HeroSimple title="Noticias" backgroundImage={hero_simple} />
 
-      <Section className="py-20">
+      <Section fadeIn={true}>
         <Container className="flex flex-col items-center space-y-6">
           <IconTitle
             highlightFirstLetter={false}
@@ -96,13 +76,8 @@ export default function New() {
               className="mt-20 mb-10"
             />
 
-            <Carousel
-              currentIndex={startIndex}
-              totalSlides={totalSlides}
-              onPrev={handlePrev}
-              onNext={handleNext}
-            >
-              {currentImgs.map((img) => (
+            <Carousel>
+              {imgs.map((img) => (
                 <div
                   key={img.id}
                   className="relative h-[281px] w-[421px] overflow-hidden"
