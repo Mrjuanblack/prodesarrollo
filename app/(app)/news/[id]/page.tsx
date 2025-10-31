@@ -21,7 +21,7 @@ export default function New() {
           />
 
           <div className="self-start space-y-5">
-            <StatusBadge category="Social" />
+            <StatusBadge category="Categoría: Social" />
 
             <div>
               <Text
