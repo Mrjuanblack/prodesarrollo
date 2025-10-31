@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@heroui/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -9,37 +9,46 @@ const PaginationDots: React.FC<PaginationProps> = ({
   totalSlides,
   isInside,
 }) => {
-  const dots = Array.from({ length: totalSlides }, (_, index) => (
-    <div
-      key={index}
-      className={`w-[17px] h-[17px] rounded-full cursor-pointer transition-all duration-300 ${
-        index === currentIndex
-          ? "bg-secondary scale-110"
-          : "bg-gray-300 opacity-70"
-      } ${isInside ? "bg-opacity-80" : ""}`}
-    />
-  ));
-
   return (
     <div
       className={`flex justify-center gap-2 ${
         isInside ? "absolute bottom-4 w-full z-10" : "mt-8"
       }`}
     >
-      {dots}
+      {Array.from({ length: totalSlides }).map((_, index) => (
+        <div
+          key={index}
+          className={`w-[17px] h-[17px] rounded-full cursor-pointer transition-all duration-300 ${
+            index === currentIndex
+              ? "bg-secondary scale-110"
+              : "bg-gray-300 opacity-70"
+          } ${isInside ? "bg-opacity-80" : ""}`}
+        />
+      ))}
     </div>
   );
 };
 
 export const CarouselComponent: React.FC<CarouselProps> = ({
   children,
-  totalSlides,
-  currentIndex,
   slidesPerView = 3,
   paginationPosition = "bottom",
-  onPrev,
-  onNext,
 }) => {
+  const [startIndex, setStartIndex] = useState(0);
+
+  const totalItems = children.length;
+  const totalSlides = Math.ceil(totalItems / slidesPerView);
+
+  const handleNext = () => {
+    setStartIndex((prev) => (prev + 1) % totalSlides);
+  };
+
+  const handlePrev = () => {
+    setStartIndex((prev) => (prev - 1 + totalSlides) % totalSlides);
+  };
+
+  const isInside = paginationPosition === "inside";
+
   const colClassMap: Record<number, string> = {
     1: "lg:grid-cols-1",
     2: "lg:grid-cols-2",
@@ -49,13 +58,16 @@ export const CarouselComponent: React.FC<CarouselProps> = ({
     6: "lg:grid-cols-6",
   };
 
-  const isInside = paginationPosition === "inside";
+  const lgColsClass =
+    colClassMap[Math.min(Math.max(slidesPerView, 1), 6)] || "lg:grid-cols-3";
+
+  const currentContents = children.slice(
+    startIndex * slidesPerView,
+    (startIndex + 1) * slidesPerView
+  );
 
   const buttonClass =
     "h-[77px] w-[77px] flex absolute top-1/2 -translate-y-1/2 z-30 backdrop-blur-sm shadow-md rounded-full transition-all duration-300";
-
-  const lgColsClass =
-    colClassMap[Math.min(Math.max(slidesPerView, 1), 6)] || "lg:grid-cols-3";
 
   return (
     <section className="relative w-full">
@@ -64,7 +76,7 @@ export const CarouselComponent: React.FC<CarouselProps> = ({
           isIconOnly
           radius="full"
           variant="shadow"
-          onPress={onPrev}
+          onPress={handlePrev}
           aria-label="Anterior"
           className={`${buttonClass} left-0 -ml-9 bg-white/70 border border-gray-200 hover:bg-white`}
         >
@@ -74,7 +86,7 @@ export const CarouselComponent: React.FC<CarouselProps> = ({
         <div className="relative w-full z-10">
           <AnimatePresence mode="wait">
             <motion.div
-              key={currentIndex}
+              key={startIndex}
               exit={{ opacity: 0, x: -60 }}
               animate={{ opacity: 1, x: 0 }}
               initial={{ opacity: 0, x: 60 }}
@@ -84,7 +96,7 @@ export const CarouselComponent: React.FC<CarouselProps> = ({
               }}
               className={`grid grid-cols-1 ${lgColsClass} gap-8 w-full`}
             >
-              {children}
+              {currentContents}
             </motion.div>
           </AnimatePresence>
         </div>
@@ -93,7 +105,7 @@ export const CarouselComponent: React.FC<CarouselProps> = ({
           isIconOnly
           radius="full"
           variant="shadow"
-          onPress={onNext}
+          onPress={handleNext}
           aria-label="Siguiente"
           className={`${buttonClass} right-0 -mr-9 bg-secondary/80 border border-secondary-400 hover:bg-secondary-300`}
         >
@@ -102,7 +114,7 @@ export const CarouselComponent: React.FC<CarouselProps> = ({
 
         {isInside && (
           <PaginationDots
-            currentIndex={currentIndex}
+            currentIndex={startIndex}
             totalSlides={totalSlides}
             isInside={true}
           />
@@ -111,7 +123,7 @@ export const CarouselComponent: React.FC<CarouselProps> = ({
 
       {!isInside && (
         <PaginationDots
-          currentIndex={currentIndex}
+          currentIndex={startIndex}
           totalSlides={totalSlides}
           isInside={false}
         />

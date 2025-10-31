@@ -14,7 +14,7 @@ export default function News() {
     <>
       <HeroSimple title="Noticias" backgroundImage={hero_simple} />
 
-      <Section className="py-20">
+      <Section fadeIn={true}>
         <Container>
           <div className="flex justify-end gap-5">
             <OrderFilter />

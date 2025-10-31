@@ -17,7 +17,7 @@ export default function Transparency() {
         backgroundImage={hero_simple}
       />
 
-      <Section className="py-20">
+      <Section fadeIn={true}>
         <Container className="space-y-10">
           {laws.map(({ title, description, downloadUrl, id }) => (
             <div
@@ -41,7 +41,7 @@ export default function Transparency() {
         </Container>
       </Section>
 
-      <Section className="w-full pb-20">
+      <Section fadeIn={true}>
         <Container>
           <SectionHeader icon={Monitor} title="Directrices accesibilidad web" />
 

@@ -8,7 +8,7 @@ export const HeroSimpleComponent: FC<HeroTitleProps> = ({
   backgroundImage,
 }) => {
   return (
-    <Section fadeIn={true}>
+    <Section hasPadding={false} fadeIn={true}>
       <div className="w-full flex items-center justify-start relative h-[220px] md:h-[250px] overflow-hidden">
         <Image
           fill

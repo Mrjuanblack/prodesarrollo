@@ -14,7 +14,7 @@ export default function Calls() {
         backgroundImage={hero_simple}
       />
 
-      <Section className="py-20">
+      <Section fadeIn={true}>
         <Container>
           {laws.map(({ title, description, downloadUrl, id }) => (
             <div

@@ -13,7 +13,7 @@ export default function StructureTeam() {
         backgroundImage={hero_simple}
       />
 
-      <Section className="py-15">
+      <Section fadeIn={true}>
         <Container>
           <IconTitle title="Directivos" />
           <div className="mt-7 grid grid-cols-1 md:grid-cols-2 gap-7">

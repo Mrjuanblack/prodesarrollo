@@ -23,7 +23,7 @@ export const AboutSection: FC<AboutSectionProps> = ({
   classNameVideo = "w-[475px] h-[291px]",
 }) => {
   return (
-    <Section fadeIn={true} className="mt-15">
+    <Section fadeIn={true}>
       <Container
         className={`flex flex-col md:flex-row items-center justify-between ${
           reverse ? "md:flex-row-reverse" : ""
