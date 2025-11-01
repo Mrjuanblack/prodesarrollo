@@ -32,6 +32,7 @@ const PaginationDots: React.FC<PaginationProps> = ({
 export const CarouselComponent: React.FC<CarouselProps> = ({
   children,
   slidesPerView = 3,
+  hasDots = true,
   paginationPosition = "bottom",
 }) => {
   const [startIndex, setStartIndex] = useState(0);
@@ -112,7 +113,7 @@ export const CarouselComponent: React.FC<CarouselProps> = ({
           <ChevronRight size={35} className="text-primary" />
         </Button>
 
-        {isInside && (
+        {isInside && hasDots && (
           <PaginationDots
             currentIndex={startIndex}
             totalSlides={totalSlides}
@@ -121,7 +122,7 @@ export const CarouselComponent: React.FC<CarouselProps> = ({
         )}
       </div>
 
-      {!isInside && (
+      {!isInside && hasDots && (
         <PaginationDots
           currentIndex={startIndex}
           totalSlides={totalSlides}

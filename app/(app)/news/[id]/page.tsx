@@ -4,7 +4,7 @@ import Image from "next/image";
 import { imgs } from "./page.properties";
 import { HeroSimple } from "@/ui/organism";
 import hero_simple from "@/public/hero-simple.svg";
-import { BackgroundSection, StatusBadge, Text } from "@/ui/atoms";
+import { BackgroundSection, Chip, Text } from "@/ui/atoms";
 import { Carousel, Container, IconTitle, Section } from "@/ui/molecules";
 import { CallToActionSection } from "@/ui/organism/CallToActionSection/CallToActionSection";
 
@@ -21,7 +21,7 @@ export default function New() {
           />
 
           <div className="self-start space-y-5">
-            <StatusBadge category="Categoría: Social" />
+            <Chip category="Categoría: Social" />
 
             <div>
               <Text

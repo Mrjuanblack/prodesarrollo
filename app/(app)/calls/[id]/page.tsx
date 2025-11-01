@@ -3,13 +3,7 @@
 import Image from "next/image";
 import { actas, imgs } from "./page.properties";
 import { HeroSimple } from "@/ui/organism";
-import {
-  BackgroundSection,
-  Button,
-  StatusBadge,
-  Text,
-  Title,
-} from "@/ui/atoms";
+import { BackgroundSection, Button, Chip, Text, Title } from "@/ui/atoms";
 import hero_simple from "@/public/hero-simple.svg";
 import { Carousel, Container, IconTitle, Section } from "@/ui/molecules";
 import { CallToActionSection } from "@/ui/organism/CallToActionSection/CallToActionSection";
@@ -31,7 +25,7 @@ const Call = () => {
           />
 
           <div className="self-start space-y-5">
-            <StatusBadge category="Estado: En proceso" />
+            <Chip />
 
             <div>
               <Title
