@@ -1,7 +1,7 @@
 import React from "react";
+import { Text } from "@/ui/atoms";
 import { ShieldAlert } from "lucide-react";
 import { Container, Section } from "@/ui/molecules";
-import { Text } from "@/ui/atoms";
 
 interface InfoCardProps {
   message: string;

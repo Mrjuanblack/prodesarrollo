@@ -1,7 +1,7 @@
 import React from "react";
 import { Cog } from "lucide-react";
-import { InfoCardProps } from "./info-card.properties";
 import { Text, Title } from "../..";
+import { InfoCardProps } from "./info-card.properties";
 
 export const InfoCardComponent: React.FC<InfoCardProps> = ({ item }) => {
   const { title, description } = item;

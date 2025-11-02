@@ -1,7 +1,7 @@
 "use client";
 
-import { HeroSimple } from "@/ui/organism";
 import { news } from "./page.properties";
+import { HeroSimple } from "@/ui/organism";
 import hero_simple from "@/public/hero-simple.svg";
 import { Container, Section } from "@/ui/molecules";
 import { BackgroundSection, NewsCard } from "@/ui/atoms";

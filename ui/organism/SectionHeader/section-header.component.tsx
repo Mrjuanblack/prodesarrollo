@@ -1,5 +1,3 @@
-"use client";
-
 import { FC } from "react";
 import { Text } from "@/ui/atoms";
 import { IconTitle } from "@/ui/molecules";

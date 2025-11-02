@@ -9,14 +9,15 @@ import {
   ArrowDownToLine,
 } from "lucide-react";
 import { useState } from "react";
-import { profileTypes, projects } from "./page.properties";
 import { InfoCard } from "./components/info-card";
 import hero_simple from "@/public/hero-simple.svg";
 import { HelpSection, HeroSimple } from "@/ui/organism";
+import { profileTypes, projects } from "./page.properties";
 import { Container, IconTitle, Section } from "@/ui/molecules";
-import { BackgroundSection, Button, StepTab, Text } from "@/ui/atoms";
 import { ProfileTypeCard } from "./components/ProfileTypeCard";
 import { BranchInfoCard } from "./components/branch-info-card";
+import { BackgroundSection, Button, StepTab, Text } from "@/ui/atoms";
+import FormContactSection from "./components/form-contact-section.component";
 
 export default function Participate() {
   const [active, setActive] = useState("step-1");
@@ -36,10 +37,12 @@ export default function Participate() {
       <HeroSimple title="Banco de oferentes" backgroundImage={hero_simple} />
 
       <Section fadeIn={true}>
-        <Container className="flex justify-center flex-col space-y-10">
-          <IconTitle title="Participa en PRO. DESARROLLO" />
+        <Container className="flex flex-col space-y-10">
+          <div className="flex justify-center">
+            <IconTitle title="Participa en PRO. DESARROLLO" />
+          </div>
 
-          <div>
+          <div className="w-full">
             <StepTab
               tabs={tabs}
               defaultActive="step-1"
@@ -65,7 +68,7 @@ export default function Participate() {
             )}
 
             {active === "step-2" && (
-              <div className="space-y-10">
+              <div className="w-full space-y-10">
                 <div>
                   <IconTitle
                     Icon={Link}
@@ -117,7 +120,12 @@ export default function Participate() {
               </div>
             )}
 
-            {active === "step-3" && <BranchInfoCard />}
+            {active === "step-3" && (
+              <div className="w-full flex gap-10">
+                <FormContactSection />
+                <BranchInfoCard />
+              </div>
+            )}
           </div>
         </Container>
       </Section>

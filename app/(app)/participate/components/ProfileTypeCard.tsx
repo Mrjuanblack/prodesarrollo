@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { ProfileTypeItem } from "../page.properties";
 import { Title } from "@/ui/atoms";
+import { ProfileTypeItem } from "../page.properties";
 
 interface ProfileTypeCardProps {
   active?: boolean;

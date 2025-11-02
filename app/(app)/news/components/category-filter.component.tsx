@@ -1,7 +1,7 @@
-import { IconTitle } from "@/ui/molecules";
-import { Select, SelectItem } from "@heroui/react";
-import { SlidersHorizontal } from "lucide-react";
 import { useState } from "react";
+import { IconTitle } from "@/ui/molecules";
+import { SlidersHorizontal } from "lucide-react";
+import { Select, SelectItem } from "@heroui/react";
 
 export const CategoryFilter = () => {
   const [category, setCategory] = useState("");

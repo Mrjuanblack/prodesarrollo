@@ -55,9 +55,9 @@ export const AboutSection: FC<AboutSectionProps> = ({
             ))}
           </div>
 
-          {videoSrc.map((src, index) => (
+          {videoSrc.map((src) => (
             <motion.div
-              key={index}
+              key={src}
               whileHover={{ scale: 1.02 }}
               className={`relative bg-white rounded-2xl shadow-md overflow-hidden aspect-video z-10 ${classNameVideo}`}
             >

@@ -1,11 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import { Button } from "../..";
 import { useRouter } from "next/navigation";
 import { Card, CardBody } from "@heroui/react";
 import { NewsCardProps } from "./news-card.properties";
 import noticiaExample from "@/public/noticia-example.svg";
-import { Button } from "../..";
 
 export const NewsCardComponent: React.FC<NewsCardProps> = ({ item }) => {
   const router = useRouter();

@@ -5,11 +5,11 @@ import { FileText } from "lucide-react";
 import { Divider } from "@heroui/react";
 import { HeroSimple } from "@/ui/organism";
 import hero_simple from "@/public/hero-simple.svg";
-import { BackgroundSection, CallCard, SearchBar } from "@/ui/atoms";
 import { btns, calls, options } from "./page.properties";
 import { FilterByState } from "./components/filter-by-state";
 import { Carousel, Container, Section } from "@/ui/molecules";
 import { ProjectTypeCard } from "./components/project-type-card";
+import { BackgroundSection, CallCard, SearchBar } from "@/ui/atoms";
 import { CallToActionSection } from "@/ui/organism/CallToActionSection/CallToActionSection";
 
 export default function Calls() {

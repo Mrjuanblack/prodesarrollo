@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { Container, Section } from "@/ui/molecules";
 import { Button, Text, Title } from "@/ui/atoms";
+import { Container, Section } from "@/ui/molecules";
 import manos_unidas from "@/public/haz-parte-cambio.svg";
 
 export const CallToActionSection = () => {

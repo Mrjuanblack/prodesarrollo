@@ -1,6 +1,6 @@
+import { Text, Title } from "../..";
 import { Search } from "lucide-react";
 import { TransparencyCardProps } from "./transparency-card.properties";
-import { Text, Title } from "../..";
 
 export const TransparencyCardComponent: React.FC<TransparencyCardProps> = ({
   item,
