@@ -1,16 +1,19 @@
 import React from "react";
-import { MessageCircleQuestion } from "lucide-react";
+import Image from "next/image";
 import { Container, Section } from "@/ui/molecules";
+import hero_img from "@/public/preguntas-icono.svg";
 
 export const HelpSectionComponent: React.FC = () => {
   return (
     <Section fadeIn={true} className="bg-default-100 md:bg-default-100">
       <Container className="flex flex-col md:flex-row items-center justify-between">
         <div className="flex items-center gap-4">
-          <div className="bg-[#E8EFFC] rounded-full p-3 flex items-center justify-center">
-            <MessageCircleQuestion
-              size={55}
-              className="text-primary opacity-90"
+          <div className="relative h-[226px] w-[226px] rounded-full p-3 flex items-center justify-center overflow-hidden">
+            <Image
+              fill
+              src={hero_img}
+              alt="logo de pregunta"
+              className="object-cover"
             />
           </div>
 
