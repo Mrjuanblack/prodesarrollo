@@ -1,7 +1,7 @@
 import React from "react";
 import { Text } from "@/ui/atoms";
-import { IconTitle } from "@/ui/molecules";
-import { FileText, MapPin } from "lucide-react";
+import { Sedes } from "@/ui/organism";
+import { FileText } from "lucide-react";
 
 export const BranchInfoCard: React.FC = () => {
   return (
@@ -15,32 +15,7 @@ export const BranchInfoCard: React.FC = () => {
         text="También puedes enviar la documentación física a cualquiera de nuestras sedes."
       />
 
-      <div className="flex items-center justify-center gap-2 mb-4">
-        <IconTitle
-          title="Sedes"
-          Icon={MapPin}
-          classNameTitle="lg:text-[20px]"
-        />
-      </div>
-
-      <div className="space-y-4 text-[20px]">
-        <div>
-          <Text text="Bucaramanga" className="text-secondary font-semibold" />
-
-          <Text
-            className="text-primary"
-            text="Ejemplo dirección sede Bucaramanga Santander"
-          />
-        </div>
-
-        <div>
-          <Text text="Bogotá" className="text-secondary font-semibold" />
-          <Text
-            className="text-primary"
-            text="Ejemplo dirección sede Bogotá Cundinamarca"
-          />
-        </div>
-      </div>
+      <Sedes />
     </div>
   );
 };
