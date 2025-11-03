@@ -138,7 +138,7 @@ export const HeaderHomeComponent = () => {
             className="md:hidden text-primary"
           />
 
-          <NavbarBrand>
+          <NavbarBrand className="w-[156px]">
             <Image
               alt="ProDesarrollo"
               src={pro_desarrollo_logo}

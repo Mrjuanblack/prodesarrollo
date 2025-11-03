@@ -1,13 +1,16 @@
 "use client";
 
 import { FC } from "react";
+import Image from "next/image";
 import { Sedes } from "@/ui/organism";
-import { Divider } from "@heroui/react";
 import { MessageSquare } from "lucide-react";
 import { ContactCardProps } from "./page.properties";
-import { BackgroundSection, Text } from "@/ui/atoms";
+import { Divider, Input, Textarea } from "@heroui/react";
 import { Container, IconTitle, Section } from "@/ui/molecules";
+import message_icon from "@/public/message-icono.svg";
+import message_icon_two from "@/public/message-icono-2.svg";
 import { socialItems } from "@/ui/organism/Header/header.properties";
+import { BackgroundSection, Button, FormCard, Text, Title } from "@/ui/atoms";
 
 const ContactCard: FC<ContactCardProps> = ({ children }) => {
   return (
@@ -21,46 +24,122 @@ const Contacts = () => {
   return (
     <>
       <Section fadeIn={true}>
-        <Container>
-          <div className="w-full"></div>
-          <div className="w-full max-w-[400px] space-y-10">
-            <ContactCard>
-              <IconTitle
-                Icon={MessageSquare}
-                title="Canales de contacto"
-                classNameTitle="lg:text-[20px]"
-              />
+        <Container className="flex flex-col">
+          <div className="flex flex-col justify-center items-center gap-5">
+            <div className="flex items-center gap-5">
+              <div className="relative w-[216px] h-40">
+                <div className="absolute w-36 h-36 top-0 left-0">
+                  <Image
+                    fill
+                    src={message_icon_two}
+                    alt="message icon"
+                    className="object-cover w-full h-full transition-transform duration-300 scale-105 hover:scale-110"
+                  />
+                </div>
 
-              <Text
-                text="Redes sociales"
-                className="text-secondary font-semibold"
-              />
-
-              <div className="flex gap-7">
-                {socialItems.map(({ icon: Icon, label, href }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    aria-label={label}
-                    className="flex justify-center items-center rounded-full h-[50px] w-[50px] bg-primary-50 hover:bg-primary-200"
-                  >
-                    <Icon className="h-7 w-7 text-primary" strokeWidth="2" />
-                  </a>
-                ))}
+                <div className="absolute w-36 h-36 bottom-0 right-0">
+                  <Image
+                    fill
+                    src={message_icon}
+                    alt="message icon"
+                    className="object-cover w-full h-full transition-transform duration-300 scale-105 hover:scale-110"
+                  />
+                </div>
               </div>
-              <Divider className="w-full bg-secondary" />
 
-              <Text
-                text="Correo electrónico"
-                className="text-secondary font-semibold underline"
-              />
+              <div>
+                <Title
+                  text="¿Necesitas ayuda?"
+                  className="md:text-[25px]"
+                  highlightFirstLetter={false}
+                />
 
-              <Text className="text-primary" text="ejemplo@correo.com" />
-            </ContactCard>
+                <Title
+                  className="md:text-[25px]"
+                  highlightFirstLetter={false}
+                  text="¡Estamos para escucharte!"
+                />
+              </div>
+            </div>
 
-            <ContactCard>
-              <Sedes />
-            </ContactCard>
+            <Text
+              className="text-black lg:text-[20px]"
+              text="Horario de atención: Lunes a Viernes - 8:00 am - 4:00pm"
+            />
+          </div>
+
+          <div className="flex gap-10 mt-15">
+            <FormCard
+              title="Ingresa la siguiente información para  registrar tu solicitud"
+              form={
+                <>
+                  <Input label="Nombre completo" placeholder="" size="lg" />
+
+                  <Input label="Teléfono" placeholder="" size="lg" />
+
+                  <Input
+                    size="lg"
+                    label="Correo electrónico"
+                    placeholder="ejemplo@correo.com"
+                  />
+
+                  <Textarea
+                    size="lg"
+                    placeholder=""
+                    label="Descripción de la solicitud"
+                  />
+                </>
+              }
+              buttonAction={
+                <>
+                  <Button
+                    text="Enviar"
+                    variant="solid"
+                    className="bg-secondary w-fit hover:bg-secondary-400 font-bold transition-colors duration-200 shadow-md"
+                  />
+                </>
+              }
+            />
+
+            <div className="w-full max-w-[400px] space-y-10">
+              <ContactCard>
+                <IconTitle
+                  Icon={MessageSquare}
+                  title="Canales de contacto"
+                  classNameTitle="lg:text-[20px]"
+                />
+
+                <Text
+                  text="Redes sociales"
+                  className="text-secondary font-semibold"
+                />
+
+                <div className="flex gap-7">
+                  {socialItems.map(({ icon: Icon, label, href }) => (
+                    <a
+                      key={label}
+                      href={href}
+                      aria-label={label}
+                      className="flex justify-center items-center rounded-full h-[50px] w-[50px] bg-primary-50 hover:bg-primary-200"
+                    >
+                      <Icon className="h-7 w-7 text-primary" strokeWidth="2" />
+                    </a>
+                  ))}
+                </div>
+                <Divider className="w-full bg-secondary" />
+
+                <Text
+                  text="Correo electrónico"
+                  className="text-secondary font-semibold underline"
+                />
+
+                <Text className="text-primary" text="ejemplo@correo.com" />
+              </ContactCard>
+
+              <ContactCard>
+                <Sedes />
+              </ContactCard>
+            </div>
           </div>
         </Container>
       </Section>
