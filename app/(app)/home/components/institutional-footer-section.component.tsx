@@ -28,7 +28,7 @@ export const InstitutionalFooterSection = () => {
         <div>
           <iframe
             width="auto"
-            height="500px"
+            height="350px"
             title="Hora Legal Colombia"
             src="https://horalegal.inm.gov.co/widget.html"
             style={{

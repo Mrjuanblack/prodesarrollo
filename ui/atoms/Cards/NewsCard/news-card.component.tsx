@@ -55,12 +55,16 @@ export const NewsCardComponent: React.FC<NewsCardProps> = ({ item }) => {
                 image ? "self-start" : "self-center"
               } mb-6 rounded-full px-5 py-2 bg-primary shadow-md`}
             >
-              <p className="text-white text-[20px] font-semibold">{category}</p>
+              <p className="text-white text-[15px] lg:text-[20px] font-semibold">
+                {category}
+              </p>
             </div>
 
             <h3
               className={`text-white ${
-                image ? "text-[20px]" : "text-[25px] text-center"
+                image
+                  ? "text-[15px] lg:text-[20px]"
+                  : "text-[20px] lg:text-[25px] text-center"
               } font-extrabold mb-2 leading-snug`}
             >
               {title}
@@ -69,7 +73,9 @@ export const NewsCardComponent: React.FC<NewsCardProps> = ({ item }) => {
 
           <p
             className={`text-white/90 ${
-              image ? "text-[18px]" : "text-[20px] text-center"
+              image
+                ? "text-[25px] lg:text-[18px]"
+                : "text-[15px] lg:text-[20px] text-center"
             } font-light`}
           >
             {date}
@@ -84,7 +90,7 @@ export const NewsCardComponent: React.FC<NewsCardProps> = ({ item }) => {
                   router.push(item.href);
                 }
               }}
-              className="bg-white border-2 border-primary mt-7 text-[20px]"
+              className="bg-white border-2 border-primary mt-7"
             />
           )}
         </div>

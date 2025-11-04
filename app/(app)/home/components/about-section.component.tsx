@@ -19,17 +19,16 @@ export const AboutSection: FC<AboutSectionProps> = ({
   videoSrc,
   description,
   reverse = false,
-  classNameDots = "w-[136px] h-[370px]",
-  classNameVideo = "w-[475px] h-[291px]",
+  classNameDots = "w-[45%] h-[120%] lg:w-[136px] lg:h-[370px]",
 }) => {
   return (
     <Section fadeIn={true}>
       <Container
-        className={`md:p-0 flex flex-col lg:flex-row items-center justify-between ${
+        className={`flex flex-col lg:flex-row items-center justify-between ${
           reverse ? "lg:flex-row-reverse" : ""
         }`}
       >
-        <div className="lg:w-[60%] space-y-8">
+        <div className="w-full lg:w-[65%] space-y-8">
           <Title
             text={title}
             className="text-[15px] xl:text-[25px] leading-none"
@@ -44,7 +43,7 @@ export const AboutSection: FC<AboutSectionProps> = ({
           )}
         </div>
 
-        <div className="relative lg:w-[35%] flex justify-center flex-col gap-5 items-end mt-10 lg:mt-0">
+        <div className="relative w-full lg:w-[30%] flex justify-center flex-col gap-5 items-end mt-10 lg:mt-0">
           <div
             className={`absolute ${
               reverse ? "left-0" : "right-0"
@@ -62,12 +61,12 @@ export const AboutSection: FC<AboutSectionProps> = ({
             <motion.div
               key={src}
               whileHover={{ scale: 1.02 }}
-              className={`relative bg-white rounded-2xl shadow-md overflow-hidden aspect-video z-10 ${classNameVideo}`}
+              className={`relative bg-white rounded-2xl shadow-md overflow-hidden aspect-video z-10 w-full`}
             >
               <iframe
+                src={src}
                 width="100%"
                 height="100%"
-                src={src}
                 title="Ven a Colombia, El País de la Belleza ✨"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               ></iframe>
