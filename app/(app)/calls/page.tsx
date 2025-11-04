@@ -5,7 +5,8 @@ import { FileText } from "lucide-react";
 import { Divider } from "@heroui/react";
 import { HeroSimple } from "@/ui/organism";
 import hero_simple from "@/public/hero-simple.svg";
-import { btns, calls, options } from "./page.properties";
+import { btns, options } from "./page.properties";
+import { projects } from "./[id]/page.properties";
 import { FilterByState } from "./components/filter-by-state";
 import { Carousel, Container, Section } from "@/ui/molecules";
 import { ProjectTypeCard } from "./components/project-type-card";
@@ -97,7 +98,7 @@ export default function Calls() {
           </div>
 
           <div className="space-y-5">
-            {calls.map((item) => (
+            {projects.map((item) => (
               <CallCard key={item.id} item={item} />
             ))}
           </div>
