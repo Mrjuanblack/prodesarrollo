@@ -3,13 +3,16 @@ import { useRouter } from "next/navigation";
 import { Card, CardBody } from "@heroui/react";
 import { Button, Chip, Text, Title } from "../..";
 import { CheckCircle, Clock } from "lucide-react";
+import { getProjectStatusLabel, ProjectStatus } from "@/domain/Projects";
+import { formatDate } from "@/utils/date.utilities";
 import { CallCardProps } from "./call-card.properties";
 
 export const CallCardComponent: FC<CallCardProps> = ({ item }) => {
   const router = useRouter();
 
-  const { estado, fechaApertura, titulo, descripcion, onViewProject } = item;
-  const isFinalizado = estado === "Finalizado";
+  const { status, date, title, description } = item;
+
+  const isFinalizado = status === ProjectStatus.COMPLETED;
 
   const IconoEstado = isFinalizado ? CheckCircle : Clock;
 
@@ -21,23 +24,23 @@ export const CallCardComponent: FC<CallCardProps> = ({ item }) => {
       <CardBody className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex-1">
           <Chip
-            category={`Estado: ${estado}`}
+            category={`Estado: ${getProjectStatusLabel(status)}`}
             icono={<IconoEstado size={18} />}
             isActive={isFinalizado}
           />
 
           <Title
-            text={titulo}
+            text={title}
             className="md:text-[20px] mb-1"
             highlightFirstLetter={false}
           />
 
           <Text
-            text={`Fecha de apertura: ${fechaApertura}`}
+            text={`Fecha de apertura: ${formatDate(date)}`}
             className="md:text-[20px] text-primary mb-3"
           />
           <Text
-            text={descripcion}
+            text={description}
             className="text-primary text-[20px] leading-relaxed"
           />
         </div>

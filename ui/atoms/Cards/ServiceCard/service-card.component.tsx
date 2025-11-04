@@ -10,14 +10,11 @@ export const ServiceCardComponent: React.FC<ServiceCardProps> = ({ item }) => {
     <div className="p-6 bg-primary/70 rounded-lg shadow-md rounded-tr-[70px] flex flex-col">
       <div className="relative flex items-start gap-2 z-10">
         <Settings size={30} className="text-white" />
-        <Text
-          text={title}
-          className="text-[20px] text-white font-semibold leading-snug"
-        />
+        <Text text={title} className="text-white font-semibold leading-snug" />
       </div>
 
       <div className="mt-5 p-7 pr-10 bg-white rounded-lg rounded-tr-[70px] flex-1">
-        <p className="text-black text-[18px] leading-relaxed text-justify">
+        <p className="text-black text-[15px] lg:text-[18px] leading-relaxed text-justify">
           {description}
         </p>
       </div>
