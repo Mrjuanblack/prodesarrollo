@@ -53,9 +53,12 @@ export default function Participate() {
           <div className="flex flex-col items-center">
             {active === "step-1" && (
               <>
-                <Text text="Selecciona una opción" className="text-[20px]" />
+                <Text
+                  text="Selecciona una opción"
+                  className="text-[15px] lg:text-[20px]"
+                />
 
-                <div className="flex gap-6 mt-10">
+                <div className="flex flex-col md:flex-row gap-6 mt-10 w-full">
                   {profileTypes.map((item) => (
                     <ProfileTypeCard
                       key={item.id}
@@ -121,7 +124,7 @@ export default function Participate() {
             )}
 
             {active === "step-3" && (
-              <div className="w-full flex gap-10">
+              <div className="w-full flex gap-10 flex-col lg:flex-row">
                 <FormContactSection />
                 <BranchInfoCard />
               </div>

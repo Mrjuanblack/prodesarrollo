@@ -41,6 +41,7 @@ export const HeaderHomeComponent = () => {
               >
                 {item.label}
               </p>
+
               <ul
                 className={`pl-4 border-l-2 ${
                   activeItem === item.label
@@ -79,13 +80,14 @@ export const HeaderHomeComponent = () => {
                   disableRipple
                   variant="solid"
                   onClick={() => setActiveItem(item.label)}
-                  className={`sm:text-[15px] md:text-[15px] lg:text-[20px] p-0 font-semibold relative bg-transparent flex items-center gap-1 ${
+                  className={`text-[15px] xl:text-[20px] p-0 font-semibold relative bg-transparent flex items-center gap-1 ${
                     activeItem === item.label
                       ? "text-primary font-bold after:content-[''] after:absolute after:-bottom-1.5 after:left-1/2 after:-translate-x-1/2 after:w-3 after:h-3 after:bg-secondary after:rounded-full"
                       : "text-gray-600 hover:text-primary"
                   }`}
                 >
                   {item.label}
+
                   <ChevronDown
                     size={18}
                     className={`transition-transform ${
@@ -105,7 +107,7 @@ export const HeaderHomeComponent = () => {
                       setActiveItem(subItem.label);
                       router.push(subItem.href);
                     }}
-                    className={`sm:text-[15px] md:text-[15px] lg:text-[20px] ${
+                    className={`text-[15px] xl:text-[20px] ${
                       activeItem === subItem.label
                         ? "text-primary font-semibold"
                         : ""
@@ -127,7 +129,7 @@ export const HeaderHomeComponent = () => {
                 if (item.href) router.push(item.href);
                 if (isMobile) setIsMenuOpen(false);
               }}
-              className={`p-0 sm:text-[15px] md:text-[15px] lg:text-[20px] font-semibold relative bg-transparent hover:bg-transparent after:transition-transform ${
+              className={`p-0 text-[15px] xl:text-[20px] font-semibold relative bg-transparent hover:bg-transparent after:transition-transform ${
                 isMobile
                   ? `w-full justify-start text-lg py-3 text-left ${
                       activeItem === item.label
@@ -154,14 +156,15 @@ export const HeaderHomeComponent = () => {
           <Image
             alt="GOV.CO"
             src={colombia_logo}
-            className="h-7 md:h-9 md:w-[154px]"
+            className="h-7 md:h-9 w-[154px] "
           />
         </Container>
       </div>
 
       <Navbar
         maxWidth="2xl"
-        className="text-primary py-5"
+        isMenuOpen={isMenuOpen}
+        className="text-primary py-3 xl:py-5"
         onMenuOpenChange={setIsMenuOpen}
       >
         <NavbarContent justify="start">
@@ -170,11 +173,11 @@ export const HeaderHomeComponent = () => {
             aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
           />
 
-          <NavbarBrand className="w-[156px]">
+          <NavbarBrand className="sm:w-[130px] xl:w-[156px] pl-4 md:pl-0">
             <Image
               alt="ProDesarrollo"
               src={pro_desarrollo_logo}
-              className="h-auto w-[156px] ml-4 md:ml-0"
+              className="sm:w-[130px] xl:w-[156px]"
             />
           </NavbarBrand>
         </NavbarContent>
@@ -196,20 +199,19 @@ export const HeaderHomeComponent = () => {
           ))}
         </NavbarContent>
 
-        <NavbarMenu className="pt-4 px-4 bg-white">
+        <NavbarMenu className="pt-18 px-4 bg-white">
           <div className="flex flex-col gap-2">{renderMenuItems(true)}</div>
 
           <div className="mt-8 pt-4 border-t border-gray-100 flex gap-4 justify-start">
-            {socialItems.map(({ icon: Icon, label }) => (
-              <Button
+            {socialItems.map(({ icon: Icon, label, href }) => (
+              <a
                 key={label}
-                isIconOnly
-                variant="light"
+                href={href}
                 aria-label={label}
-                className="rounded-full h-10 w-10 bg-primary-50 hover:bg-primary-200"
+                className="rounded-full h-10 w-10 bg-primary-50 hover:bg-primary-200 flex items-center justify-center"
               >
                 <Icon className="h-6 w-6 text-primary" strokeWidth="2" />
-              </Button>
+              </a>
             ))}
           </div>
         </NavbarMenu>

@@ -35,7 +35,7 @@ export const NewsCardComponent: React.FC<NewsCardProps> = ({ item }) => {
 
       <div className="absolute inset-0 bg-black/50 z-1" />
 
-      <CardBody className="px-15 flex flex-row items-center h-full relative z-2 gap-15">
+      <CardBody className="px-15 flex flex-row items-center justify-center h-full relative z-2 gap-15">
         {image && (
           <div className="h-[200px] w-[194px] flex items-center">
             <Image

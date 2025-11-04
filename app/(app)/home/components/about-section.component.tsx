@@ -25,23 +25,26 @@ export const AboutSection: FC<AboutSectionProps> = ({
   return (
     <Section fadeIn={true}>
       <Container
-        className={`flex flex-col md:flex-row items-center justify-between ${
-          reverse ? "md:flex-row-reverse" : ""
+        className={`md:p-0 flex flex-col lg:flex-row items-center justify-between ${
+          reverse ? "lg:flex-row-reverse" : ""
         }`}
       >
-        <div className="md:w-[60%] space-y-8">
-          <Title text={title} className="text-md md:text-[25px] leading-none" />
+        <div className="lg:w-[60%] space-y-8">
+          <Title
+            text={title}
+            className="text-[15px] xl:text-[25px] leading-none"
+          />
 
-          <div className="text-black text-[20px] leading-relaxed text-justify">
+          <div className="text-black text-[15px] xl:text-[25px] leading-relaxed text-justify mb-8 ">
             {description}
           </div>
 
           {children && (
-            <div className="mt-8 flex w-full justify-center">{children}</div>
+            <div className="flex w-full justify-center mb-10">{children}</div>
           )}
         </div>
 
-        <div className="relative md:w-[35%] flex justify-center flex-col gap-5 items-center mt-10 lg:mt-0">
+        <div className="relative lg:w-[35%] flex justify-center flex-col gap-5 items-end mt-10 lg:mt-0">
           <div
             className={`absolute ${
               reverse ? "left-0" : "right-0"

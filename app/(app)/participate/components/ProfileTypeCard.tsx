@@ -17,7 +17,7 @@ export const ProfileTypeCard: React.FC<ProfileTypeCardProps> = ({
     <button
       onClick={() => onClick?.(item.id)}
       className={`bg-default-100 p-5 flex flex-col items-center rounded-2xl shadow-sm border overflow-hidden 
-      w-[200px] md:w-[394px] h-[474px] transition-all duration-300 cursor-pointer 
+      w-full md:w-[394px] h-[474px] transition-all duration-300 cursor-pointer 
       hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-primary/30
       ${active ? "bg-default-200 border-primary" : "border-gray-200"}`}
     >

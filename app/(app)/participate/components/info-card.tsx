@@ -17,7 +17,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({
   return (
     <Section fadeIn={true}>
       <Container>
-        <div className="flex items-center border-3 border-[#E0E6F5] rounded-2xl py-7 shadow-sm gap-20 px-20">
+        <div className="flex items-center border-3 border-[#E0E6F5] rounded-2xl py-7 shadow-sm gap-20 px-20 flex-col lg:flex-row">
           <div className="flex items-center justify-center rounded-full text-primary">
             <Icon size={50} className="text-primary" />
           </div>
@@ -26,7 +26,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({
         </div>
 
         {children && (
-          <div className="mt-20 flex justify-center">{children}</div>
+          <div className="mt-10 lg:mt-20 flex justify-center">{children}</div>
         )}
       </Container>
     </Section>

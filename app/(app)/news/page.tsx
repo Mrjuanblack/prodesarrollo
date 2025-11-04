@@ -16,7 +16,7 @@ export default function News() {
 
       <Section fadeIn={true}>
         <Container>
-          <div className="flex justify-end gap-5">
+          <div className="flex justify-end gap-5 flex-col md:flex-row">
             <OrderFilter />
             <CategoryFilter />
           </div>

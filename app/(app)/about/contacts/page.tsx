@@ -132,6 +132,7 @@ const Contacts = () => {
                     </a>
                   ))}
                 </div>
+
                 <Divider className="w-full bg-secondary" />
 
                 <Text

@@ -18,7 +18,7 @@ const PaginationDots: React.FC<PaginationProps> = ({
       {Array.from({ length: totalSlides }).map((_, index) => (
         <div
           key={index}
-          className={`w-[17px] h-[17px] rounded-full cursor-pointer transition-all duration-300 ${
+          className={`w-3.5 h-3.5 lg:w-[17px] lg:h-[17px] rounded-full cursor-pointer transition-all duration-300 ${
             index === currentIndex
               ? "bg-secondary scale-110"
               : "bg-gray-300 opacity-70"
@@ -68,7 +68,7 @@ export const CarouselComponent: React.FC<CarouselProps> = ({
   );
 
   const buttonClass =
-    "h-[77px] w-[77px] flex absolute top-1/2 -translate-y-1/2 z-30 backdrop-blur-sm shadow-md rounded-full transition-all duration-300";
+    "h-[60px] w-[60px] lg:h-[77px] lg:w-[77px] flex absolute top-1/2 -translate-y-1/2 z-30 backdrop-blur-sm shadow-md rounded-full transition-all duration-300";
 
   return (
     <section className="relative w-full">

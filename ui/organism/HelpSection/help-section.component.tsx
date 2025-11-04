@@ -8,7 +8,7 @@ export const HelpSectionComponent: React.FC = () => {
     <Section fadeIn={true} className="bg-default-100 md:bg-default-100">
       <Container className="flex flex-col md:flex-row items-center justify-between">
         <div className="flex items-center gap-4">
-          <div className="relative h-[226px] w-[226px] rounded-full p-3 flex items-center justify-center overflow-hidden">
+          <div className="relative h-[150px] w-[150px] md:h-[226px] md:w-[226px] rounded-full p-3 flex items-center justify-center overflow-hidden">
             <Image
               fill
               src={hero_img}
@@ -27,7 +27,7 @@ export const HelpSectionComponent: React.FC = () => {
           </div>
         </div>
 
-        <button className="cursor-pointer mt-6 md:mt-0 text-[20px] border border-primary text-primary font-medium px-5 py-2 rounded-full hover:bg-primary hover:text-white transition-all duration-300">
+        <button className="cursor-pointer mt-6 md:mt-0 text-[15px] md:text-[20px] border border-primary text-primary font-medium px-5 py-2 rounded-full hover:bg-primary hover:text-white transition-all duration-300">
           Enviar consulta
         </button>
       </Container>

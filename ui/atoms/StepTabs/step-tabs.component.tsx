@@ -23,7 +23,7 @@ export const StepTabsComponent: FC<StepTabsProps> = ({
           <button
             key={tab.id}
             onClick={() => handleClick(tab.id)}
-            className={`relative cursor-pointer flex flex-col items-center justify-center w-full py-2 text-[20px] transition-colors ${
+            className={`relative cursor-pointer flex flex-col items-center justify-center w-full py-2 text-[15px] lg:text-[20px] transition-colors ${
               isActive ? "text-primary font-semibold" : "text-gray-400"
             }`}
           >

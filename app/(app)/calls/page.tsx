@@ -69,7 +69,7 @@ export default function Calls() {
             })}
           </div>
 
-          <Divider className="w-[1023px] bg-secondary mb-15" />
+          <Divider className="w-full lg:w-[1023px] bg-secondary mb-15" />
 
           <Carousel hasDots={false} slidesPerView={5}>
             {options.map((option) => {
@@ -86,7 +86,7 @@ export default function Calls() {
             })}
           </Carousel>
 
-          <Divider className="w-[1023px] bg-secondary mt-15" />
+          <Divider className="lg:w-[1023px] bg-secondary mt-15" />
         </Container>
       </Section>
 
