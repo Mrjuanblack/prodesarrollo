@@ -1,5 +1,5 @@
 // Core
-import React, { JSX } from "react";
+import { JSX } from "react";
 
 // Properties
 import { TitleProperties } from "./title.properties";
@@ -11,7 +11,9 @@ export const TitleComponent = (properties: TitleProperties): JSX.Element => {
   const remainingText = text.slice(1);
 
   return (
-    <h1 className={`font-bold text-2xl text-primary md:text-3xl ${className}`}>
+    <h1
+      className={`font-bold text-[15px] text-primary lg:text-[20px] ${className}`}
+    >
       {highlightFirstLetter ? (
         <>
           <span className="text-secondary">{firstLetter}</span>

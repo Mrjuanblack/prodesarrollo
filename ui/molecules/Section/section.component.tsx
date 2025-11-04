@@ -18,8 +18,8 @@ export const SectionComponent: FC<SectionProps> = ({
         ref={ref}
         initial={{ opacity: 0, y: 50 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className={`bg-white w-full flex justify-center ${className} ${
-          hasPadding ? "py-20" : "py-0"
+        className={`w-full flex justify-center ${className} ${
+          hasPadding ? "py-10 lg:py-20" : "py-0"
         }`}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       >
@@ -31,7 +31,7 @@ export const SectionComponent: FC<SectionProps> = ({
   return (
     <section
       className={`bg-white w-full flex justify-center ${className} ${
-        hasPadding ? "py-20" : "py-0"
+        hasPadding ? "py-10 lg:py-20" : "py-0"
       }`}
     >
       {children}

@@ -1,5 +1,5 @@
 export interface IconTitleProps {
-  title: string;
+  title?: string;
   className?: string;
   iconColor?: string;
   iconBgColor?: string;

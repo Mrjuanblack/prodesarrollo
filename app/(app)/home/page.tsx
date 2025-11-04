@@ -1,7 +1,7 @@
 "use client";
 
-import { BackgroundSection, Button } from "@/ui/atoms";
 import { Hero } from "./components/hero.component";
+import { BackgroundSection, Button } from "@/ui/atoms";
 import { AreasImpact } from "./components/areas-impact.component";
 import { NewsCarousel } from "./components/news-carousel.component";
 import { AboutSection } from "./components/about-section.component";

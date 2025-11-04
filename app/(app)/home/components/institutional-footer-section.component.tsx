@@ -27,10 +27,10 @@ export const InstitutionalFooterSection = () => {
 
         <div>
           <iframe
-            src="https://horalegal.inm.gov.co/widget.html"
-            title="Hora Legal Colombia"
-            width="700px"
+            width="auto"
             height="500px"
+            title="Hora Legal Colombia"
+            src="https://horalegal.inm.gov.co/widget.html"
             style={{
               border: "none",
               overflow: "hidden",

@@ -1,7 +1,7 @@
 "use client";
 
-import { HeroSimple } from "@/ui/organism";
 import { news } from "./page.properties";
+import { HeroSimple } from "@/ui/organism";
 import hero_simple from "@/public/hero-simple.svg";
 import { Container, Section } from "@/ui/molecules";
 import { BackgroundSection, NewsCard } from "@/ui/atoms";
@@ -16,7 +16,7 @@ export default function News() {
 
       <Section fadeIn={true}>
         <Container>
-          <div className="flex justify-end gap-5">
+          <div className="flex justify-end gap-5 flex-col md:flex-row">
             <OrderFilter />
             <CategoryFilter />
           </div>

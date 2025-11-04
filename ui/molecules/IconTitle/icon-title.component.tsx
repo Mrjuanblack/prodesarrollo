@@ -15,20 +15,22 @@ export const IconTitleComponent: FC<IconTitleProps> = ({
     <div className={`flex items-center ${className}`}>
       {Icon && (
         <div
-          className={`flex items-center justify-center w-[25px] h-[25px] rounded-full shrink-0 mr-4 ${iconBgColor}`}
+          className={`flex items-center justify-center w-[18px] h-[18px] lg:w-[25px] lg:h-[25px] rounded-full shrink-0 mr-4 ${iconBgColor}`}
         >
           <Icon
             strokeWidth="1.5"
-            className={`w-7 h-7 ${iconColor} -mr-4 -mb-3`}
+            className={`w-4 h-4 lg:w-7 lg:h-7 ${iconColor} -mr-2 -mb-2 lg:-mr-4 lg:-mb-3`}
           />
         </div>
       )}
 
-      <Title
-        text={title}
-        highlightFirstLetter={highlightFirstLetter}
-        className={`leading-none ${classNameTitle}`}
-      />
+      {title && (
+        <Title
+          text={title}
+          highlightFirstLetter={highlightFirstLetter}
+          className={`leading-none ${classNameTitle}`}
+        />
+      )}
     </div>
   );
 };

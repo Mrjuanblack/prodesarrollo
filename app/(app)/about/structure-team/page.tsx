@@ -1,9 +1,9 @@
 import { HeroSimple } from "@/ui/organism";
-import { BackgroundSection, TeamCard } from "@/ui/atoms";
+import { teamMembers } from "./page.properties";
 import hero_simple from "@/public/hero-simple.svg";
+import { BackgroundSection, TeamCard } from "@/ui/atoms";
 import { Container, IconTitle, Section } from "@/ui/molecules";
 import { CallToActionSection } from "@/ui/organism/CallToActionSection/CallToActionSection";
-import { teamMembers } from "./page.properties";
 
 export default function StructureTeam() {
   return (

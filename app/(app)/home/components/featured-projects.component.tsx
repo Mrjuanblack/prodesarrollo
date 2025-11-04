@@ -31,7 +31,7 @@ export const FeaturedProjects = () => {
           onClick={() => console.log("Navegar a noticias")}
         />
 
-        <Divider className="w-[1023px] bg-secondary mt-15" />
+        <Divider className="lg:w-[1023px] bg-secondary mt-15" />
       </Container>
     </Section>
   );

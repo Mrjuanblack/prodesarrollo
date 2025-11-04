@@ -18,7 +18,7 @@ const PaginationDots: React.FC<PaginationProps> = ({
       {Array.from({ length: totalSlides }).map((_, index) => (
         <div
           key={index}
-          className={`w-[17px] h-[17px] rounded-full cursor-pointer transition-all duration-300 ${
+          className={`w-3.5 h-3.5 lg:w-[17px] lg:h-[17px] rounded-full cursor-pointer transition-all duration-300 ${
             index === currentIndex
               ? "bg-secondary scale-110"
               : "bg-gray-300 opacity-70"
@@ -32,18 +32,22 @@ const PaginationDots: React.FC<PaginationProps> = ({
 export const CarouselComponent: React.FC<CarouselProps> = ({
   children,
   slidesPerView = 3,
+  hasDots = true,
   paginationPosition = "bottom",
 }) => {
   const [startIndex, setStartIndex] = useState(0);
+  const [direction, setDirection] = useState(0);
 
   const totalItems = children.length;
   const totalSlides = Math.ceil(totalItems / slidesPerView);
 
   const handleNext = () => {
+    setDirection(1);
     setStartIndex((prev) => (prev + 1) % totalSlides);
   };
 
   const handlePrev = () => {
+    setDirection(-1);
     setStartIndex((prev) => (prev - 1 + totalSlides) % totalSlides);
   };
 
@@ -66,8 +70,12 @@ export const CarouselComponent: React.FC<CarouselProps> = ({
     (startIndex + 1) * slidesPerView
   );
 
+  const offset = 60;
+  const exitX = direction * offset;
+  const initialX = -direction * offset;
+
   const buttonClass =
-    "h-[77px] w-[77px] flex absolute top-1/2 -translate-y-1/2 z-30 backdrop-blur-sm shadow-md rounded-full transition-all duration-300";
+    "h-[60px] w-[60px] lg:h-[77px] lg:w-[77px] flex absolute top-1/2 -translate-y-1/2 z-30 backdrop-blur-sm shadow-md rounded-full transition-all duration-300";
 
   return (
     <section className="relative w-full">
@@ -84,12 +92,12 @@ export const CarouselComponent: React.FC<CarouselProps> = ({
         </Button>
 
         <div className="relative w-full z-10">
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait" custom={direction}>
             <motion.div
               key={startIndex}
-              exit={{ opacity: 0, x: -60 }}
+              exit={{ opacity: 0, x: exitX }}
               animate={{ opacity: 1, x: 0 }}
-              initial={{ opacity: 0, x: 60 }}
+              initial={{ opacity: 0, x: initialX }}
               transition={{
                 duration: 0.45,
                 ease: [0.43, 0.13, 0.23, 0.96],
@@ -112,16 +120,16 @@ export const CarouselComponent: React.FC<CarouselProps> = ({
           <ChevronRight size={35} className="text-primary" />
         </Button>
 
-        {isInside && (
+        {isInside && hasDots && (
           <PaginationDots
+            isInside={true}
             currentIndex={startIndex}
             totalSlides={totalSlides}
-            isInside={true}
           />
         )}
       </div>
 
-      {!isInside && (
+      {!isInside && hasDots && (
         <PaginationDots
           currentIndex={startIndex}
           totalSlides={totalSlides}

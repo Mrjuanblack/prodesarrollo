@@ -7,9 +7,9 @@ import pro_desarrollo_logo from "@/public/pro-desarrollo-logo-white.svg";
 
 export const FooterComponent = () => {
   return (
-    <footer className="bg-primary h-[400px] relative overflow-hidden rounded-tr-full flex items-center -mt-[400px]">
-      <Container className="relative z-10 flex flex-col md:flex-row md:items-center gap-40">
-        <div className="flex flex-col gap-3">
+    <footer className="bg-primary md:h-[400px] relative overflow-hidden md:rounded-tr-full flex items-center -mt-[400px]">
+      <Container className="relative z-10 flex flex-col md:flex-row md:items-center gap-10 md:gap-20 lg:gap-30 xl:gap-30 py-10 md:py-0">
+        <div className="flex flex-col gap-3 md:hidden lg:flex">
           <Image
             alt="ProDesarrollo"
             src={pro_desarrollo_logo}
@@ -24,7 +24,7 @@ export const FooterComponent = () => {
         </div>
 
         <div className="flex flex-col gap-2 text-white">
-          <h3 className="text-[18px] font-semibold text-secondary-200">
+          <h3 className="text-[15px] lg:text-[18px] font-semibold text-secondary-200">
             Contacto
           </h3>
 
@@ -32,8 +32,8 @@ export const FooterComponent = () => {
             <MapPin size={18} className="mt-1 text-secondary-200" />
 
             <div>
-              <p className="font-semibold text-[18px]">Sedes</p>
-              <ul className="list-disc list-inside text-[18px] leading-relaxed">
+              <p className="font-semibold text-[15px] lg:text-[18px]">Sedes</p>
+              <ul className="list-disc list-inside text-[15px] lg:text-[18px] leading-relaxed">
                 <li>Bogotá</li>
                 <li>Bucaramanga</li>
               </ul>
@@ -42,7 +42,9 @@ export const FooterComponent = () => {
 
           <div className="flex items-center gap-2 mt-2">
             <Phone size={18} className="text-secondary-200" />
-            <p className="text-[18px]">Teléfono: (+57) 324 543 2683</p>
+            <p className="text-[15px] lg:text-[18px]">
+              Teléfono: (+57) 324 543 2683
+            </p>
           </div>
 
           <div className="flex gap-4 mt-4">
@@ -60,11 +62,11 @@ export const FooterComponent = () => {
         </div>
 
         <div className="flex flex-col gap-2 text-white">
-          <h3 className="text-[18px] font-semibold text-secondary-200">
+          <h3 className="text-[15px] lg:text-[18px] font-semibold text-secondary-200">
             Navegación
           </h3>
 
-          <div className="flex flex-col items-start gap-2 mt-1 font-semibold text-[18px]">
+          <div className="flex flex-col items-start gap-2 mt-1 font-semibold text-[15px] lg:text-[18px]">
             <a href="/about/about-us">Nosotros</a>
             <a href="/transparency">Transparencia</a>
             <a href="/calls">Convocatorias</a>

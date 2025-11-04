@@ -1,11 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import { Button } from "../..";
 import { useRouter } from "next/navigation";
 import { Card, CardBody } from "@heroui/react";
 import { NewsCardProps } from "./news-card.properties";
 import noticiaExample from "@/public/noticia-example.svg";
-import { Button } from "../..";
 
 export const NewsCardComponent: React.FC<NewsCardProps> = ({ item }) => {
   const router = useRouter();
@@ -14,6 +14,7 @@ export const NewsCardComponent: React.FC<NewsCardProps> = ({ item }) => {
 
   return (
     <Card
+      as="div"
       shadow="lg"
       isPressable
       className={`relative ${
@@ -34,7 +35,7 @@ export const NewsCardComponent: React.FC<NewsCardProps> = ({ item }) => {
 
       <div className="absolute inset-0 bg-black/50 z-1" />
 
-      <CardBody className="px-15 flex flex-row items-center h-full relative z-2 gap-15">
+      <CardBody className="px-15 flex flex-row items-center justify-center h-full relative z-2 gap-15">
         {image && (
           <div className="h-[200px] w-[194px] flex items-center">
             <Image

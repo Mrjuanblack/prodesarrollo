@@ -8,6 +8,10 @@ export const TextComponent = (properties: TextProperties): JSX.Element => {
   const { text, className } = properties;
 
   return (
-    <p className={`text-medium font-normal text-black ${className}`}>{text}</p>
+    <p
+      className={`text-[15px] lg:text-[20px] font-normal text-black ${className}`}
+    >
+      {text}
+    </p>
   );
 };
