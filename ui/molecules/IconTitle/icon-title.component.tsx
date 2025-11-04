@@ -24,11 +24,13 @@ export const IconTitleComponent: FC<IconTitleProps> = ({
         </div>
       )}
 
-      <Title
-        text={title}
-        highlightFirstLetter={highlightFirstLetter}
-        className={`leading-none ${classNameTitle}`}
-      />
+      {title && (
+        <Title
+          text={title}
+          highlightFirstLetter={highlightFirstLetter}
+          className={`leading-none ${classNameTitle}`}
+        />
+      )}
     </div>
   );
 };

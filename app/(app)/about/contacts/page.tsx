@@ -1,16 +1,24 @@
 "use client";
 
+import {
+  Text,
+  Input,
+  Title,
+  Button,
+  FormCard,
+  TextArea,
+  BackgroundSection,
+} from "@/ui/atoms";
 import { FC } from "react";
 import Image from "next/image";
 import { Sedes } from "@/ui/organism";
+import { Divider } from "@heroui/react";
 import { MessageSquare } from "lucide-react";
 import { ContactCardProps } from "./page.properties";
-import { Divider, Input, Textarea } from "@heroui/react";
-import { Container, IconTitle, Section } from "@/ui/molecules";
 import message_icon from "@/public/message-icono.svg";
 import message_icon_two from "@/public/message-icono-2.svg";
+import { Container, IconTitle, Section } from "@/ui/molecules";
 import { socialItems } from "@/ui/organism/Header/header.properties";
-import { BackgroundSection, Button, FormCard, Text, Title } from "@/ui/atoms";
 
 const ContactCard: FC<ContactCardProps> = ({ children }) => {
   return (
@@ -73,18 +81,16 @@ const Contacts = () => {
               title="Ingresa la siguiente información para  registrar tu solicitud"
               form={
                 <>
-                  <Input label="Nombre completo" placeholder="" size="lg" />
+                  <Input label="Nombre completo" placeholder="" />
 
-                  <Input label="Teléfono" placeholder="" size="lg" />
+                  <Input label="Teléfono" placeholder="" />
 
                   <Input
-                    size="lg"
                     label="Correo electrónico"
                     placeholder="ejemplo@correo.com"
                   />
 
-                  <Textarea
-                    size="lg"
+                  <TextArea
                     placeholder=""
                     label="Descripción de la solicitud"
                   />

@@ -14,6 +14,7 @@ export const NewsCardComponent: React.FC<NewsCardProps> = ({ item }) => {
 
   return (
     <Card
+      as="div"
       shadow="lg"
       isPressable
       className={`relative ${

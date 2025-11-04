@@ -1,3 +1,4 @@
+import { Search } from "lucide-react";
 import { InfoItem } from "@/ui/atoms/Cards/InfoCard/info-card.properties";
 import { TransparencyItem } from "@/ui/atoms/Cards/TransparencyCard/transparency-card.properties";
 
@@ -32,54 +33,64 @@ export const transparencies: TransparencyItem[] = [
   {
     id: 1,
     title: "Transparencia",
+    Icon: Search,
     description:
       "Garantizamos claridad y rendición de cuentas en la gestión de los recursos públicos y privados.",
   },
   {
     id: 2,
     title: "Confianza",
+    Icon: Search,
     description:
       "Promovemos la integridad y la responsabilidad como pilares para fortalecer la credibilidad institucional.",
   },
   {
     id: 3,
     title: "Gestión responsable",
+    Icon: Search,
+
     description:
       "Administramos los recursos de manera eficiente y ética, asegurando resultados sostenibles y verificables.",
   },
   {
     id: 4,
     title: "Transparencia",
+    Icon: Search,
     description:
       "Garantizamos claridad y rendición de cuentas en la gestión de los recursos públicos y privados.",
   },
   {
     id: 5,
     title: "Confianza",
+    Icon: Search,
     description:
       "Promovemos la integridad y la responsabilidad como pilares para fortalecer la credibilidad institucional.",
   },
   {
     id: 6,
     title: "Gestión responsable",
+    Icon: Search,
     description:
       "Administramos los recursos de manera eficiente y ética, asegurando resultados sostenibles y verificables.",
   },
   {
     id: 7,
     title: "Transparencia",
+    Icon: Search,
     description:
       "Garantizamos claridad y rendición de cuentas en la gestión de los recursos públicos y privados.",
   },
   {
     id: 8,
     title: "Confianza",
+    Icon: Search,
     description:
       "Promovemos la integridad y la responsabilidad como pilares para fortalecer la credibilidad institucional.",
   },
   {
     id: 9,
     title: "Gestión responsable",
+    Icon: Search,
     description:
       "Administramos los recursos de manera eficiente y ética, asegurando resultados sostenibles y verificables.",
   },

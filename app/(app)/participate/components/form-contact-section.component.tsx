@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { Button, FormCard } from "@/ui/atoms";
-import { Input, Select, SelectItem } from "@heroui/react";
+import { Button, FormCard, Input, Select } from "@/ui/atoms";
 
 const idTypes = [
-  { label: "Cédula de ciudadanía", value: "cc" },
-  { label: "Tarjeta de identidad", value: "ti" },
-  { label: "Cédula de extranjería", value: "ce" },
-  { label: "Pasaporte", value: "pa" },
+  { key: 1, label: "Cédula de ciudadanía", value: "cc" },
+  { key: 2, label: "Tarjeta de identidad", value: "ti" },
+  { key: 3, label: "Cédula de extranjería", value: "ce" },
+  { key: 4, label: "Pasaporte", value: "pa" },
 ];
 
 export const FormContactSection = () => {
@@ -23,29 +22,19 @@ export const FormContactSection = () => {
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Select
-              size="lg"
+              options={idTypes}
               label="Tipo de identificación"
               placeholder="Selecciona una opción"
-            >
-              {idTypes.map((type) => (
-                <SelectItem key={type.value} textValue={type.value}>
-                  {type.label}
-                </SelectItem>
-              ))}
-            </Select>
+            />
 
-            <Input size="lg" placeholder="" label="Número de identificación" />
+            <Input placeholder="" label="Número de identificación" />
           </div>
 
-          <Input label="Nombre completo" placeholder="" size="lg" />
+          <Input label="Nombre completo" placeholder="" />
 
-          <Input label="Teléfono" placeholder="" size="lg" />
+          <Input label="Teléfono" placeholder="" />
 
-          <Input
-            size="lg"
-            label="Correo electrónico"
-            placeholder="ejemplo@correo.com"
-          />
+          <Input label="Correo electrónico" placeholder="ejemplo@correo.com" />
 
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 text-[20px]">
             <span className="text-black font-medium">
