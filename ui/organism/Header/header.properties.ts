@@ -36,7 +36,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     label: "Convocatorias",
-    type: "dropdown",
+    type: "link",
     href: "/calls",
     items: [],
   },

@@ -1,10 +1,13 @@
 import { FC } from "react";
-import { Button, Chip, Text, Title } from "../..";
+import { useRouter } from "next/navigation";
 import { Card, CardBody } from "@heroui/react";
+import { Button, Chip, Text, Title } from "../..";
 import { CheckCircle, Clock } from "lucide-react";
 import { CallCardProps } from "./call-card.properties";
 
 export const CallCardComponent: FC<CallCardProps> = ({ item }) => {
+  const router = useRouter();
+
   const { estado, fechaApertura, titulo, descripcion, onViewProject } = item;
   const isFinalizado = estado === "Finalizado";
 
@@ -43,6 +46,7 @@ export const CallCardComponent: FC<CallCardProps> = ({ item }) => {
           <Button
             text="Ver proyecto"
             variant="bordered"
+            onClick={() => router.push("/calls/1")}
             className="font-semibold w-fit"
           />
         </div>
