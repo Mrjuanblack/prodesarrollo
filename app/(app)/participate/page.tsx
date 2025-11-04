@@ -58,7 +58,7 @@ export default function Participate() {
                   className="text-[15px] lg:text-[20px]"
                 />
 
-                <div className="flex flex-col md:flex-row gap-6 mt-10 w-full">
+                <div className="flex flex-col md:flex-row gap-6 mt-10 w-full justify-center">
                   {profileTypes.map((item) => (
                     <ProfileTypeCard
                       key={item.id}
