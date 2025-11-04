@@ -9,3 +9,5 @@ export { ButtonComponent as Button } from "./Button/button.component";
 export { GlobalLoaderComponent as GlobalLoader } from "./GlobalLoader/global-loader.component";
 export { BackgroundSectionComponent as BackgroundSection } from "./BackgroundSection/background-section.component";
 export { StatusBadgeComponent as StatusBadge } from "./StatusBadge/status-badge.component";
+export { FileUploadButtonComponent as FileUploadButton } from "./FileUploadButton/file-upload-button.component";
+export type { FileUploadButtonProperties } from "./FileUploadButton/file-upload-button.properties";

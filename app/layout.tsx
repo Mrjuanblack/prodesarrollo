@@ -19,6 +19,7 @@ import "@fontsource/plus-jakarta-sans/800-italic.css";
 import ProviderHeroUi from "@/context/provider-hero-ui";
 import LoaderProvider from "@/context/provider-loader";
 import ProviderAppShell from "@/context/provider-app-shell";
+import QueryProvider from "@/context/provider-query";
 
 export const metadata: Metadata = {
   title: "Prodesarrollo",
@@ -40,11 +41,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        <ProviderHeroUi>
-          <LoaderProvider>
-            <ProviderAppShell>{children}</ProviderAppShell>
-          </LoaderProvider>
-        </ProviderHeroUi>
+        <QueryProvider>
+          <ProviderHeroUi>
+            <LoaderProvider>
+              <ProviderAppShell>{children}</ProviderAppShell>
+            </LoaderProvider>
+          </ProviderHeroUi>
+        </QueryProvider>
       </body>
     </html>
   );
