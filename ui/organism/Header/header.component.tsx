@@ -32,16 +32,33 @@ export const HeaderHomeComponent = () => {
       {menuItems.map((item) =>
         item.type === "dropdown" ? (
           isMobile ? (
-            <div key={item.label} className="w-full">
-              <p className="text-lg font-bold text-primary mb-2 mt-4 cursor-pointer">
+            <div key={item.label} className="w-full mt-4">
+              <p
+                onClick={() => setActiveItem(item.label)}
+                className={`text-lg font-bold mb-2 cursor-pointer ${
+                  activeItem === item.label ? "text-primary" : "text-gray-800"
+                }`}
+              >
                 {item.label}
               </p>
-              <ul className="pl-4 border-l-2 border-gray-200">
+
+              <ul
+                className={`pl-4 border-l-2 ${
+                  activeItem === item.label
+                    ? "border-primary"
+                    : "border-gray-200"
+                } space-y-1`}
+              >
                 {item.items.map((subItem) => (
                   <li
                     key={subItem.label}
-                    className="py-1 text-gray-600 text-base hover:text-primary transition-colors cursor-pointer"
+                    className={`py-1 text-base cursor-pointer transition-colors ${
+                      activeItem === subItem.label
+                        ? "text-primary font-semibold"
+                        : "text-gray-600 hover:text-primary"
+                    }`}
                     onClick={() => {
+                      setActiveItem(subItem.label);
                       router.push(subItem.href);
                       setIsMenuOpen(false);
                     }}
@@ -61,33 +78,42 @@ export const HeaderHomeComponent = () => {
               <DropdownTrigger>
                 <Button
                   disableRipple
-                  variant="light"
+                  variant="solid"
                   onClick={() => setActiveItem(item.label)}
-                  className={`text-[18px] font-semibold relative bg-transparent flex items-center gap-1 ${
+                  className={`text-[15px] xl:text-[20px] p-0 font-semibold relative bg-transparent flex items-center gap-1 ${
                     activeItem === item.label
                       ? "text-primary font-bold after:content-[''] after:absolute after:-bottom-1.5 after:left-1/2 after:-translate-x-1/2 after:w-3 after:h-3 after:bg-secondary after:rounded-full"
                       : "text-gray-600 hover:text-primary"
                   }`}
                 >
                   {item.label}
+
                   <ChevronDown
                     size={18}
-                    className={`transition-transform text-gray-600 ${
-                      openDropdown === item.label ? "rotate-180" : ""
+                    className={`transition-transform ${
+                      openDropdown === item.label
+                        ? "rotate-180 text-primary"
+                        : "text-gray-600"
                     }`}
                   />
                 </Button>
               </DropdownTrigger>
+
               <DropdownMenu aria-label={item.label}>
                 {item.items.map((subItem) => (
                   <DropdownItem
                     key={subItem.label}
                     onClick={() => {
-                      setActiveItem(item.label);
+                      setActiveItem(subItem.label);
                       router.push(subItem.href);
                     }}
+                    className={`text-[15px] xl:text-[20px] ${
+                      activeItem === subItem.label
+                        ? "text-primary font-semibold"
+                        : ""
+                    }`}
                   >
-                    <p className="text-[18px]">{subItem.label}</p>
+                    {subItem.label}
                   </DropdownItem>
                 ))}
               </DropdownMenu>
@@ -97,15 +123,19 @@ export const HeaderHomeComponent = () => {
           <NavbarItem key={item.label} className={isMobile ? "w-full" : ""}>
             <Button
               disableRipple
-              variant="light"
+              variant="solid"
               onClick={() => {
                 setActiveItem(item.label);
                 if (item.href) router.push(item.href);
                 if (isMobile) setIsMenuOpen(false);
               }}
-              className={`text-[18px] font-semibold relative bg-transparent after:transition-transform ${
+              className={`p-0 text-[15px] xl:text-[20px] font-semibold relative bg-transparent hover:bg-transparent after:transition-transform ${
                 isMobile
-                  ? "w-full justify-start text-lg py-3 hover:bg-gray-100"
+                  ? `w-full justify-start text-lg py-3 text-left ${
+                      activeItem === item.label
+                        ? "text-primary font-bold"
+                        : "text-gray-700 hover:text-primary"
+                    }`
                   : activeItem === item.label
                   ? "text-primary font-bold after:absolute after:-bottom-1.5 after:left-1/2 after:-translate-x-1/2 after:w-3 after:h-3 after:bg-secondary after:rounded-full"
                   : "text-gray-600 hover:text-primary"
@@ -123,35 +153,40 @@ export const HeaderHomeComponent = () => {
     <header className="w-full">
       <div className="bg-primary flex items-center justify-start py-1">
         <Container>
-          <Image src={colombia_logo} alt="GOV.CO" className="h-9 w-[154px]" />
+          <Image
+            alt="GOV.CO"
+            src={colombia_logo}
+            className="h-7 md:h-9 w-[154px] "
+          />
         </Container>
       </div>
 
       <Navbar
-        className="text-primary py-5"
         maxWidth="2xl"
+        isMenuOpen={isMenuOpen}
+        className="text-primary py-3 xl:py-5"
         onMenuOpenChange={setIsMenuOpen}
       >
         <NavbarContent justify="start">
           <NavbarMenuToggle
+            className="lg:hidden text-primary"
             aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
-            className="md:hidden text-primary"
           />
 
-          <NavbarBrand>
+          <NavbarBrand className="sm:w-[130px] xl:w-[156px] pl-4 md:pl-0">
             <Image
               alt="ProDesarrollo"
               src={pro_desarrollo_logo}
-              className="h-auto w-[156px] ml-4 md:ml-0"
+              className="sm:w-[130px] xl:w-[156px]"
             />
           </NavbarBrand>
         </NavbarContent>
 
-        <NavbarContent justify="center" className="gap-6 hidden md:flex">
+        <NavbarContent justify="center" className="gap-6 hidden lg:flex">
           {renderMenuItems(false)}
         </NavbarContent>
 
-        <NavbarContent justify="end" className="gap-3 hidden md:flex">
+        <NavbarContent justify="end" className="gap-3 hidden xl:flex">
           {socialItems.map(({ icon: Icon, label, href }) => (
             <a
               key={label}
@@ -164,20 +199,19 @@ export const HeaderHomeComponent = () => {
           ))}
         </NavbarContent>
 
-        <NavbarMenu className="pt-4 px-4 bg-white">
+        <NavbarMenu className="pt-18 px-4 bg-white">
           <div className="flex flex-col gap-2">{renderMenuItems(true)}</div>
 
           <div className="mt-8 pt-4 border-t border-gray-100 flex gap-4 justify-start">
-            {socialItems.map(({ icon: Icon, label }) => (
-              <Button
+            {socialItems.map(({ icon: Icon, label, href }) => (
+              <a
                 key={label}
-                isIconOnly
-                variant="light"
+                href={href}
                 aria-label={label}
-                className="rounded-full h-[40px] w-[40px] bg-primary-50 hover:bg-primary-200"
+                className="rounded-full h-10 w-10 bg-primary-50 hover:bg-primary-200 flex items-center justify-center"
               >
                 <Icon className="h-6 w-6 text-primary" strokeWidth="2" />
-              </Button>
+              </a>
             ))}
           </div>
         </NavbarMenu>

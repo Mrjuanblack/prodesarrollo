@@ -76,7 +76,7 @@ export default function AboutUs() {
       </Section>
 
       <Section fadeIn={true}>
-        <Container className="flex gap-15">
+        <Container className="flex gap-15 flex-col md:flex-row">
           <MissionCardCard
             title="Misión"
             isRoundedLeft={true}

@@ -1,30 +1,40 @@
-export interface LawItem {
-  id: number;
-  title: string;
-  description: string;
-  downloadUrl: string;
-}
+import { TransparencyItem } from "@/ui/atoms/Cards/TransparencyCard/transparency-card.properties";
 
-export const laws: LawItem[] = [
+export const transparencies: TransparencyItem[] = [
   {
     id: 1,
-    title: "Ley 1712 de 2014",
+    title: "Petición",
     description:
-      "- Por medio de la cual se crea la Ley de Transparencia y del Derecho de Acceso a la Información Pública Nacional y se dictan otras disposiciones.",
-    downloadUrl: "/docs/ley-1712-2014.pdf",
+      "“Solicitud respetuosa, verbal o escrita, que una persona natural o jurídica presenta ante la entidad para que se realice una actuación, se preste un servicio, se suministre información o se examinen documentos; por motivos de interés general o particular.”",
   },
   {
     id: 2,
-    title: "Decreto No. 1081",
+    title: "Queja",
     description:
-      "del 26 de mayo de 2015 del Departamento Administrativo de la Presidencia de la República - Por medio del cual se expide el Decreto reglamentario único del sector Presidencia de la República.",
-    downloadUrl: "/docs/ley-80-1993.pdf",
+      "“Manifestación de insatisfacción, protesta o inconformidad, que formula una persona natural o jurídica contra la actuación de la entidad, sus funcionarios o prestadores del servicio.”",
   },
   {
     id: 3,
-    title: "Resolución No. 001519",
+    title: "Reclamo",
     description:
-      "del 24 de Agosto de 2020 del Ministerio de Tecnologías de la información y las comunicaciones – “Por la cual se definen los estándares y directrices para publicar la información señalada en la Ley 1712 del 2014 y se definen los requisitos materia de acceso a la información pública, accesibilidad web, seguridad digital, y datos abiertos”",
-    downloadUrl: "/docs/ley-1474-2011.pdf",
+      "“Manifestación de inconformidad referida a la prestación de un servicio, la atención recibida o el incumplimiento de una solicitud o petición previa; dirigida a que se dé solución o corrección.”",
+  },
+  {
+    id: 4,
+    title: "Sugerencia",
+    description:
+      "“Idea, recomendación o propuesta formulada por una persona, para mejorar la calidad del servicio, los procesos, procedimientos o actividades de la entidad.”",
+  },
+  {
+    id: 5,
+    title: "Denuncia",
+    description:
+      "“Manifestación que pone en conocimiento de la autoridad competente una conducta irregular, supuestamente cometida por funcionarios o contratistas de la entidad, para que se investigue penal, disciplinaria, administrativa o ético‑profesionalmente.”",
+  },
+  {
+    id: 6,
+    title: "Felicitación",
+    description:
+      "“Expresión de reconocimiento o agradecimiento por la buena atención, la calidad del servicio recibido o el desempeño de los funcionarios o contratistas de la entidad.”",
   },
 ];

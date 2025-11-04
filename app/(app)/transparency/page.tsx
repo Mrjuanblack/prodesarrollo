@@ -1,12 +1,12 @@
 "use client";
 
-import { HeroSimple, SectionHeader } from "@/ui/organism";
 import { BackgroundSection } from "@/ui/atoms";
 import { infos, laws } from "./page.properties";
-import { Download, FileText, Monitor } from "lucide-react";
 import hero_simple from "@/public/hero-simple.svg";
 import { Container, Section } from "@/ui/molecules";
 import { Accordion, AccordionItem } from "@heroui/react";
+import { HeroSimple, SectionHeader } from "@/ui/organism";
+import { Download, FileText, Monitor } from "lucide-react";
 import { CallToActionSection } from "@/ui/organism/CallToActionSection/CallToActionSection";
 
 export default function Transparency() {

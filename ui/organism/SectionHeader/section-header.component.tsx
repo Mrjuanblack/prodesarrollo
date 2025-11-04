@@ -1,5 +1,3 @@
-"use client";
-
 import { FC } from "react";
 import { Text } from "@/ui/atoms";
 import { IconTitle } from "@/ui/molecules";
@@ -19,7 +17,7 @@ export const SectionHeaderComponent: FC<SectionHeaderProps> = ({
       {description && (
         <Text
           text={description}
-          className={`text-md md:text-[20px] mt-4 max-w-6xl text-center ${descriptionColor}`}
+          className={`text-[15px] lg:text-[20px] mt-4 max-w-6xl text-center ${descriptionColor}`}
         />
       )}
     </div>

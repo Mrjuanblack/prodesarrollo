@@ -1,30 +1,91 @@
-export interface LawItem {
-  id: number;
-  title: string;
-  description: string;
-  downloadUrl: string;
-}
+import noticiaExample from "@/public/noticia-example.svg";
+import { ProjectTypeItem } from "./components/project-type-card";
+import { CallItem } from "@/ui/atoms/Cards/CallCard/call-card.properties";
 
-export const laws: LawItem[] = [
+export const calls: CallItem[] = [
   {
     id: 1,
-    title: "Ley 1712 de 2014",
-    description:
-      "- Por medio de la cual se crea la Ley de Transparencia y del Derecho de Acceso a la Información Pública Nacional y se dictan otras disposiciones.",
-    downloadUrl: "/docs/ley-1712-2014.pdf",
+    estado: "En proceso",
+    fechaApertura: "27/10/2025",
+    titulo: "Construcción de cubierta para cancha múltiple",
+    descripcion:
+      "Interventoría técnica, administrativa y financiera para el proyecto de construcción de estructura y cubierta para cancha múltiple en la vereda Paramito del municipio de Barichara, Santander.",
   },
   {
     id: 2,
-    title: "Decreto No. 1081",
-    description:
-      "del 26 de mayo de 2015 del Departamento Administrativo de la Presidencia de la República - Por medio del cual se expide el Decreto reglamentario único del sector Presidencia de la República.",
-    downloadUrl: "/docs/ley-80-1993.pdf",
+    estado: "Finalizado",
+    fechaApertura: "15/09/2025",
+    titulo: "Mejoramiento de vías rurales",
+    descripcion:
+      "Supervisión y control de la obra de mejoramiento de vías terciarias en el municipio de Villanueva, Santander.",
   },
   {
     id: 3,
-    title: "Resolución No. 001519",
-    description:
-      "del 24 de Agosto de 2020 del Ministerio de Tecnologías de la información y las comunicaciones – “Por la cual se definen los estándares y directrices para publicar la información señalada en la Ley 1712 del 2014 y se definen los requisitos materia de acceso a la información pública, accesibilidad web, seguridad digital, y datos abiertos”",
-    downloadUrl: "/docs/ley-1474-2011.pdf",
+    estado: "En proceso",
+    fechaApertura: "05/10/2025",
+    titulo: "Construcción de alcantarillado sanitario",
+    descripcion:
+      "Interventoría para la construcción del sistema de alcantarillado sanitario y planta de tratamiento en el corregimiento de Guane, municipio de Barichara.",
+  },
+  {
+    id: 4,
+    estado: "Finalizado",
+    fechaApertura: "02/08/2025",
+    titulo: "Rehabilitación del parque principal",
+    descripcion:
+      "Proyecto de restauración del parque principal del municipio de Curití, con enfoque turístico y cultural.",
+  },
+];
+
+interface btnItem {
+  id: number;
+  year: number;
+}
+
+export const btns: btnItem[] = [
+  {
+    id: 1,
+    year: 2025,
+  },
+  {
+    id: 2,
+    year: 2026,
+  },
+  {
+    id: 3,
+    year: 2027,
+  },
+];
+
+export const options: ProjectTypeItem[] = [
+  {
+    id: 1,
+    img: noticiaExample,
+    title: "Infraestructura",
+  },
+  {
+    id: 2,
+    img: noticiaExample,
+    title: "Proyectos Sociales",
+  },
+  {
+    id: 3,
+    img: noticiaExample,
+    title: "Educación",
+  },
+  {
+    id: 4,
+    img: noticiaExample,
+    title: "Educación",
+  },
+  {
+    id: 5,
+    img: noticiaExample,
+    title: "Educación",
+  },
+  {
+    id: 6,
+    img: noticiaExample,
+    title: "Educación",
   },
 ];

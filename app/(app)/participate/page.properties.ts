@@ -1,3 +1,6 @@
+import { StaticImageData } from "next/image";
+import noticiaExample from "@/public/noticia-example.svg";
+
 export interface LawItem {
   id: number;
   title: string;
@@ -26,5 +29,44 @@ export const laws: LawItem[] = [
     description:
       "del 24 de Agosto de 2020 del Ministerio de Tecnologías de la información y las comunicaciones – “Por la cual se definen los estándares y directrices para publicar la información señalada en la Ley 1712 del 2014 y se definen los requisitos materia de acceso a la información pública, accesibilidad web, seguridad digital, y datos abiertos”",
     downloadUrl: "/docs/ley-1474-2011.pdf",
+  },
+];
+
+export interface ProjectItem {
+  id: number;
+  name: string;
+}
+
+export const projects: ProjectItem[] = [
+  {
+    id: 1,
+    name: "Ley 1712 de 2014",
+  },
+  {
+    id: 2,
+    name: "Decreto No. 1081",
+  },
+  {
+    id: 3,
+    name: "Resolución No. 001519",
+  },
+];
+
+export interface ProfileTypeItem {
+  id: number;
+  title: string;
+  img: StaticImageData;
+}
+
+export const profileTypes: ProfileTypeItem[] = [
+  {
+    id: 1,
+    title: "Persona natural",
+    img: noticiaExample,
+  },
+  {
+    id: 2,
+    title: "Persona jurídica",
+    img: noticiaExample,
   },
 ];

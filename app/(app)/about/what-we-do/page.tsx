@@ -16,10 +16,10 @@ export default function WhatWeDo() {
       <HeroSimple title="¿Qué hacemos?" backgroundImage={hero_simple} />
 
       <Section fadeIn={true}>
-        <Container className="relative h-[500px] flex flex-col md:flex-row items-center justify-center gap-15">
-          <div className="absolute top-0 left-0 z-0 shrink-0 w-[500px] h-[500px] flex justify-center rounded-full bg-[#F5F8FF]"></div>
+        <Container className="relative lg:h-[500px] flex flex-col lg:flex-row items-center justify-center gap-15">
+          <div className="absolute top-0 lg:left-0 z-0 shrink-0 w-[500px] h-[500px] flex justify-center rounded-full bg-[#F5F8FF]"></div>
 
-          <div className="shrink-0 z-1 ml-15 w-[266px] h-[266px]">
+          <div className="shrink-0 z-1 mt-15 lg:ml-15 w-[266px] h-[266px]">
             <Image
               src={crane_img}
               alt="Ilustración construcción"
@@ -27,10 +27,10 @@ export default function WhatWeDo() {
             />
           </div>
 
-          <div className="z-1 leading-relaxed text-justify">
-            <Title text="Objeto Social" className="text-[25px] mb-5" />
+          <div className="z-1 leading-relaxed text-center lg:text-justify">
+            <Title text="Objeto Social" className="lg:text-[25px] mb-5" />
 
-            <p className="text-black text-[20px]">
+            <p className="text-black text-[15px] lg:text-[20px]">
               PRO. DESARROLLO. Su objeto principal es ejecutar, desarrollar,
               fomentar, implementar, gestionar, planificar o financiar todo tipo
               de programas y proyectos de manera lícita, el fomento y desarrollo
