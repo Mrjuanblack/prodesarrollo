@@ -36,7 +36,7 @@ export default function AboutUs() {
             classNameVideo="w-[350px] h-[220px]"
             videoSrc={[
               "https://www.youtube.com/embed/mn64ZdDpC6k",
-              "https://www.youtube.com/embed/mn64ZdDpC6k",
+              "https://www.youtube.com/embed/jdOT18uUuWc",
             ]}
             description={
               <>

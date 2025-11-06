@@ -14,6 +14,7 @@ export const FilterByState = () => {
       <Select
         shadow={true}
         options={estados}
+        name="statusFilter"
         label="Filtrar por estado"
         placeholder="Selecciona una opción"
         selectedKeys={estado ? [estado] : []}

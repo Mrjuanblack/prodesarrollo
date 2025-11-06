@@ -14,13 +14,13 @@ export const TransparencyCardComponent: React.FC<TransparencyCardProps> = ({
 
         <Title
           text={title}
-          className="self-end font-semibold text-[25px] mb-3"
+          className="self-end font-semibold text-[20px] lg:text-[25px] mb-3"
         />
       </div>
 
       <Text
         text={description}
-        className="text-black text-[18px] leading-relaxed text-right"
+        className="text-black text-[15px] lg:text-[18px] leading-relaxed text-right"
       />
     </div>
   );
