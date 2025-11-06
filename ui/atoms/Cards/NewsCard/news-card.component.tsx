@@ -29,7 +29,7 @@ export const NewsCardComponent: React.FC<NewsCardProps> = ({ item }) => {
           priority={true}
           objectFit="contain"
           src={noticiaExample}
-          className="scale-200"
+          className="scale-200 md:scale-300 lg:scale-200"
         />
       </div>
 

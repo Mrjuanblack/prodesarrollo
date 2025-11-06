@@ -15,7 +15,7 @@ export const ChipComponent: FC<ChipProps> = ({
     <Chip
       variant="flat"
       startContent={icono}
-      className={`${estadoColor} font-semibold px-3 py-2 rounded-full mb-3 w-fit text-[20px]`}
+      className={`${estadoColor} font-semibold px-3 py-2 rounded-full mb-3 w-fit text-[16px] md:text-[18px] lg:text-[20px]`}
     >
       {category}
     </Chip>

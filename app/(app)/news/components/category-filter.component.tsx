@@ -18,9 +18,9 @@ export const CategoryFilter = () => {
   return (
     <div className="bg-[#F2F6FF] p-6 rounded-3xl shadow-md flex flex-col gap-4 w-full md:w-[300px]">
       <IconTitle
-        title="Filtrar por categoría"
         Icon={SlidersHorizontal}
         highlightFirstLetter={false}
+        title="Filtrar por categoría"
         classNameTitle="lg:text-black lg:text-[20px] lg:text-light"
       />
 

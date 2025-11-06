@@ -22,9 +22,9 @@ export default function Transparency() {
           {laws.map(({ title, description, downloadUrl, id }) => (
             <div
               key={id}
-              className="flex flex-col md:flex-row items-center justify-between bg-[#F5F8FF] rounded-xl p-10 shadow-sm gap-20"
+              className="flex flex-col md:flex-row items-center justify-between bg-[#F5F8FF] rounded-xl p-10 shadow-sm gap-7 lg:gap-20"
             >
-              <p className="text-[20px] text-black leading-relaxed text-center md:text-left">
+              <p className="text-[15px] lg:text-[20px] text-black leading-relaxed text-center md:text-left">
                 <span className="font-semibold">{title}</span> {description}
               </p>
 
@@ -32,7 +32,7 @@ export default function Transparency() {
                 href={downloadUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 md:mt-0 flex items-center gap-2 border border-primary text-primary rounded-full px-4 py-2 text-[20px] font-medium hover:bg-primary hover:text-white transition-all duration-300"
+                className="mt-4 md:mt-0 flex items-center gap-2 border border-primary text-primary rounded-full px-4 py-2 text-[15px] lg:text-[20px] font-medium hover:bg-primary hover:text-white transition-all duration-300"
               >
                 Descargar <Download size={23} />
               </a>
@@ -56,7 +56,7 @@ export default function Transparency() {
                 aria-label={item.title}
                 className="bg-[#F5F8FF] border-none"
                 title={
-                  <span className="text-primary font-semibold text-[25px]">
+                  <span className="text-primary font-semibold text-[20px] lg:text-[25px]">
                     {item.number}. {item.title}
                   </span>
                 }
@@ -65,7 +65,7 @@ export default function Transparency() {
                   {item.subItems.map((sub) => (
                     <li
                       key={sub.id}
-                      className="flex items-center gap-3 text-[25px] text-black hover:text-primary transition-colors"
+                      className="flex items-center gap-3 text-[20px] lg:text-[25px] text-black hover:text-primary transition-colors"
                     >
                       <FileText size={20} className="text-primary" />
                       <span>

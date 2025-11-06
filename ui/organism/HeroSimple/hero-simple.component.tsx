@@ -9,7 +9,7 @@ export const HeroSimpleComponent: FC<HeroTitleProps> = ({
 }) => {
   return (
     <Section hasPadding={false} fadeIn={true}>
-      <div className="w-full flex items-center justify-start relative h-[220px] md:h-[250px] overflow-hidden">
+      <div className="w-full flex items-center justify-start relative h-[170px] md:h-[200px] lg:h-[250px] overflow-hidden">
         <Image
           fill
           priority
@@ -23,7 +23,7 @@ export const HeroSimpleComponent: FC<HeroTitleProps> = ({
 
         <div className="relative z-10 bg-primary/80 px-6 py-10 w-[60%] rounded-tr-4xl">
           <Container>
-            <h1 className="text-secondary text-center text-xl md:text-2xl font-semibold italic">
+            <h1 className="text-secondary text-center text-lg lg:text-2xl font-semibold italic">
               {title}
             </h1>
           </Container>

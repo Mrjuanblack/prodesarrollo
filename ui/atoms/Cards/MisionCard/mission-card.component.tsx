@@ -21,7 +21,7 @@ export const MissionCardComponent: FC<MissionCardProps> = ({
       </CardHeader>
 
       <CardBody className="pt-2">
-        <div className="text-white text-[20px] leading-relaxed">
+        <div className="text-white text-[15px] lg:text-[20px] leading-relaxed">
           {missionText}
         </div>
       </CardBody>

@@ -35,8 +35,8 @@ const Contacts = () => {
         <Container className="flex flex-col">
           <div className="flex flex-col justify-center items-center gap-5">
             <div className="flex items-center gap-5">
-              <div className="relative w-[216px] h-40">
-                <div className="absolute w-36 h-36 top-0 left-0">
+              <div className="relative w-[190px] lg:w-[216px] h-40">
+                <div className="absolute w-32 h-32 lg:w-36 lg:h-36 top-0 left-0">
                   <Image
                     fill
                     src={message_icon_two}
@@ -45,7 +45,7 @@ const Contacts = () => {
                   />
                 </div>
 
-                <div className="absolute w-36 h-36 bottom-0 right-0">
+                <div className="absolute w-32 h-32 lg:w-36 lg:h-36 bottom-0 right-0">
                   <Image
                     fill
                     src={message_icon}
@@ -58,12 +58,12 @@ const Contacts = () => {
               <div>
                 <Title
                   text="¿Necesitas ayuda?"
-                  className="md:text-[25px]"
+                  className="text-[20px] md:text-[22px] lg:text-[25px]"
                   highlightFirstLetter={false}
                 />
 
                 <Title
-                  className="md:text-[25px]"
+                  className="text-[20px] md:text-[22px] lg:text-[25px]"
                   highlightFirstLetter={false}
                   text="¡Estamos para escucharte!"
                 />
@@ -71,12 +71,12 @@ const Contacts = () => {
             </div>
 
             <Text
-              className="text-black lg:text-[20px]"
+              className="text-black text-[18px] md:text-[20px] lg:text-[22px]"
               text="Horario de atención: Lunes a Viernes - 8:00 am - 4:00pm"
             />
           </div>
 
-          <div className="flex gap-10 mt-15">
+          <div className="flex flex-col lg:flex-row gap-10 mt-15">
             <FormCard
               title="Ingresa la siguiente información para  registrar tu solicitud"
               form={
@@ -107,7 +107,7 @@ const Contacts = () => {
               }
             />
 
-            <div className="w-full max-w-[400px] space-y-10">
+            <div className="w-full xl:max-w-[400px] space-y-10">
               <ContactCard>
                 <IconTitle
                   Icon={MessageSquare}

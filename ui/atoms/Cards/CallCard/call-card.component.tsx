@@ -37,11 +37,12 @@ export const CallCardComponent: FC<CallCardProps> = ({ item }) => {
 
           <Text
             text={`Fecha de apertura: ${formatDate(date)}`}
-            className="md:text-[20px] text-primary mb-3"
+            className="text-[16px] md:text-[18px] lg:text-[20px] text-primary mb-3"
           />
+
           <Text
             text={description}
-            className="text-primary text-[20px] leading-relaxed"
+            className="text-primary text-[16px] md:text-[18px] lg:text-[20px] leading-relaxed"
           />
         </div>
 
