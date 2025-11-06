@@ -26,17 +26,17 @@ export default function New() {
             <div>
               <Text
                 text="Fecha : 27/10/2025"
-                className="text-primary font-normal text-[20px]"
+                className="text-primary font-normal text-[16px] md:text-[18px] lg:text-[20px]"
               />
 
               <Text
                 text="Publicado por: Ana García"
-                className="text-primary font-normal text-[20px]"
+                className="text-primary font-normal text-[16px] md:text-[18px] lg:text-[20px]"
               />
             </div>
 
             <Text
-              className="text-justify text-[20px]"
+              className="text-justify text-[16px] md:text-[18px] lg:text-[20px]"
               text={
                 <>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
@@ -80,7 +80,7 @@ export default function New() {
               {imgs.map((img) => (
                 <div
                   key={img.id}
-                  className="relative h-[281px] w-[421px] overflow-hidden"
+                  className="relative h-[281px] overflow-hidden"
                 >
                   <Image
                     fill

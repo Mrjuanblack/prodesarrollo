@@ -20,7 +20,7 @@ export const FormContactSection = () => {
       title="Ingresa la siguiente información"
       form={
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
             <Select
               options={idTypes}
               label="Tipo de identificación"
@@ -36,7 +36,7 @@ export const FormContactSection = () => {
 
           <Input label="Correo electrónico" placeholder="ejemplo@correo.com" />
 
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 text-[20px]">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 text-[15px] lg:text-[20px]">
             <span className="text-black font-medium">
               Cargar archivos y/o imágenes de soporte
             </span>

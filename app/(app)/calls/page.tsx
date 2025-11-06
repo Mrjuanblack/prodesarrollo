@@ -31,7 +31,7 @@ export default function Calls() {
 
       <Section fadeIn={true}>
         <Container className="flex flex-col items-center">
-          <div className="flex justify-center mt-10 min-w-[707px]">
+          <div className="flex justify-center mt-10 w-full lg:w-fit lg:min-w-[707px]">
             <SearchBar
               value={query}
               onChange={setQuery}
@@ -39,7 +39,7 @@ export default function Calls() {
             />
           </div>
 
-          <div className="my-10 w-full flex flex-row justify-center items-center gap-5">
+          <div className="my-10 w-full flex flex-wrap justify-center gap-5">
             {btns.map(({ id, year }) => {
               const active = activeBtn === year;
 
@@ -48,8 +48,8 @@ export default function Calls() {
                   key={id}
                   onClick={() => setActiveBtn(year)}
                   className={`
-                    flex items-center gap-2 px-7 py-4 rounded-2xl transition-all duration-300
-                    font-semibold text-[25px] cursor-pointer shadow-lg
+                    w-full md:w-fit flex items-center gap-2 px-7 py-4 rounded-2xl transition-all duration-300
+                    font-semibold text-[19px] md:text-[23px] lg:text-[25px] cursor-pointer shadow-lg
                     ${
                       active
                         ? "bg-[#A9BEFF] text-primary shadow-xl"

@@ -68,25 +68,21 @@ const Call = () => {
             <Chip />
 
             <div>
-              <Title
-                text={title}
-                highlightFirstLetter={false}
-                className="lg:text-[20px]"
-              />
+              <Title text={title} highlightFirstLetter={false} />
 
               <Text
                 text={`Fecha: ${projectDate}`}
-                className="text-primary font-normal text-[20px]"
+                className="text-primary font-normal text-[15px] md:text-[18px] lg:text-[20px]"
               />
 
               <Text
                 text={`Publicado por: ${publishedBy}`}
-                className="text-primary font-normal text-[20px]"
+                className="text-primary font-normal text-[15px] md:text-[18px] lg:text-[20px]"
               />
             </div>
 
             <Text
-              className="text-justify text-[20px]"
+              className="text-justify text-[15px] md:text-[18px] lg:text-[20px]"
               text={<>{description}</>}
             />
 
@@ -94,14 +90,11 @@ const Call = () => {
               <div className="flex items-center gap-2">
                 <IconTitle
                   Icon={Link}
-                  classNameTitle="md:font-normal md:text-[20px]"
+                  classNameTitle="md:font-normal"
                   title="Interventoría asociada: "
                   highlightFirstLetter={false}
                 />
-                <Title
-                  text={relatedProjects[0].title}
-                  className="md:text-[20px]"
-                />
+                <Title text={relatedProjects[0].title} />
               </div>
             )}
           </div>
@@ -128,7 +121,9 @@ const Call = () => {
                 <div className="bg-[#D9E0FF] p-2 rounded-lg">
                   <ArrowDownToLine size={20} className="text-primary" />
                 </div>
-                <span className="text-[20px] font-medium">{acta.name}</span>
+                <span className="text-[15px] md:text-[18px] lg:text-[20px] font-medium">
+                  {acta.name}
+                </span>
               </a>
             ))}
           </div>

@@ -21,7 +21,7 @@ export default function News() {
             <CategoryFilter />
           </div>
 
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-13">
+          <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-13">
             {news.map((news) => (
               <NewsCard key={news.id} item={news} />
             ))}

@@ -87,7 +87,7 @@ export default function Participate() {
                         key={project.id}
                         className="flex items-center gap-3 text-black hover:text-primary cursor-pointer transition-colors"
                       >
-                        <span className="text-[20px] font-medium">
+                        <span className="text-[15px] lg:text-[20px] font-medium">
                           {index + 1}. {project.name}
                         </span>
                       </div>
@@ -113,7 +113,7 @@ export default function Participate() {
                         <div className="bg-[#D9E0FF] p-2 rounded-lg">
                           <ArrowDownToLine size={20} className="text-primary" />
                         </div>
-                        <span className="text-[20px] font-medium">
+                        <span className="text-[15px] lg:text-[20px] font-medium">
                           {project.name}
                         </span>
                       </div>

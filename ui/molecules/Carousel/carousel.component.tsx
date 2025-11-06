@@ -5,49 +5,49 @@ import React, { useState, useEffect, useMemo } from "react";
 import { CarouselProps, PaginationProps } from "./carousel.properties";
 
 const useConditionalResponsiveSlides = (propSlidesPerView: number): number => {
+  const initialSlides = Math.max(1, propSlidesPerView);
+
   const breakpoints = useMemo(
     () => [
-      { slides: 2, media: "(min-width: 768px)" },
-      { slides: 3, media: "(min-width: 1024px)" },
+      { slides: Math.min(initialSlides, 2), media: "(min-width: 768px)" },
+      { slides: Math.min(initialSlides, 6), media: "(min-width: 1024px)" },
     ],
-    []
+    [initialSlides]
   );
 
-  const [responsiveSlides, setResponsiveSlides] = useState(1);
+  const calculateSlides = (currentBreakpoints: typeof breakpoints): number => {
+    if (typeof window === "undefined") return 1;
 
-  useEffect(() => {
-    if (propSlidesPerView !== 3) {
-      return;
+    if (window.matchMedia(currentBreakpoints[1].media).matches) {
+      return currentBreakpoints[1].slides;
     }
 
+    if (window.matchMedia(currentBreakpoints[0].media).matches) {
+      return currentBreakpoints[0].slides;
+    }
+
+    return 1;
+  };
+
+  const [responsiveSlides, setResponsiveSlides] = useState(() =>
+    calculateSlides(breakpoints)
+  );
+
+  useEffect(() => {
+    if (initialSlides === 1) return;
+
     const getSlides = () => {
-      let currentSlides = 1;
-
-      if (window.matchMedia(breakpoints[0].media).matches) {
-        currentSlides = breakpoints[0].slides;
-      }
-
-      if (window.matchMedia(breakpoints[1].media).matches) {
-        currentSlides = breakpoints[1].slides;
-      }
-
-      setResponsiveSlides(currentSlides);
+      setResponsiveSlides(calculateSlides(breakpoints));
     };
-
-    getSlides();
 
     const handlers = breakpoints.map((bp) => {
       const mediaQuery = window.matchMedia(bp.media);
-      mediaQuery.addListener(getSlides);
-      return () => mediaQuery.removeListener(getSlides);
+      mediaQuery.addEventListener("change", getSlides);
+      return () => mediaQuery.removeEventListener("change", getSlides);
     });
 
     return () => handlers.forEach((remove) => remove());
-  }, [breakpoints, propSlidesPerView]);
-
-  if (propSlidesPerView !== 3) {
-    return propSlidesPerView;
-  }
+  }, [breakpoints, initialSlides]);
 
   return responsiveSlides;
 };
@@ -57,13 +57,15 @@ const PaginationDots: React.FC<PaginationProps> = ({
   totalSlides,
   isInside,
 }) => {
+  const safeTotalSlides = Math.max(0, totalSlides);
+
   return (
     <div
       className={`flex justify-center gap-2 ${
         isInside ? "absolute bottom-4 w-full z-10" : "mt-8"
       }`}
     >
-      {Array.from({ length: totalSlides }).map((_, index) => (
+      {Array.from({ length: safeTotalSlides }).map((_, index) => (
         <div
           key={index}
           className={`w-3.5 h-3.5 lg:w-[17px] lg:h-[17px] rounded-full cursor-pointer transition-all duration-300 ${
@@ -88,8 +90,13 @@ export const CarouselComponent: React.FC<CarouselProps> = ({
 
   const currentSlidesPerView = useConditionalResponsiveSlides(slidesPerView);
 
-  const totalItems = children.length;
+  const childrenArray = React.Children.toArray(children);
+  const totalItems = childrenArray.length;
+
   const totalSlides = Math.ceil(totalItems / currentSlidesPerView);
+
+  const adjustedStartIndex =
+    totalSlides > 0 ? Math.min(startIndex, totalSlides - 1) : 0;
 
   const handleNext = () => {
     setDirection(1);
@@ -98,26 +105,19 @@ export const CarouselComponent: React.FC<CarouselProps> = ({
 
   const handlePrev = () => {
     setDirection(-1);
-    setStartIndex((prev) => (prev - 1 + totalSlides) % totalSlides);
+    setStartIndex(
+      (prev) => (adjustedStartIndex - 1 + totalSlides) % totalSlides
+    );
   };
 
   const isInside = paginationPosition === "inside";
 
-  const colClassMap: Record<number, string> = {
-    1: "md:grid-cols-1 lg:grid-cols-1",
-    2: "md:grid-cols-2 lg:grid-cols-2",
-    3: "md:grid-cols-2 lg:grid-cols-3",
-    4: "md:grid-cols-2 lg:grid-cols-4",
-    5: "md:grid-cols-2 lg:grid-cols-5",
-    6: "md:grid-cols-2 lg:grid-cols-6",
-  };
-
   const maxSlides = Math.min(Math.max(slidesPerView, 1), 6);
-  const gridClasses = colClassMap[maxSlides] || "md:grid-cols-2 lg:grid-cols-3";
+  const gridClasses = `md:grid-cols-2 lg:grid-cols-${maxSlides}`;
 
-  const currentContents = children.slice(
-    startIndex * currentSlidesPerView,
-    (startIndex + 1) * currentSlidesPerView
+  const currentContents = childrenArray.slice(
+    adjustedStartIndex * currentSlidesPerView,
+    (adjustedStartIndex + 1) * currentSlidesPerView
   );
 
   const offset = 60;
@@ -137,7 +137,7 @@ export const CarouselComponent: React.FC<CarouselProps> = ({
           onPress={handlePrev}
           aria-label="Anterior"
           className={`${buttonClass} left-0 -ml-9 bg-white/70 border border-gray-200 hover:bg-white`}
-          isDisabled={startIndex === 0}
+          isDisabled={adjustedStartIndex === 0}
         >
           <ChevronLeft size={35} className="text-gray-600" />
         </Button>
@@ -145,7 +145,7 @@ export const CarouselComponent: React.FC<CarouselProps> = ({
         <div className="relative w-full z-10 overflow-hidden">
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
-              key={startIndex}
+              key={adjustedStartIndex}
               exit={{ opacity: 0, x: exitX }}
               animate={{ opacity: 1, x: 0 }}
               initial={{ opacity: 0, x: initialX }}
@@ -158,6 +158,7 @@ export const CarouselComponent: React.FC<CarouselProps> = ({
               {currentContents}
             </motion.div>
           </AnimatePresence>
+
           <div
             className={`grid grid-cols-1 ${gridClasses} gap-8 w-full invisible`}
           >
@@ -172,7 +173,10 @@ export const CarouselComponent: React.FC<CarouselProps> = ({
           onPress={handleNext}
           aria-label="Siguiente"
           className={`${buttonClass} right-0 -mr-9 bg-secondary/80 border border-secondary-400 hover:bg-secondary-300`}
-          isDisabled={startIndex === totalSlides - 1}
+          isDisabled={
+            adjustedStartIndex === totalSlides - 1 ||
+            totalItems <= currentSlidesPerView
+          }
         >
           <ChevronRight size={35} className="text-primary" />
         </Button>
@@ -180,14 +184,15 @@ export const CarouselComponent: React.FC<CarouselProps> = ({
         {isInside && hasDots && (
           <PaginationDots
             isInside={true}
-            currentIndex={startIndex}
+            currentIndex={adjustedStartIndex}
             totalSlides={totalSlides}
           />
         )}
       </div>
+
       {!isInside && hasDots && (
         <PaginationDots
-          currentIndex={startIndex}
+          currentIndex={adjustedStartIndex}
           totalSlides={totalSlides}
           isInside={false}
         />

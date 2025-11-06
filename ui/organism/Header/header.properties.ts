@@ -26,6 +26,7 @@ export const menuItems: MenuItem[] = [
       { label: "Quiénes somos", href: "/about/about-us" },
       { label: "Qué hacemos", href: "/about/what-we-do" },
       { label: "Estructura organizacional", href: "/about/structure-team" },
+      { label: "Contactos", href: "/about/contacts" },
     ],
   },
   {
