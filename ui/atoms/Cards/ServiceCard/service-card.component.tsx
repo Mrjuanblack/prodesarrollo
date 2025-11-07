@@ -7,7 +7,7 @@ export const ServiceCardComponent: React.FC<ServiceCardProps> = ({ item }) => {
   const { title, description } = item;
 
   return (
-    <div className="p-6 bg-primary/70 rounded-lg shadow-md rounded-tr-[70px] flex flex-col">
+    <div className="h-full p-6 bg-primary/70 rounded-lg shadow-md rounded-tr-[70px] flex flex-col">
       <div className="relative flex items-start gap-2 z-10">
         <Settings size={30} className="text-white" />
         <Text text={title} className="text-white font-semibold leading-snug" />

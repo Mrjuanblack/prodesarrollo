@@ -8,11 +8,19 @@ import { projects } from "./page.properties";
 import { Project } from "@/domain/Projects";
 import hero_simple from "@/public/hero-simple.svg";
 import { ArrowDownToLine, Link } from "lucide-react";
+import { formatDate } from "@/utils/date.utilities";
 import noticiaExample from "@/public/noticia-example.svg";
 import { Carousel, Container, IconTitle, Section } from "@/ui/molecules";
 import { BackgroundSection, Button, Chip, Text, Title } from "@/ui/atoms";
+import { ICarouselProps } from "@/ui/molecules/Carousel/carousel.properties";
 import { CallToActionSection } from "@/ui/organism/CallToActionSection/CallToActionSection";
-import { formatDate } from "@/utils/date.utilities";
+
+const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
+  base: "basis-full",
+  sm: "sm:basis-1/2",
+  md: "md:basis-1/3",
+  lg: "lg:basis-1/4",
+};
 
 const Call = () => {
   const params = useParams();
@@ -44,9 +52,10 @@ const Call = () => {
   const publishedBy = "Ana García";
   const projectDate = formatDate(date);
   const actas = documents;
+
   const imgs = photosUrls.map((url, index) => ({
-    id: index.toString(),
-    img: url || noticiaExample,
+    id: url,
+    img: noticiaExample,
     alt: `Foto ${index + 1} del proyecto ${title}`,
   }));
 
@@ -131,28 +140,30 @@ const Call = () => {
       </Section>
 
       <Section fadeIn={true}>
-        <Container className="flex flex-col items-center">
+        <Container className="w-full flex flex-col items-center">
           <IconTitle
             highlightFirstLetter={false}
             title="Registro fotográfico"
             className="mb-10"
           />
 
-          <Carousel>
-            {imgs.map((img) => (
-              <div
-                key={img.id}
-                className="relative h-[281px] w-[421px] overflow-hidden"
-              >
-                <Image
-                  fill
-                  src={img.img}
-                  alt={img.alt}
-                  className="object-cover"
-                />
-              </div>
-            ))}
-          </Carousel>
+          <div className="w-full">
+            <Carousel slideSizeClasses={customSlideClasses}>
+              {imgs.map((img) => (
+                <div
+                  key={img.id}
+                  className="relative h-[281px] overflow-hidden"
+                >
+                  <Image
+                    fill
+                    src={img.img}
+                    alt={img.alt}
+                    className="object-cover"
+                  />
+                </div>
+              ))}
+            </Carousel>
+          </div>
 
           <Button
             variant="solid"

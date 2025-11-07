@@ -4,6 +4,14 @@ import { projects } from "../page.properties";
 import { SectionHeader } from "@/ui/organism";
 import { Button, ProjectCard } from "@/ui/atoms";
 import { Carousel, Container, Section } from "@/ui/molecules";
+import { ICarouselProps } from "@/ui/molecules/Carousel/carousel.properties";
+
+const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
+  base: "basis-full",
+  sm: "sm:basis-1/2",
+  md: "md:basis-1/3",
+  lg: "lg:basis-1/4",
+};
 
 export const FeaturedProjects = () => {
   return (
@@ -11,18 +19,20 @@ export const FeaturedProjects = () => {
       fadeIn={true}
       className="bg-linear-to-b from-[#EFF3FD] to-[#FFFFFF]"
     >
-      <Container className="flex flex-col items-center">
+      <Container className="w-full flex flex-col items-center">
         <SectionHeader
           icon={Newspaper}
           title="Proyectos destacados"
           description="Nuestros proyectos reflejan el compromiso con el desarrollo social, económico y ambiental de las comunidades."
         />
 
-        <Carousel>
-          {projects.map((item) => (
-            <ProjectCard key={item.id} item={item} />
-          ))}
-        </Carousel>
+        <div className="w-full">
+          <Carousel slideSizeClasses={customSlideClasses}>
+            {projects.map((item) => (
+              <ProjectCard key={item.id} item={item} />
+            ))}
+          </Carousel>
+        </div>
 
         <Button
           variant="solid"

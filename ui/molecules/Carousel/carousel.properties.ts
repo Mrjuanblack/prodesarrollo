@@ -1,12 +1,21 @@
-export interface PaginationProps {
-  currentIndex: number;
-  totalSlides: number;
-  isInside: boolean;
+import { EmblaOptionsType } from "embla-carousel";
+import { ReactNode } from "react";
+
+export interface ISlideSizeClasses {
+  base: string;
+  sm: string;
+  md: string;
+  lg: string;
 }
 
-export interface CarouselProps {
-  children: React.ReactNode[];
-  slidesPerView?: number;
-  hasDots?: boolean;
-  paginationPosition?: "inside" | "bottom";
+export interface ICarouselProps {
+  children: ReactNode;
+  options?: EmblaOptionsType;
+
+  showDots?: boolean;
+  dotActiveColor?: string;
+  dotInactiveColor?: string;
+
+  slideSizeClasses: ISlideSizeClasses;
+  gapClass?: string;
 }
