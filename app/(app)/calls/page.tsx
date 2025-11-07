@@ -12,6 +12,14 @@ import { Carousel, Container, Section } from "@/ui/molecules";
 import { ProjectTypeCard } from "./components/project-type-card";
 import { BackgroundSection, CallCard, SearchBar } from "@/ui/atoms";
 import { CallToActionSection } from "@/ui/organism/CallToActionSection/CallToActionSection";
+import { ICarouselProps } from "@/ui/molecules/Carousel/carousel.properties";
+
+const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
+  base: "basis-full",
+  sm: "sm:basis-1/2",
+  md: "md:basis-1/3",
+  lg: "lg:basis-1/5",
+};
 
 export default function Calls() {
   const [query, setQuery] = useState("");
@@ -72,7 +80,11 @@ export default function Calls() {
 
           <Divider className="w-full lg:w-[1023px] bg-secondary mb-15" />
 
-          <Carousel hasDots={false} slidesPerView={5}>
+          <Carousel
+            gapClass="px-0"
+            showDots={false}
+            slideSizeClasses={customSlideClasses}
+          >
             {options.map((option) => {
               return (
                 <ProjectTypeCard

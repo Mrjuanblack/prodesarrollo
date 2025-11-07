@@ -9,6 +9,16 @@ import { HeroSimple, SectionHeader } from "@/ui/organism";
 import { Carousel, Container, Section } from "@/ui/molecules";
 import { BackgroundSection, InfoCard, Title } from "@/ui/atoms";
 import { CallToActionSection } from "@/ui/organism/CallToActionSection/CallToActionSection";
+import { ICarouselProps } from "@/ui/molecules/Carousel/carousel.properties";
+
+const options = { loop: false };
+
+const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
+  base: "basis-full",
+  sm: "sm:basis-1/2",
+  md: "md:basis-1/3",
+  lg: "lg:basis-1/4",
+};
 
 export default function WhatWeDo() {
   return (
@@ -56,11 +66,11 @@ export default function WhatWeDo() {
             description="Celebramos y suscribimos convenios y contratos interadministrativos, civiles y comerciales con entidades públicas y privadas, orientados al fortalecimiento de la gestión pública y a la promoción eficiente del desarrollo territorial."
           />
 
-          <div className="mt-30"></div>
-
-          <Carousel>
+          <Carousel options={options} slideSizeClasses={customSlideClasses}>
             {infos.map((service) => (
-              <InfoCard key={service.id} item={service} />
+              <div key={service.id} className="h-full pb-17">
+                <InfoCard item={service} />
+              </div>
             ))}
           </Carousel>
         </Container>

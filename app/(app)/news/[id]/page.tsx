@@ -7,6 +7,14 @@ import hero_simple from "@/public/hero-simple.svg";
 import { BackgroundSection, Chip, Text } from "@/ui/atoms";
 import { Carousel, Container, IconTitle, Section } from "@/ui/molecules";
 import { CallToActionSection } from "@/ui/organism/CallToActionSection/CallToActionSection";
+import { ICarouselProps } from "@/ui/molecules/Carousel/carousel.properties";
+
+const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
+  base: "basis-full",
+  sm: "sm:basis-1/2",
+  md: "md:basis-1/3",
+  lg: "lg:basis-1/4",
+};
 
 export default function New() {
   return (
@@ -76,7 +84,7 @@ export default function New() {
               className="mt-20 mb-10"
             />
 
-            <Carousel>
+            <Carousel slideSizeClasses={customSlideClasses}>
               {imgs.map((img) => (
                 <div
                   key={img.id}
