@@ -45,8 +45,7 @@ export const CarouselComponent: React.FC<ICarouselProps> = (props) => {
     onNextButtonClick,
   } = usePrevNextButtons(emblaApi);
 
-  const slideClasses = `
-    flex-shrink-0 min-w-0 py-[15px] ${gapClass} 
+  const slideClasses = ` bg-transparent flex-shrink-0 min-w-0 py-[15px] ${gapClass} 
     ${slideSizeClasses?.base} ${slideSizeClasses?.sm} ${slideSizeClasses?.md} ${slideSizeClasses?.lg}
   `;
 

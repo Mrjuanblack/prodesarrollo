@@ -12,31 +12,39 @@ import {
   NavbarMenuToggle,
 } from "@heroui/react";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { Container } from "@/ui/molecules";
-import { useRouter } from "next/navigation";
 import colombia_logo from "@/public/gov-co-logo.svg";
 import { menuItems, socialItems } from "./header.properties";
 import pro_desarrollo_logo from "@/public/pro-desarrollo-logo.svg";
+import { usePathname, useRouter } from "next/navigation";
 
 export const HeaderHomeComponent = () => {
   const router = useRouter();
-  const [activeItem, setActiveItem] = useState<string>("Inicio");
+  const pathname = usePathname();
+
+  const currentPathName = pathname.split("/")?.[1];
+
+  const [activeItem, setActiveItem] = useState<string>("");
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    setActiveItem(currentPathName);
+  }, [currentPathName]);
 
   const renderMenuItems = (isMobile = false) => (
     <>
       {menuItems.map((item) =>
         item.type === "dropdown" ? (
           isMobile ? (
-            <div key={item.label} className="w-full mt-4">
+            <div key={item.key} className="w-full mt-4">
               <p
-                onClick={() => setActiveItem(item.label)}
+                onClick={() => setActiveItem(item.key)}
                 className={`text-lg font-bold mb-2 cursor-pointer ${
-                  activeItem === item.label ? "text-primary" : "text-gray-800"
+                  activeItem === item.key ? "text-primary" : "text-gray-800"
                 }`}
               >
                 {item.label}
@@ -44,21 +52,19 @@ export const HeaderHomeComponent = () => {
 
               <ul
                 className={`pl-4 border-l-2 ${
-                  activeItem === item.label
-                    ? "border-primary"
-                    : "border-gray-200"
+                  activeItem === item.key ? "border-primary" : "border-gray-200"
                 } space-y-1`}
               >
                 {item.items.map((subItem) => (
                   <li
-                    key={subItem.label}
+                    key={subItem.key}
                     className={`py-1 text-base cursor-pointer transition-colors ${
-                      activeItem === subItem.label
+                      activeItem === subItem.key
                         ? "text-primary font-semibold"
                         : "text-gray-600 hover:text-primary"
                     }`}
                     onClick={() => {
-                      setActiveItem(subItem.label);
+                      setActiveItem(subItem.key);
                       router.push(subItem.href);
                       setIsMenuOpen(false);
                     }}
@@ -70,7 +76,7 @@ export const HeaderHomeComponent = () => {
             </div>
           ) : (
             <Dropdown
-              key={item.label}
+              key={item.key}
               onOpenChange={(isOpen) =>
                 setOpenDropdown(isOpen ? item.label : null)
               }
@@ -79,9 +85,9 @@ export const HeaderHomeComponent = () => {
                 <Button
                   disableRipple
                   variant="solid"
-                  onClick={() => setActiveItem(item.label)}
+                  onClick={() => setActiveItem(item.key)}
                   className={`text-[15px] xl:text-[20px] p-0 font-semibold relative bg-transparent flex items-center gap-1 ${
-                    activeItem === item.label
+                    activeItem === item.key
                       ? "text-primary font-bold after:content-[''] after:absolute after:-bottom-1.5 after:left-1/2 after:-translate-x-1/2 after:w-3 after:h-3 after:bg-secondary after:rounded-full"
                       : "text-gray-600 hover:text-primary"
                   }`}
@@ -99,16 +105,16 @@ export const HeaderHomeComponent = () => {
                 </Button>
               </DropdownTrigger>
 
-              <DropdownMenu aria-label={item.label}>
+              <DropdownMenu aria-label={item.key}>
                 {item.items.map((subItem) => (
                   <DropdownItem
-                    key={subItem.label}
+                    key={subItem.key}
                     onClick={() => {
-                      setActiveItem(subItem.label);
+                      setActiveItem(subItem.key);
                       router.push(subItem.href);
                     }}
                     className={`text-[15px] xl:text-[20px] ${
-                      activeItem === subItem.label
+                      activeItem === subItem.key
                         ? "text-primary font-semibold"
                         : ""
                     }`}
@@ -120,23 +126,23 @@ export const HeaderHomeComponent = () => {
             </Dropdown>
           )
         ) : (
-          <NavbarItem key={item.label} className={isMobile ? "w-full" : ""}>
+          <NavbarItem key={item.key} className={isMobile ? "w-full" : ""}>
             <Button
               disableRipple
               variant="solid"
               onClick={() => {
-                setActiveItem(item.label);
+                setActiveItem(item.key);
                 if (item.href) router.push(item.href);
                 if (isMobile) setIsMenuOpen(false);
               }}
               className={`p-0 text-[15px] xl:text-[20px] font-semibold relative bg-transparent hover:bg-transparent after:transition-transform ${
                 isMobile
                   ? `w-full justify-start text-lg py-3 text-left ${
-                      activeItem === item.label
+                      activeItem === item.key
                         ? "text-primary font-bold"
                         : "text-gray-700 hover:text-primary"
                     }`
-                  : activeItem === item.label
+                  : activeItem === item.key
                   ? "text-primary font-bold after:absolute after:-bottom-1.5 after:left-1/2 after:-translate-x-1/2 after:w-3 after:h-3 after:bg-secondary after:rounded-full"
                   : "text-gray-600 hover:text-primary"
               }`}
