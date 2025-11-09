@@ -31,6 +31,7 @@ export const CarouselComponent: React.FC<ICarouselProps> = (props) => {
     options = RESPONSIVE_OPTIONS,
     dotActiveColor = "bg-secondary",
     dotInactiveColor = "bg-gray-300",
+    marginTop = "mt-4 lg:mt-6",
   } = props;
 
   const [emblaRef, emblaApi] = useEmblaCarousel(options);
@@ -45,8 +46,7 @@ export const CarouselComponent: React.FC<ICarouselProps> = (props) => {
     onNextButtonClick,
   } = usePrevNextButtons(emblaApi);
 
-  const slideClasses = `
-    flex-shrink-0 min-w-0 py-[15px] ${gapClass} 
+  const slideClasses = `bg-transparent flex-shrink-0 min-w-0 ${gapClass} 
     ${slideSizeClasses?.base} ${slideSizeClasses?.sm} ${slideSizeClasses?.md} ${slideSizeClasses?.lg}
   `;
 
@@ -69,27 +69,26 @@ export const CarouselComponent: React.FC<ICarouselProps> = (props) => {
       <PrevButton
         onClick={onPrevButtonClick}
         disabled={prevBtnDisabled}
-        className="cursor-pointer absolute top-1/2 left-0 transform -translate-y-1/2 -translate-x-1/2 z-10 p-3 bg-white/70 hover:bg-white rounded-full shadow-lg disabled:opacity-30 transition"
+        className="cursor-pointer absolute top-1/2 left-1 lg:left-0 transform -translate-y-1/2 -translate-x-1/2 z-10 p-1 md:p-2 lg:p-3 bg-white/70 hover:bg-white rounded-full shadow-lg disabled:opacity-30 transition"
       />
 
       <NextButton
         onClick={onNextButtonClick}
         disabled={nextBtnDisabled}
-        className="cursor-pointer absolute top-1/2 right-0 transform -translate-y-1/2 translate-x-1/2 z-10 p-3 bg-secondary-200 hover:bg-secondary-300 rounded-full shadow-lg disabled:opacity-30 transition"
+        className="cursor-pointer absolute top-1/2 right-1 lg:right-0 transform -translate-y-1/2 translate-x-1/2 z-10 p-1 md:p-2 lg:p-3 bg-secondary-200 hover:bg-secondary-300 rounded-full shadow-lg disabled:opacity-30 transition"
       />
 
       {showDots && scrollSnaps.length > 1 && (
-        <div className="flex justify-center mt-6 space-x-3">
+        <div
+          className={`relative flex justify-center space-x-2 lg:space-x-3 z-10 ${marginTop}`}
+        >
           {scrollSnaps.map((_, index) => (
             <DotButton
               key={index}
               onClick={() => onDotButtonClick(index)}
-              className={`w-3 h-3 rounded-full transition-colors 
-                                 ${
-                                   index === selectedIndex
-                                     ? dotActiveColor
-                                     : dotInactiveColor
-                                 }`}
+              className={`w-3 h-3 lg:w-4 lg:h-4 rounded-full transition-colors ${
+                index === selectedIndex ? dotActiveColor : dotInactiveColor
+              }`}
             />
           ))}
         </div>

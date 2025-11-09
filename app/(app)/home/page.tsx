@@ -15,8 +15,8 @@ export default function Home() {
       <Hero />
 
       <AboutSection
+        reverse={true}
         title="Sobre Nosotros"
-        reverse={false}
         videoSrc={["https://www.youtube.com/embed/mn64ZdDpC6k"]}
         description={
           <>
@@ -40,7 +40,7 @@ export default function Home() {
       </AboutSection>
 
       <AboutSection
-        reverse={true}
+        reverse={false}
         title="Gestión integral para el desarrollo territorial y social"
         videoSrc={["https://www.youtube.com/embed/mn64ZdDpC6k"]}
         description={

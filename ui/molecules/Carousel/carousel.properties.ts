@@ -18,4 +18,6 @@ export interface ICarouselProps {
 
   slideSizeClasses: ISlideSizeClasses;
   gapClass?: string;
+
+  marginTop?: string;
 }
