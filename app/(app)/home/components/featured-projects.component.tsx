@@ -29,7 +29,9 @@ export const FeaturedProjects = () => {
         <div className="w-full">
           <Carousel slideSizeClasses={customSlideClasses}>
             {projects.map((item) => (
-              <ProjectCard key={item.id} item={item} />
+              <div key={item.id}>
+                <ProjectCard item={item} />
+              </div>
             ))}
           </Carousel>
         </div>
@@ -37,11 +39,11 @@ export const FeaturedProjects = () => {
         <Button
           variant="solid"
           text="Ver todos los proyectos"
-          className="font-semibold w-fit mt-10 bg-secondary"
+          className="font-semibold w-fit mt-7 lg:mt-10 bg-secondary shadow-lg"
           onClick={() => console.log("Navegar a noticias")}
         />
 
-        <Divider className="lg:w-[1023px] bg-secondary mt-15" />
+        <Divider className="lg:w-[1023px] bg-secondary mt-7 lg:mt-15" />
       </Container>
     </Section>
   );

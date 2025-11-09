@@ -15,9 +15,9 @@ export const Hero = () => {
     <Section fadeIn={true} hasPadding={false}>
       <Container>
         <Carousel
-          showDots={false}
           gapClass="px-[0px]"
           options={{ loop: true }}
+          marginTop="mt-4 md:mt-6 lg:-mt-7"
           slideSizeClasses={customSlideClasses}
         >
           {carouselSlides.map((contents) => (

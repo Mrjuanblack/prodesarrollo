@@ -14,8 +14,8 @@ const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
 
 export const NewsCarousel = () => {
   return (
-    <Section fadeIn={true}>
-      <Container className="w-full flex flex-col items-center">
+    <Section hasPadding={false} fadeIn={true}>
+      <Container className="mt-5 lg:mt-0 w-full flex flex-col items-center">
         <SectionHeader title="Noticias" icon={Newspaper} />
 
         <div className="w-full">
@@ -29,7 +29,7 @@ export const NewsCarousel = () => {
         <Button
           variant="bordered"
           text="Ver más noticias"
-          className="font-semibold w-fit mt-10"
+          className="font-semibold w-fit mt-5 lg:mt-10"
           onClick={() => console.log("Navegar a noticias")}
         />
       </Container>

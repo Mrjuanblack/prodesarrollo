@@ -19,6 +19,7 @@ import colombia_logo from "@/public/gov-co-logo.svg";
 import { menuItems, socialItems } from "./header.properties";
 import pro_desarrollo_logo from "@/public/pro-desarrollo-logo.svg";
 import { usePathname, useRouter } from "next/navigation";
+import { Button as MyButton } from "@/ui/atoms";
 
 export const HeaderHomeComponent = () => {
   const router = useRouter();
@@ -40,10 +41,10 @@ export const HeaderHomeComponent = () => {
       {menuItems.map((item) =>
         item.type === "dropdown" ? (
           isMobile ? (
-            <div key={item.key} className="w-full mt-4">
+            <div key={item.key} className="w-full">
               <p
                 onClick={() => setActiveItem(item.key)}
-                className={`text-lg font-bold mb-2 cursor-pointer ${
+                className={`text-[15px] md:text-[18px] font-bold mb-2 cursor-pointer ${
                   activeItem === item.key ? "text-primary" : "text-gray-800"
                 }`}
               >
@@ -53,12 +54,12 @@ export const HeaderHomeComponent = () => {
               <ul
                 className={`pl-4 border-l-2 ${
                   activeItem === item.key ? "border-primary" : "border-gray-200"
-                } space-y-1`}
+                } space-y-2`}
               >
                 {item.items.map((subItem) => (
                   <li
                     key={subItem.key}
-                    className={`py-1 text-base cursor-pointer transition-colors ${
+                    className={`text-[15px] md:text-[18px] cursor-pointer transition-colors ${
                       activeItem === subItem.key
                         ? "text-primary font-semibold"
                         : "text-gray-600 hover:text-primary"
@@ -86,7 +87,7 @@ export const HeaderHomeComponent = () => {
                   disableRipple
                   variant="solid"
                   onClick={() => setActiveItem(item.key)}
-                  className={`text-[15px] xl:text-[20px] p-0 font-semibold relative bg-transparent flex items-center gap-1 ${
+                  className={`text-[15px] md:text-[18px] p-0 font-semibold relative bg-transparent flex items-center gap-1 ${
                     activeItem === item.key
                       ? "text-primary font-bold after:content-[''] after:absolute after:-bottom-1.5 after:left-1/2 after:-translate-x-1/2 after:w-3 after:h-3 after:bg-secondary after:rounded-full"
                       : "text-gray-600 hover:text-primary"
@@ -113,7 +114,7 @@ export const HeaderHomeComponent = () => {
                       setActiveItem(subItem.key);
                       router.push(subItem.href);
                     }}
-                    className={`text-[15px] xl:text-[20px] ${
+                    className={`text-[15px] md:text-[18px] ${
                       activeItem === subItem.key
                         ? "text-primary font-semibold"
                         : ""
@@ -135,9 +136,9 @@ export const HeaderHomeComponent = () => {
                 if (item.href) router.push(item.href);
                 if (isMobile) setIsMenuOpen(false);
               }}
-              className={`p-0 text-[15px] xl:text-[20px] font-semibold relative bg-transparent hover:bg-transparent after:transition-transform ${
+              className={`p-0 text-[15px] md:text-[18px] font-semibold relative bg-transparent hover:bg-transparent after:transition-transform ${
                 isMobile
-                  ? `w-full justify-start text-lg py-3 text-left ${
+                  ? `w-full justify-start py-3 text-left ${
                       activeItem === item.key
                         ? "text-primary font-bold"
                         : "text-gray-700 hover:text-primary"
@@ -157,12 +158,12 @@ export const HeaderHomeComponent = () => {
 
   return (
     <header className="w-full">
-      <div className="bg-primary flex items-center justify-start py-1">
+      <div className="bg-primary flex items-center py-1 lg:py-2">
         <Container>
           <Image
             alt="GOV.CO"
             src={colombia_logo}
-            className="h-7 md:h-9 w-[154px] "
+            className="h-[18px] md:h-[27px] lg:h-[36px] w-fit"
           />
         </Container>
       </div>
@@ -170,7 +171,7 @@ export const HeaderHomeComponent = () => {
       <Navbar
         maxWidth="2xl"
         isMenuOpen={isMenuOpen}
-        className="text-primary py-3 xl:py-5"
+        className="text-primary lg:py-2 xl:py-3"
         onMenuOpenChange={setIsMenuOpen}
       >
         <NavbarContent justify="start">
@@ -179,42 +180,54 @@ export const HeaderHomeComponent = () => {
             aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
           />
 
-          <NavbarBrand className="sm:w-[130px] xl:w-[156px] pl-4 md:pl-0">
+          <NavbarBrand className="h-[35px] lg:h-[62px]">
             <Image
               alt="ProDesarrollo"
               src={pro_desarrollo_logo}
-              className="sm:w-[130px] xl:w-[156px]"
+              className="h-[35px] lg:h-[62px]"
             />
           </NavbarBrand>
         </NavbarContent>
 
-        <NavbarContent justify="center" className="gap-6 hidden lg:flex">
+        <NavbarContent
+          justify="center"
+          className="gap-3 lg:gap-4 xl:gap-6 hidden lg:flex"
+        >
           {renderMenuItems(false)}
         </NavbarContent>
 
-        <NavbarContent justify="end" className="gap-3 hidden xl:flex">
+        <NavbarContent justify="end" className="gap-2 hidden xl:flex">
           {socialItems.map(({ icon: Icon, label, href }) => (
             <a
               key={label}
               href={href}
               aria-label={label}
-              className="flex justify-center items-center rounded-full h-[50px] w-[50px] bg-primary-50 hover:bg-primary-200"
+              className="flex justify-center items-center rounded-full h-[35px] w-[35px] lg:h-[50px] lg:w-[50px] bg-primary-50 hover:bg-primary-200"
             >
-              <Icon className="h-7 w-7 text-primary" strokeWidth="2" />
+              <Icon className="h-6 w-6 text-primary" strokeWidth="2" />
             </a>
           ))}
         </NavbarContent>
 
-        <NavbarMenu className="pt-18 px-4 bg-white">
-          <div className="flex flex-col gap-2">{renderMenuItems(true)}</div>
+        <NavbarContent justify="end" className="gap-2 md:hidden">
+          <MyButton
+            variant="solid"
+            text="Quiero donar"
+            className="font-semibold w-fit bg-secondary shadow-lg"
+            onClick={() => console.log("Navegar a noticias")}
+          />
+        </NavbarContent>
 
-          <div className="mt-8 pt-4 border-t border-gray-100 flex gap-4 justify-start">
+        <NavbarMenu className="pt-10 bg-white">
+          <div className="flex flex-col">{renderMenuItems(true)}</div>
+
+          <div className="mt-6 pt-8 border-t border-gray-100 flex gap-2 justify-start">
             {socialItems.map(({ icon: Icon, label, href }) => (
               <a
                 key={label}
                 href={href}
                 aria-label={label}
-                className="rounded-full h-10 w-10 bg-primary-50 hover:bg-primary-200 flex items-center justify-center"
+                className="rounded-full h-[50px] w-[50px] bg-primary-50 hover:bg-primary-200 flex items-center justify-center"
               >
                 <Icon className="h-6 w-6 text-primary" strokeWidth="2" />
               </a>

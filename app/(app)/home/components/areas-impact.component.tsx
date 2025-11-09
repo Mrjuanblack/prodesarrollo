@@ -70,7 +70,7 @@ const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
   base: "basis-full",
   sm: "sm:basis-1/2",
   md: "md:basis-1/3",
-  lg: "lg:basis-1/4",
+  lg: "lg:basis-1/3",
 };
 
 export const AreasImpact = () => {
@@ -94,7 +94,7 @@ export const AreasImpact = () => {
         <Button
           text="Ver más"
           variant="bordered"
-          className="font-semibold w-fit mt-10"
+          className="font-semibold w-fit mt-7 lg:mt-10"
           onClick={() => console.log("Ver más")}
         />
       </Container>
