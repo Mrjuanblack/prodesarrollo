@@ -27,7 +27,7 @@ export const FooterComponent = () => {
   return (
     <footer className="bg-primary md:h-[400px] relative overflow-hidden rounded-tr-[200px] lg:rounded-tr-full flex items-center -mt-[400px]">
       <Container className="relative z-10 flex flex-row md:items-center gap-10 md:gap-20 xl:gap-30 py-15 md:py-10 lg:py-0">
-        <div className="flex flex-col gap-3 md:hidden lg:flex">
+        <div className="flex flex-col gap-3">
           <Image
             alt="ProDesarrollo"
             src={pro_desarrollo_logo}
