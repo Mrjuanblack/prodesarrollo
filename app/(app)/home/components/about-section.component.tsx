@@ -60,6 +60,7 @@ export const AboutSection: FC<AboutSectionProps> = ({
                   src={src}
                   width="100%"
                   height="100%"
+                  className="rounded-2xl"
                   title="Ven a Colombia, El País de la Belleza ✨"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 ></iframe>
@@ -69,7 +70,10 @@ export const AboutSection: FC<AboutSectionProps> = ({
         </div>
 
         <div className="w-full lg:w-[55%]">
-          <Title text={title} className="mt-5" />
+          <Title
+            text={title}
+            className="text-[15px] md:text-[20px] lg:text-[25px] mt-5"
+          />
 
           <div className="mt-3 text-black text-[12px] md:text-[16px] lg:text-[20px] leading-relaxed text-justify mb-5 md:mb-10">
             {description}

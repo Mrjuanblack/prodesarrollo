@@ -6,8 +6,8 @@ import { TitleProperties } from "./title.properties";
 
 export const TitleComponent = (properties: TitleProperties): JSX.Element => {
   const {
-    className = "",
-    text = "text-[15px] md:text-[20px] lg:text-[25px]",
+    className = "text-[15px] md:text-[20px] lg:text-[25px]",
+    text = "",
     highlightFirstLetter = true,
   } = properties;
 
