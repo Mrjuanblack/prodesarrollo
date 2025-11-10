@@ -6,9 +6,9 @@ import manos_unidas from "@/public/haz-parte-cambio.svg";
 export const CallToActionSection = () => {
   return (
     <Section fadeIn={true} className="bg-default-100 lg:bg-default-100">
-      <Container className="flex flex-col md:flex-row items-center justify-center md:gap-16">
+      <Container className="flex flex-row items-center justify-center gap-10 md:gap-16">
         <div className="relative w-50 h-50 md:w-70 md:h-70 flex items-center justify-center">
-          <div className="absolute w-30 h-30 shadow-md md:w-56 md:h-56 rounded-full bg-secondary-200" />
+          <div className="absolute w-[68px] h-[68px] shadow-md md:w-56 md:h-56 rounded-full bg-secondary-200" />
 
           <Image
             src={manos_unidas}
@@ -17,7 +17,7 @@ export const CallToActionSection = () => {
           />
         </div>
 
-        <div className="text-center md:text-left">
+        <div className="text-left">
           <Title
             text="Haz parte del cambio"
             className="mb-4 text-[15px] md:text-[20px] lg:text-[30px]"
@@ -26,7 +26,7 @@ export const CallToActionSection = () => {
           <Text
             text="Explora nuestros proyectos sociales con impacto real y conoce cómo
             puedes ayudar a financiarlos para su ejecución."
-            className="text-[13px] md:text-[20px] lg:text-[25px] mb-4 lg:mb-6 max-w-3xl mx-auto md:mx-0"
+            className="text-justify text-[13px] md:text-[20px] lg:text-[25px] mb-4 lg:mb-6 max-w-3xl mx-auto md:mx-0"
           />
 
           <Button

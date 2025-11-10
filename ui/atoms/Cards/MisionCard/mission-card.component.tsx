@@ -17,11 +17,15 @@ export const MissionCardComponent: FC<MissionCardProps> = ({
       radius="lg"
     >
       <CardHeader className="flex items-center">
-        <IconTitle title={title} Icon={Facebook} classNameTitle="text-white" />
+        <IconTitle
+          title={title}
+          Icon={Facebook}
+          classNameTitle="text-white text-[15px] md:text-[20px] lg:text-[30px]"
+        />
       </CardHeader>
 
       <CardBody className="pt-2">
-        <div className="text-white text-[15px] lg:text-[20px] leading-relaxed">
+        <div className="text-white text-[13px] md:text-[15px] lg:text-[20px] leading-relaxed">
           {missionText}
         </div>
       </CardBody>

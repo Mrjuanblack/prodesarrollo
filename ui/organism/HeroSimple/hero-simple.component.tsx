@@ -21,7 +21,7 @@ export const HeroSimpleComponent: FC<HeroTitleProps> = ({
 
         <div className="absolute inset-0 bg-black/30" />
 
-        <div className="relative z-10 bg-primary/80 px-6 py-10 w-[70%] lg:w-[50%] rounded-r-4xl">
+        <div className="relative z-10 bg-primary/80 px-6 py-5 lg:py-10 w-[70%] lg:w-[50%] rounded-r-4xl">
           <Container>
             <h1 className="text-secondary text-center text-lg lg:text-2xl font-semibold italic">
               {title}

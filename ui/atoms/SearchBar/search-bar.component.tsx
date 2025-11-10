@@ -16,7 +16,7 @@ export const SearchBarComponent: React.FC<SearchBarProps> = ({
   onSearch,
 }) => {
   return (
-    <div className="flex w-full max-w-[500px] rounded-full border border-default-100 shadow-sm overflow-hidden h-[58px]">
+    <div className="flex w-full max-w-[500px] rounded-full border border-default-100 shadow-sm overflow-hidden h-[50px] lg:h-[67px]">
       <Input
         size="lg"
         value={value}
@@ -24,7 +24,7 @@ export const SearchBarComponent: React.FC<SearchBarProps> = ({
         variant="flat"
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="flex-1 h-full rounded-l-full text-[18px] bg-transparent border-none focus:outline-none"
+        className="flex-1 h-full rounded-l-full text-[15px] md:text-[18px] lg:text-[20px] bg-transparent border-none focus:outline-none"
         classNames={{
           input: "text-gray-700 placeholder:text-gray-400 h-full",
           inputWrapper: "h-full bg-transparent shadow-none border-none px-5",

@@ -15,7 +15,7 @@ import { CallToActionSection } from "@/ui/organism/CallToActionSection/CallToAct
 import { ICarouselProps } from "@/ui/molecules/Carousel/carousel.properties";
 
 const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
-  base: "basis-full",
+  base: "basis-1/2",
   sm: "sm:basis-1/2",
   md: "md:basis-1/3",
   lg: "lg:basis-1/5",
@@ -39,7 +39,7 @@ export default function Calls() {
 
       <Section fadeIn={true}>
         <Container className="flex flex-col items-center">
-          <div className="flex justify-center mt-10 w-full lg:w-fit lg:min-w-[707px]">
+          <div className="flex justify-center w-full lg:w-fit lg:min-w-[707px]">
             <SearchBar
               value={query}
               onChange={setQuery}
@@ -47,7 +47,7 @@ export default function Calls() {
             />
           </div>
 
-          <div className="my-10 w-full flex flex-wrap justify-center gap-5">
+          <div className="my-10 w-full flex flex-wrap justify-center gap-3 lg:gap-5">
             {btns.map(({ id, year }) => {
               const active = activeBtn === year;
 
@@ -56,8 +56,8 @@ export default function Calls() {
                   key={id}
                   onClick={() => setActiveBtn(year)}
                   className={`
-                    w-full md:w-fit flex items-center gap-2 px-7 py-4 rounded-2xl transition-all duration-300
-                    font-semibold text-[19px] md:text-[23px] lg:text-[25px] cursor-pointer shadow-lg
+                    w-full md:w-fit flex items-center gap-2 px-5 lg:px-7 py-4 rounded-2xl transition-all duration-300
+                    font-semibold text-[17px] md:text-[22px] lg:text-[25px] cursor-pointer shadow-lg
                     ${
                       active
                         ? "bg-[#A9BEFF] text-primary shadow-xl"
@@ -78,38 +78,40 @@ export default function Calls() {
             })}
           </div>
 
-          <Divider className="w-full lg:w-[1023px] bg-secondary mb-15" />
+          <Divider className="w-full lg:w-[1023px] bg-secondary mb-7 lg:mb-15" />
 
-          <Carousel
-            gapClass="px-0"
-            showDots={false}
-            slideSizeClasses={customSlideClasses}
-          >
-            {options.map((option) => {
-              return (
-                <ProjectTypeCard
-                  key={option.id}
-                  item={option}
-                  active={active === option.title}
-                  onClick={(value) => {
-                    setActive(value);
-                  }}
-                />
-              );
-            })}
-          </Carousel>
+          <div className="w-full">
+            <Carousel
+              gapClass="px-3"
+              showDots={false}
+              slideSizeClasses={customSlideClasses}
+            >
+              {options.map((option) => {
+                return (
+                  <ProjectTypeCard
+                    key={option.id}
+                    item={option}
+                    active={active === option.title}
+                    onClick={(value) => {
+                      setActive(value);
+                    }}
+                  />
+                );
+              })}
+            </Carousel>
+          </div>
 
-          <Divider className="lg:w-[1023px] bg-secondary mt-15" />
+          <Divider className="lg:w-[1023px] bg-secondary mt-7 lg:mt-15" />
         </Container>
       </Section>
 
       <Section fadeIn={true}>
         <Container>
-          <div className="flex justify-end mb-10">
+          <div className="flex justify-end mb-7 lg:mb-10">
             <FilterByState />
           </div>
 
-          <div className="space-y-5">
+          <div className="space-y-4 lg:space-y-5">
             {projects.map((item) => (
               <CallCard key={item.id} item={item} />
             ))}
