@@ -21,19 +21,21 @@ export default function AboutUs() {
       <HeroSimple title="¿Quiénes somos?" backgroundImage={hero_simple} />
 
       <Section fadeIn={true}>
-        <Container className="flex flex-col gap-15">
-          <div className="flex justify-center w-full">
+        <Container className="flex flex-col">
+          <div className="hidden md:flex justify-center w-full">
             <Image
               src={pro_desarrollo_logo}
               alt="logo de pro desarrollo"
-              className="h-20 w-[303px]"
+              className="h-[80px] w-fit"
             />
           </div>
 
           <AboutSection
+            reverse={true}
             title="Naturaleza Institucional"
-            classNameDots="w-[411px] h-[570px] left-0"
-            classNameVideo="w-[350px] h-[220px]"
+            classNameContainerVideos="justify-center lg:justify-end"
+            classNameDots="hidden lg:h-full lg:w-[35%] lg:grid left-0"
+            classNameVideo="w-[47.9%] md:w-[48.1%] lg:w-[85%] bg-default-100 p-3 shadow-lg"
             videoSrc={[
               "https://www.youtube.com/embed/mn64ZdDpC6k",
               "https://www.youtube.com/embed/jdOT18uUuWc",
