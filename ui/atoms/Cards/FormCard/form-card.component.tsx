@@ -9,8 +9,8 @@ export const FormCardComponent: React.FC<FormCardProps> = ({
   buttonAction,
 }) => {
   return (
-    <Card className="bg-[#F5F8FF] rounded-2xl p-6 md:p-8 w-full shadow-md border-none">
-      <CardBody className="space-y-6">
+    <Card className="bg-[#F5F8FF] rounded-2xl p-4 md:p-6 lg:p-8 w-full shadow-md border-none">
+      <CardBody className="space-y-2 lg:space-y-4">
         <Title
           text={title}
           highlightFirstLetter={false}

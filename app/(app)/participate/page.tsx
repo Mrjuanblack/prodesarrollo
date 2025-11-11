@@ -37,7 +37,7 @@ export default function Participate() {
       <HeroSimple title="Banco de oferentes" backgroundImage={hero_simple} />
 
       <Section fadeIn={true}>
-        <Container className="flex flex-col space-y-10">
+        <Container className="flex flex-col space-y-7 lg:space-y-10">
           <div className="flex justify-center">
             <IconTitle title="Participa en PRO. DESARROLLO" />
           </div>
@@ -55,10 +55,10 @@ export default function Participate() {
               <>
                 <Text
                   text="Selecciona una opción"
-                  className="text-[15px] lg:text-[20px]"
+                  className="text-[15px] md:text-[18px] lg:text-[20px]"
                 />
 
-                <div className="flex flex-col md:flex-row gap-6 mt-10 w-full justify-center">
+                <div className="flex gap-6 mt-5 lg:mt-10 w-full justify-center">
                   {profileTypes.map((item) => (
                     <ProfileTypeCard
                       key={item.id}
@@ -71,23 +71,23 @@ export default function Participate() {
             )}
 
             {active === "step-2" && (
-              <div className="w-full space-y-10">
+              <div className="w-full space-y-5 lg:space-y-10">
                 <div>
                   <IconTitle
                     Icon={Link}
-                    className="mb-10"
+                    className="mb-5 lg:mb-10"
                     highlightFirstLetter={false}
-                    classNameTitle="lg:font-normal"
+                    classNameTitle="font-medium text-[15px] md:text-[18px] lg:text-[20px]"
                     title="Documentos requeridos para inscripción de persona natural"
                   />
 
-                  <div className="flex flex-col gap-4 pl-10">
+                  <div className="flex flex-col gap-4 pl-6 lg:pl-10">
                     {projects.map((project, index) => (
                       <div
                         key={project.id}
-                        className="flex items-center gap-3 text-black hover:text-primary cursor-pointer transition-colors"
+                        className="flex items-center text-black hover:text-primary cursor-pointer transition-colors"
                       >
-                        <span className="text-[15px] lg:text-[20px] font-medium">
+                        <span className="text-[15px] md:text-[18px] lg:text-[20px] font-medium">
                           {index + 1}. {project.name}
                         </span>
                       </div>
@@ -98,22 +98,23 @@ export default function Participate() {
                 <div>
                   <IconTitle
                     Icon={Link}
-                    className="mb-10"
+                    className="mb-5 lg:mb-10"
                     highlightFirstLetter={false}
                     title="Documentos para descargar"
-                    classNameTitle="lg:font-normal"
+                    classNameTitle="font-medium text-[15px] md:text-[18px] lg:text-[20px]"
                   />
 
-                  <div className="flex flex-col gap-4 pl-10">
+                  <div className="flex flex-col gap-4 pl-6 lg:pl-10">
                     {projects.map((project) => (
                       <div
                         key={project.id}
-                        className="flex items-center gap-3 text-black hover:text-primary cursor-pointer transition-colors"
+                        className="flex items-center gap-2 lg:gap-3 text-black hover:text-primary cursor-pointer transition-colors"
                       >
-                        <div className="bg-[#D9E0FF] p-2 rounded-lg">
+                        <div className="bg-[#D9E0FF] p-1 lg:p-2 rounded-lg">
                           <ArrowDownToLine size={20} className="text-primary" />
                         </div>
-                        <span className="text-[15px] lg:text-[20px] font-medium">
+
+                        <span className="text-[15px] md:text-[18px] lg:text-[20px] font-medium">
                           {project.name}
                         </span>
                       </div>
@@ -124,7 +125,7 @@ export default function Participate() {
             )}
 
             {active === "step-3" && (
-              <div className="w-full flex gap-10 flex-col lg:flex-row">
+              <div className="w-full flex gap-6 lg:gap-10 flex-col lg:flex-row">
                 <FormContactSection />
                 <BranchInfoCard />
               </div>

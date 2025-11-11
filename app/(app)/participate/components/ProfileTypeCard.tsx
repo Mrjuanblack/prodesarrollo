@@ -16,14 +16,14 @@ export const ProfileTypeCard: React.FC<ProfileTypeCardProps> = ({
   return (
     <button
       onClick={() => onClick?.(item.id)}
-      className={`bg-default-100 p-5 flex flex-col items-center rounded-2xl shadow-sm border overflow-hidden 
-      w-full md:w-[394px] h-[474px] transition-all duration-300 cursor-pointer 
+      className={`bg-default-100 p-3 lg:p-5 flex flex-col items-center rounded-2xl shadow-sm border overflow-hidden 
+      w-[50%] max-w-[394px] h-[247px] md:h-[374px] lg:h-[474px] transition-all duration-300 cursor-pointer 
       hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-primary/30
       ${active ? "bg-default-200 border-primary" : "border-gray-200"}`}
     >
       <Title text={item.title} />
 
-      <div className="w-full h-[360px] relative mt-5">
+      <div className="w-full h-[190px] md:h-[290px] lg:h-[360px] relative mt-3 lg:mt-5">
         <Image fill src={item.img} alt={item.title} className="object-cover" />
       </div>
     </button>

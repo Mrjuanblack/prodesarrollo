@@ -99,11 +99,14 @@ const Call = () => {
               <div className="flex items-center gap-2">
                 <IconTitle
                   Icon={Link}
-                  classNameTitle="md:font-normal"
+                  highlightFirstLetter={false}
+                  classNameTitle="font-normal text-[15px] md:text-[18px] lg:text-[20px]"
                   title="Interventoría asociada: "
+                />
+                <Title
+                  text={relatedProjects[0].title}
                   highlightFirstLetter={false}
                 />
-                <Title text={relatedProjects[0].title} />
               </div>
             )}
           </div>
@@ -111,14 +114,14 @@ const Call = () => {
       </Section>
 
       <Section hasPadding={false} fadeIn={true}>
-        <Container>
+        <Container className="mt-3 md:mt-0">
           <IconTitle
             highlightFirstLetter={false}
             title="Documentos del proyecto"
-            className="mb-10"
+            className="mb-5 lg:mb-7"
           />
 
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2 lg:gap-4">
             {actas.map((acta) => (
               <a
                 key={acta.id}
@@ -130,6 +133,7 @@ const Call = () => {
                 <div className="bg-[#D9E0FF] p-2 rounded-lg">
                   <ArrowDownToLine size={20} className="text-primary" />
                 </div>
+
                 <span className="text-[15px] md:text-[18px] lg:text-[20px] font-medium">
                   {acta.name}
                 </span>
@@ -140,11 +144,11 @@ const Call = () => {
       </Section>
 
       <Section fadeIn={true}>
-        <Container className="w-full flex flex-col items-center">
+        <Container className="w-full flex flex-col items-center mt-3 md:mt-0">
           <IconTitle
             highlightFirstLetter={false}
             title="Registro fotográfico"
-            className="mb-10"
+            className="mb-5 lg:mb-7"
           />
 
           <div className="w-full">
@@ -168,7 +172,7 @@ const Call = () => {
           <Button
             variant="solid"
             text="Quiero apoyar este proyecto"
-            className="mt-10 bg-secondary w-fit hover:bg-secondary-400 font-bold transition-colors duration-200 shadow-md"
+            className="mt-5 lg:mt-10 bg-secondary w-fit hover:bg-secondary-400 font-bold transition-colors duration-200 shadow-md"
           />
         </Container>
       </Section>
