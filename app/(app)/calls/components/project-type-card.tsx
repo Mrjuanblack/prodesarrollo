@@ -24,8 +24,8 @@ export const ProjectTypeCard: React.FC<ProjectTypeCardProps> = ({
     <button
       type="button"
       onClick={() => onClick?.(item.title)}
-      className={`flex flex-col items-center rounded-2xl border overflow-hidden
-        h-[278px] md:w-[200px] xl::w-[248px] transition-all duration-300 cursor-pointer 
+      className={`w-full flex flex-col items-center rounded-2xl border overflow-hidden
+        h-[212px] md:h-[258px] lg:h-[278px] transition-all duration-300 cursor-pointer 
         focus:outline-none focus:ring-2 focus:ring-primary/40 hover:scale-[1.03]
         ${
           active
@@ -34,7 +34,7 @@ export const ProjectTypeCard: React.FC<ProjectTypeCardProps> = ({
         }
       `}
     >
-      <div className="relative w-full h-[189px]">
+      <div className="relative w-full h-[144px] md:h-[190px] lg:h-[210px]">
         <Image
           fill
           src={img}
@@ -50,7 +50,7 @@ export const ProjectTypeCard: React.FC<ProjectTypeCardProps> = ({
       >
         <p
           className={`
-            text-center text-[16px] md:text-[17px] lg:text-[18px] transition-colors duration-200`}
+            text-center text-[14px] md:text-[16px] lg:text-[18px] transition-colors duration-200`}
         >
           {title}
         </p>

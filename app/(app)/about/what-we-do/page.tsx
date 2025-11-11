@@ -26,10 +26,10 @@ export default function WhatWeDo() {
       <HeroSimple title="¿Qué hacemos?" backgroundImage={hero_simple} />
 
       <Section fadeIn={true}>
-        <Container className="relative lg:h-[500px] flex flex-col lg:flex-row items-center justify-center gap-15">
-          <div className="absolute top-0 lg:left-0 z-0 shrink-0 w-[500px] h-[500px] flex justify-center rounded-full bg-[#F5F8FF]"></div>
+        <Container className="relative flex flex-col-reverse lg:h-[500px] lg:flex-row items-center justify-center lg:gap-15">
+          <div className="absolute bottom-0 lg:top-0 lg:left-0 z-0 shrink-0 w-[345px] h-[345px] lg:w-[500px] lg:h-[500px] flex justify-center rounded-full bg-[#F5F8FF]"></div>
 
-          <div className="shrink-0 z-1 mt-15 lg:ml-15 w-[266px] h-[266px]">
+          <div className="shrink-0 z-1 mb-15 lg:mt-15 lg:ml-15 w-[184px] h-[184px] lg:w-[266px] lg:h-[266px]">
             <Image
               src={crane_img}
               alt="Ilustración construcción"
@@ -37,10 +37,10 @@ export default function WhatWeDo() {
             />
           </div>
 
-          <div className="z-1 leading-relaxed text-center lg:text-justify">
-            <Title text="Objeto Social" className="lg:text-[25px] mb-5" />
+          <div className="z-1 leading-relaxed lg:text-justify space-y-3">
+            <Title text="Objeto Social" />
 
-            <p className="text-black text-[15px] lg:text-[20px]">
+            <p className="text-black text-[15px] text-justify md:text-[18px] lg:text-[20px]">
               PRO. DESARROLLO. Su objeto principal es ejecutar, desarrollar,
               fomentar, implementar, gestionar, planificar o financiar todo tipo
               de programas y proyectos de manera lícita, el fomento y desarrollo
@@ -68,7 +68,7 @@ export default function WhatWeDo() {
 
           <Carousel options={options} slideSizeClasses={customSlideClasses}>
             {infos.map((service) => (
-              <div key={service.id} className="h-full pb-17">
+              <div key={service.id} className="h-full pt-10">
                 <InfoCard item={service} />
               </div>
             ))}

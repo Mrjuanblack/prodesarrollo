@@ -8,12 +8,20 @@ import {
 } from "@/ui/atoms";
 import Image from "next/image";
 import hero_simple from "@/public/hero-simple.svg";
-import { Container, Section } from "@/ui/molecules";
+import { Carousel, Container, Section } from "@/ui/molecules";
 import { HeroSimple, SectionHeader } from "@/ui/organism";
 import { infos, transparencies } from "./page.properties";
 import pro_desarrollo_logo from "@/public/pro-desarrollo-logo.svg";
 import { AboutSection } from "../../home/components/about-section.component";
 import { CallToActionSection } from "@/ui/organism/CallToActionSection/CallToActionSection";
+import { ICarouselProps } from "@/ui/molecules/Carousel/carousel.properties";
+
+const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
+  base: "basis-1/2",
+  sm: "sm:basis-1/2",
+  md: "md:basis-1/3",
+  lg: "lg:basis-1/4",
+};
 
 export default function AboutUs() {
   return (
@@ -21,19 +29,21 @@ export default function AboutUs() {
       <HeroSimple title="¿Quiénes somos?" backgroundImage={hero_simple} />
 
       <Section fadeIn={true}>
-        <Container className="flex flex-col gap-15">
-          <div className="flex justify-center w-full">
+        <Container className="flex flex-col">
+          <div className="hidden md:flex justify-center w-full">
             <Image
               src={pro_desarrollo_logo}
               alt="logo de pro desarrollo"
-              className="h-20 w-[303px]"
+              className="h-[80px] w-fit"
             />
           </div>
 
           <AboutSection
+            reverse={true}
             title="Naturaleza Institucional"
-            classNameDots="w-[411px] h-[570px] left-0"
-            classNameVideo="w-[350px] h-[220px]"
+            classNameContainerVideos="justify-center lg:justify-end"
+            classNameDots="hidden lg:h-full lg:w-[35%] lg:grid left-0"
+            classNameVideo="w-[47.9%] md:w-[48.1%] lg:w-[85%] bg-default-100 p-1 lg:p-3 shadow-lg"
             videoSrc={[
               "https://www.youtube.com/embed/mn64ZdDpC6k",
               "https://www.youtube.com/embed/jdOT18uUuWc",
@@ -76,7 +86,7 @@ export default function AboutUs() {
       </Section>
 
       <Section fadeIn={true}>
-        <Container className="flex gap-15 flex-col md:flex-row">
+        <Container className="flex gap-5 md:gap-10 lg:gap-15 flex-col md:flex-row">
           <MissionCardCard
             title="Misión"
             isRoundedLeft={true}
@@ -90,7 +100,7 @@ export default function AboutUs() {
       </Section>
 
       <Section fadeIn={true}>
-        <Container className="gap-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+        <Container className="mt-7 lg:mt-0 gap-15 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
           {infos.map((info) => (
             <InfoCard key={info.id} item={info} />
           ))}
@@ -104,12 +114,22 @@ export default function AboutUs() {
             description="En PRO. DESARROLLO orientamos nuestra gestión bajo principios éticos y técnicos que fortalecen la confianza pública, la cooperación y el desarrollo territorial. Nuestros valores guían cada acción, decisión y alianza institucional, promoviendo una cultura basada en la transparencia, la eficiencia y el compromiso con el bienestar colectivo."
           />
 
-          <div className="mt-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-15">
+          <div className="mt-7 grid-cols-1 hidden lg:grid lg:grid-cols-3 lg:gap-15">
             {transparencies.map((transparency) => {
               return (
                 <TransparencyCard key={transparency.id} item={transparency} />
               );
             })}
+          </div>
+
+          <div className="mt-7 w-full lg:hidden">
+            <Carousel slideSizeClasses={customSlideClasses}>
+              {transparencies.map((transparency) => (
+                <div key={transparency.id} className="h-full">
+                  <TransparencyCard item={transparency} />
+                </div>
+              ))}
+            </Carousel>
           </div>
         </Container>
       </Section>

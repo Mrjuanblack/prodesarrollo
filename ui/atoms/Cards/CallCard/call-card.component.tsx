@@ -19,9 +19,9 @@ export const CallCardComponent: FC<CallCardProps> = ({ item }) => {
   return (
     <Card
       shadow="none"
-      className="border border-[#D6E0F5] rounded-2xl px-6 py-5 transition-all duration-300 hover:shadow-md"
+      className="border border-[#D6E0F5] rounded-2xl px-4 lg:px-6 py-3 lg:py-5 transition-all duration-300 hover:shadow-md"
     >
-      <CardBody className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <CardBody className="flex flex-col md:flex-row md:items-center justify-between lg:gap-4">
         <div className="flex-1">
           <Chip
             category={`Estado: ${getProjectStatusLabel(status)}`}
@@ -31,27 +31,27 @@ export const CallCardComponent: FC<CallCardProps> = ({ item }) => {
 
           <Title
             text={title}
-            className="md:text-[20px] mb-1"
             highlightFirstLetter={false}
+            className="text-[15px] md:text-[18px] lg:text-[20px]"
           />
 
           <Text
             text={`Fecha de apertura: ${formatDate(date)}`}
-            className="text-[16px] md:text-[18px] lg:text-[20px] text-primary mb-3"
+            className="text-[15px] md:text-[18px] lg:text-[20px] text-primary mb-2 lg:mb-3"
           />
 
           <Text
             text={description}
-            className="text-primary text-[16px] md:text-[18px] lg:text-[20px] leading-relaxed"
+            className="text-primary text-[15px] md:text-[18px] lg:text-[20px] leading-relaxed"
           />
         </div>
 
         <div className="flex justify-end md:ml-6">
           <Button
-            text="Ver proyecto"
             variant="bordered"
-            onClick={() => router.push("/calls/1")}
+            text="Ver proyecto"
             className="font-semibold w-fit"
+            onClick={() => router.push("/calls/1")}
           />
         </div>
       </CardBody>
