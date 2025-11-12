@@ -52,7 +52,7 @@ export default function Pqrs() {
 
             <Text
               text="Toda persona natural o jurídica tiene derecho a presentar solicitudes respetuosas ante esta entidad (por interés particular o general) y a obtener pronta resolución, conforme al artículo 23 de la Constitución Política y la Ley 1755 de 2015."
-              className={`text-md md:text-[20px] mt-4 max-w-6xl text-justify text-gray-500`}
+              className={`text-[15px] md:text-[18px] lg:text-[20px] mt-4 max-w-6xl text-justify text-gray-500`}
             />
           </div>
         </Container>
@@ -66,10 +66,10 @@ export default function Pqrs() {
                 <Title
                   highlightFirstLetter={false}
                   text="Selecciona el tipo de solicitud a registrar"
-                  className="text-primary md:text-[20px] font-semibold"
+                  className="text-primary text-[15px] md:text-[18px] lg:text-[20px] font-semibold"
                 />
 
-                <div className="mt-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-15">
+                <div className="mt-5 lg:mt-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-9 lg:gap-15">
                   {transparencies.map((transparency) => {
                     return (
                       <TransparencyCard
@@ -87,7 +87,7 @@ export default function Pqrs() {
                 title="Ingresa la siguiente información para registrar tu solicitud"
                 form={
                   <>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 lg:gap-4">
                       <Select
                         options={idTypes}
                         label="Tipo de identificación"
@@ -111,7 +111,7 @@ export default function Pqrs() {
                       label="Descripción de la solicitud"
                     />
 
-                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 text-[20px]">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between lg:gap-2 text-[15px] md:text-[18px] lg:text-[20px]">
                       <span className="text-black font-medium">
                         Cargar archivos y/o imágenes de soporte
                       </span>

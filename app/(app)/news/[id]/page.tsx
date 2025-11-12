@@ -7,6 +7,14 @@ import hero_simple from "@/public/hero-simple.svg";
 import { BackgroundSection, Chip, Text } from "@/ui/atoms";
 import { Carousel, Container, IconTitle, Section } from "@/ui/molecules";
 import { CallToActionSection } from "@/ui/organism/CallToActionSection/CallToActionSection";
+import { ICarouselProps } from "@/ui/molecules/Carousel/carousel.properties";
+
+const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
+  base: "basis-1/2",
+  sm: "sm:basis-1/2",
+  md: "md:basis-1/3",
+  lg: "lg:basis-1/4",
+};
 
 export default function New() {
   return (
@@ -26,17 +34,17 @@ export default function New() {
             <div>
               <Text
                 text="Fecha : 27/10/2025"
-                className="text-primary font-normal text-[20px]"
+                className="text-primary font-normal text-[15px] md:text-[18px] lg:text-[20px]"
               />
 
               <Text
                 text="Publicado por: Ana García"
-                className="text-primary font-normal text-[20px]"
+                className="text-primary font-normal text-[15px] md:text-[18px] lg:text-[20px]"
               />
             </div>
 
             <Text
-              className="text-justify text-[20px]"
+              className="text-justify text-[15px] md:text-[18px] lg:text-[20px]"
               text={
                 <>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
@@ -73,14 +81,14 @@ export default function New() {
             <IconTitle
               highlightFirstLetter={false}
               title="Registro fotográficos"
-              className="mt-20 mb-10"
+              className="mt-10 lg:mt-20 mb-5 lg:mb-10"
             />
 
-            <Carousel>
+            <Carousel slideSizeClasses={customSlideClasses}>
               {imgs.map((img) => (
                 <div
                   key={img.id}
-                  className="relative h-[281px] w-[421px] overflow-hidden"
+                  className="relative h-[135px] md:h-[200px] lg:h-[281px] overflow-hidden"
                 >
                   <Image
                     fill

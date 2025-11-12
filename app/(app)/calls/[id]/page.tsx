@@ -3,12 +3,19 @@
 import Image from "next/image";
 import Link from "next/link";
 import { HeroSimple } from "@/ui/organism";
-import { actas, imgs } from "./page.properties";
 import hero_simple from "@/public/hero-simple.svg";
 import { ArrowDownToLine, CheckCircle, Clock, Link as LinkIcon, Play, X } from "lucide-react";
 import { Carousel, Container, IconTitle, Section } from "@/ui/molecules";
 import { BackgroundSection, Button, Chip, GlobalLoader, Text, Title } from "@/ui/atoms";
+import { ICarouselProps } from "@/ui/molecules/Carousel/carousel.properties";
 import { CallToActionSection } from "@/ui/organism/CallToActionSection/CallToActionSection";
+
+const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
+  base: "basis-full",
+  sm: "sm:basis-1/2",
+  md: "md:basis-1/3",
+  lg: "lg:basis-1/4",
+};
 import useProject from "@/hooks/project/useProject";
 import { useParams } from "next/navigation";
 import { getProjectStatusLabel, getProjectTypeLabel, ProjectStatus } from "@/domain/Projects";
@@ -67,11 +74,6 @@ const Call = () => {
                 text={`Fecha : ${project.date.toLocaleDateString('es-CO')}`}
                 className="text-primary font-normal text-[20px]"
               />
-
-              {/* <Text
-                text="Publicado por: Ana García"
-                className="text-primary font-normal text-[20px]"
-              /> */}
             </div>
 
             <Text
@@ -136,7 +138,7 @@ const Call = () => {
               className="mb-10"
             />
 
-            <Carousel>
+            <Carousel slideSizeClasses={customSlideClasses}>
               {project.photos.map((photo) => (
                 <div
                   key={photo.id}

@@ -6,7 +6,7 @@ import hero_img from "@/public/preguntas-icono.svg";
 export const HelpSectionComponent: React.FC = () => {
   return (
     <Section fadeIn={true} className="bg-default-100 md:bg-default-100">
-      <Container className="flex flex-col md:flex-row items-center justify-between">
+      <Container className="flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <div className="relative h-[150px] w-[150px] md:h-[226px] md:w-[226px] rounded-full p-3 flex items-center justify-center overflow-hidden">
             <Image
@@ -18,16 +18,16 @@ export const HelpSectionComponent: React.FC = () => {
           </div>
 
           <div>
-            <h2 className="text-primary font-bold text-base md:text-[30px]">
+            <h2 className="text-primary font-bold text-[18px] md:text-[25px] lg:text-[30px]">
               ¿Tienes preguntas? Estamos aquí para ayudarte
             </h2>
-            <p className="text-black text-sm md:text-[25px] mt-5">
+            <p className="text-black text-[18px] md:text-[25px] lg:text-[30px] mt-3 lg:mt-5">
               📩 Nuestro equipo está listo para orientarte paso a paso.
             </p>
           </div>
         </div>
 
-        <button className="cursor-pointer mt-6 md:mt-0 text-[15px] md:text-[20px] border border-primary text-primary font-medium px-5 py-2 rounded-full hover:bg-primary hover:text-white transition-all duration-300">
+        <button className="cursor-pointer text-[15px] lg:text-[20px] border border-primary text-primary font-medium px-5 py-2 rounded-full hover:bg-primary hover:text-white transition-all duration-300">
           Enviar consulta
         </button>
       </Container>

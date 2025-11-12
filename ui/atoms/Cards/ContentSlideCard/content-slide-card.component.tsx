@@ -6,13 +6,18 @@ import React from "react";
 import Image from "next/image";
 import { IconTitle } from "@/ui/molecules";
 
-const ContentBlockCard: React.FC<{ item: ContentBlock }> = ({ item }) => {
+const ContentBlockCard: React.FC<{ item: ContentBlock; className: string }> = ({
+  item,
+  className,
+}) => {
   const iconColor = "text-white";
   const iconBgColor = "bg-secondary";
-  const classNameTitle = "text-md md:text-[20px] text-white";
+  const classNameTitle = "text-white text-[12px] md:text-[16px] lg:text-[20px]";
 
   return (
-    <div className="flex flex-col h-full bg-primary/60 rounded-2xl p-8">
+    <div
+      className={`flex flex-col h-full bg-primary md:bg-primary/60 rounded-b-2xl md:rounded-2xl p-4 md:p-6 lg:p-8 ${className}`}
+    >
       <div className="flex items-start mb-3">
         <IconTitle
           Icon={item.icon}
@@ -24,7 +29,7 @@ const ContentBlockCard: React.FC<{ item: ContentBlock }> = ({ item }) => {
         />
       </div>
 
-      <p className="text-white text-[14px] lg:text-[20px] leading-relaxed">
+      <p className="text-white text-[12px] md:text-[16px] lg:text-[20px] leading-relaxed">
         {item.description}
       </p>
     </div>
@@ -36,8 +41,8 @@ export const ContentSlideCardComponent: React.FC<ContentSlideProps> = ({
   items,
 }) => {
   return (
-    <div className="relative w-full h-[580px] overflow-hidden">
-      <div className="absolute inset-0 z-0">
+    <div className={`relative w-full h-[317px] lg:h-[580px] overflow-hidden`}>
+      <div className="absolute inset-0 z-0 h-[230px] md:h-full">
         <Image
           src={img}
           layout="fill"
@@ -49,9 +54,13 @@ export const ContentSlideCardComponent: React.FC<ContentSlideProps> = ({
       </div>
 
       <div className="absolute inset-0 z-2 flex flex-col justify-end">
-        <div className="gap-7 p-7 md:p-20 grid grid-cols-1 md:grid-cols-2 md:gap-12 w-full h-auto">
-          {items.map((item) => (
-            <ContentBlockCard key={item.id} item={item} />
+        <div className="w-full h-auto grid grid-cols-1 md:grid-cols-2 md:p-10 lg:px-15 md:gap-7">
+          {items.map((item, index) => (
+            <ContentBlockCard
+              item={item}
+              key={item.id}
+              className={`${index == 1 ? "hidden md:flex" : ""}`}
+            />
           ))}
         </div>
       </div>

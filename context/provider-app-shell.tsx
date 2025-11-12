@@ -2,7 +2,12 @@
 
 import { Footer, Header } from "@/ui/organism";
 import { Button } from "@heroui/react";
-import { ChartBarSquareIcon, GlobeAltIcon, BuildingOfficeIcon, DocumentDuplicateIcon } from "@heroicons/react/24/solid";
+import {
+  ChartBarSquareIcon,
+  GlobeAltIcon,
+  BuildingOfficeIcon,
+  DocumentDuplicateIcon,
+} from "@heroicons/react/24/solid";
 import { usePathname, useRouter } from "next/navigation";
 
 interface ProviderAppShellProps {
@@ -10,17 +15,15 @@ interface ProviderAppShellProps {
 }
 
 export default function ProviderAppShell({ children }: ProviderAppShellProps) {
-
   const router = useRouter();
   const pathname = usePathname();
-  
 
   const isInternal = pathname.startsWith("/internal");
   const isActive = (href: string) => pathname.endsWith(href);
 
   const internalPrefix = "/internal";
   const routes = [
-    { 
+    {
       label: "Proyectos",
       icon: DocumentDuplicateIcon,
       href: `${internalPrefix}/projects`,
@@ -35,15 +38,21 @@ export default function ProviderAppShell({ children }: ProviderAppShellProps) {
         </div>
         <div className="flex flex-col gap-2 px-4">
           {routes.map((route) => (
-            <Button size="lg" style={{ justifyContent: "flex-start" }} key={route.href} variant={isActive(route.href) ? "solid" : "light"} color="primary" startContent={<route.icon className="w-6 h-6" />} onClick={() => router.push(route.href)}>
+            <Button
+              size="lg"
+              style={{ justifyContent: "flex-start" }}
+              key={route.href}
+              variant={isActive(route.href) ? "solid" : "light"}
+              color="primary"
+              startContent={<route.icon className="w-6 h-6" />}
+              onClick={() => router.push(route.href)}
+            >
               {route.label}
             </Button>
           ))}
         </div>
       </div>
-      <div className="flex-1">
-        {children}
-      </div>
+      <div className="flex-1">{children}</div>
     </div>
   );
 
@@ -55,5 +64,5 @@ export default function ProviderAppShell({ children }: ProviderAppShellProps) {
     </>
   );
 
-  return (isInternal ? internalLayout : publicLayout);
+  return isInternal ? internalLayout : publicLayout;
 }

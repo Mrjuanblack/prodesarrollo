@@ -3,8 +3,8 @@ import { useRouter } from "next/navigation";
 import { Card, CardBody } from "@heroui/react";
 import { Button, Chip, Text, Title } from "../..";
 import { CheckCircle, Clock, Play, X } from "lucide-react";
-import { CallCardProps } from "./call-card.properties";
 import { getProjectStatusLabel, ProjectStatus } from "@/domain/Projects";
+import { CallCardProps } from "./call-card.properties";
 
 export const CallCardComponent: FC<CallCardProps> = ({ item }) => {
   const router = useRouter();
@@ -27,9 +27,9 @@ export const CallCardComponent: FC<CallCardProps> = ({ item }) => {
   return (
     <Card
       shadow="none"
-      className="border border-[#D6E0F5] rounded-2xl px-6 py-5 transition-all duration-300 hover:shadow-md"
+      className="border border-[#D6E0F5] rounded-2xl px-4 lg:px-6 py-3 lg:py-5 transition-all duration-300 hover:shadow-md"
     >
-      <CardBody className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <CardBody className="flex flex-col md:flex-row md:items-center justify-between lg:gap-4">
         <div className="flex-1">
           <Chip
             category={`Estado: ${getProjectStatusLabel(item.status)}`}
@@ -39,14 +39,15 @@ export const CallCardComponent: FC<CallCardProps> = ({ item }) => {
 
           <Title
             text={item.title}
-            className="md:text-[20px] mb-1"
             highlightFirstLetter={false}
+            className="text-[15px] md:text-[18px] lg:text-[20px]"
           />
 
           <Text
             text={`Fecha de apertura: ${item.date.toLocaleDateString('es-CO')}`}
-            className="md:text-[20px] text-primary mb-3"
+            className="text-[15px] md:text-[18px] lg:text-[20px] text-primary mb-2 lg:mb-3"
           />
+
           <Text
             text={item.description}
             className="text-primary text-[20px] leading-relaxed"
@@ -55,8 +56,8 @@ export const CallCardComponent: FC<CallCardProps> = ({ item }) => {
 
         <div className="flex justify-end md:ml-6">
           <Button
-            text="Ver proyecto"
             variant="bordered"
+            text="Ver proyecto"
             onClick={() => router.push(`/calls/${item.id}`)}
             className="font-semibold w-fit"
           />

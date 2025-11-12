@@ -14,6 +14,14 @@ import { useYearsWithProjects } from "@/hooks/project/useYearsWithProjects";
 import { ProjectType, projectTypeList } from "@/domain/Projects";
 import { useProjectsInfinite } from "@/hooks/project/useProjectsInfinite";
 import { useInfiniteScroll } from "@heroui/use-infinite-scroll";
+import { ICarouselProps } from "@/ui/molecules/Carousel/carousel.properties";
+
+const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
+  base: "basis-1/2",
+  sm: "sm:basis-1/2",
+  md: "md:basis-1/3",
+  lg: "lg:basis-1/5",
+};
 
 export default function Calls() {
   const [query, setQuery] = useState("");
@@ -49,7 +57,7 @@ export default function Calls() {
 
       <Section fadeIn={true}>
         <Container className="flex flex-col items-center">
-          <div className="flex justify-center mt-10 min-w-[707px]">
+          <div className="flex justify-center w-full lg:w-fit lg:min-w-[707px]">
             <SearchBar
               value={query}
               onChange={setQuery}
@@ -85,29 +93,36 @@ export default function Calls() {
             })}
           </div>
 
-          <Divider className="w-full lg:w-[1023px] bg-secondary mb-15" />
+          <Divider className="w-full lg:w-[1023px] bg-secondary mb-7 lg:mb-15" />
 
-          <Carousel hasDots={false} slidesPerView={5}>
-            {projectTypeList.map((type) => {
-              return (
-                <ProjectTypeCard
-                  key={type}
-                  type={type}
-                  active={activeType === type}
-                  onClick={(value) => {
-                    setActiveType(value);
-                  }}
-                />
-              );
-            })}
-          </Carousel>
-          <Divider className="lg:w-[1023px] bg-secondary mt-15" />
+          <div className="w-full">
+            <Carousel
+              gapClass="px-3"
+              showDots={false}
+              slideSizeClasses={customSlideClasses}
+            >
+              {projectTypeList.map((option) => {
+                return (
+                  <ProjectTypeCard
+                    key={option}
+                    type={option}
+                    active={activeType === option}
+                    onClick={(value) => {
+                      setActiveType(value);
+                    }}
+                  />
+                );
+              })}
+            </Carousel>
+          </div>
+
+          <Divider className="lg:w-[1023px] bg-secondary mt-7 lg:mt-15" />
         </Container>
       </Section>
 
       <Section fadeIn={true}>
         <Container>
-          <div className="flex justify-end mb-10">
+          <div className="flex justify-end mb-7 lg:mb-10">
             <FilterByState />
           </div>
 

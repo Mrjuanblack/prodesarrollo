@@ -5,13 +5,8 @@ import { JSX } from "react";
 import { TextProperties } from "./text.properties";
 
 export const TextComponent = (properties: TextProperties): JSX.Element => {
-  const { text, className } = properties;
+  const { text, className = "text-[13px] md:text-[15px] lg:text-[20px]" } =
+    properties;
 
-  return (
-    <p
-      className={`text-[15px] lg:text-[20px] font-normal text-black ${className}`}
-    >
-      {text}
-    </p>
-  );
+  return <p className={`font-normal text-black ${className}`}>{text}</p>;
 };

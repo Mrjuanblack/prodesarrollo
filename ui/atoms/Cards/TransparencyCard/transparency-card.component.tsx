@@ -6,7 +6,7 @@ export const TransparencyCardComponent: React.FC<TransparencyCardProps> = ({
 }) => {
   const { title, description, Icon } = item;
   return (
-    <div className="flex flex-col items-center text-center bg-default-100 rounded-2xl p-6 rounded-tl-[60px] shadow-sm hover:shadow-md transition-shadow duration-300">
+    <div className="h-full flex flex-col items-center text-center bg-default-100 rounded-2xl p-4 md:p-6 lg:p-8 rounded-tl-[40px] lg:rounded-tl-[60px] shadow-sm hover:shadow-md transition-shadow duration-300">
       <div className="flex w-full justify-between">
         <div className="text-primary mb-3">
           {Icon && <Icon size={40} strokeWidth={1} />}
@@ -14,13 +14,13 @@ export const TransparencyCardComponent: React.FC<TransparencyCardProps> = ({
 
         <Title
           text={title}
-          className="self-end font-semibold text-[25px] mb-3"
+          className="self-end font-semibold text-[15px] md:text-[20px] lg:text-[25px] mb-3"
         />
       </div>
 
       <Text
         text={description}
-        className="text-black text-[18px] leading-relaxed text-right"
+        className="text-black text-[14px] md:text-[16px] lg:text-[18px] leading-relaxed text-right"
       />
     </div>
   );

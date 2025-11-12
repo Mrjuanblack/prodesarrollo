@@ -11,13 +11,13 @@ export const SectionHeaderComponent: FC<SectionHeaderProps> = ({
   const descriptionColor = "text-gray-500";
 
   return (
-    <div className="flex items-center flex-col mb-15">
+    <div className="flex items-center flex-col mb-7 lg:mb-15">
       <IconTitle Icon={Icon} title={title} />
 
       {description && (
         <Text
           text={description}
-          className={`text-[15px] lg:text-[20px] mt-4 max-w-6xl text-center ${descriptionColor}`}
+          className={`text-[13px] md:text-[15px] lg:text-[20px] mt-4 max-w-6xl text-center ${descriptionColor}`}
         />
       )}
     </div>

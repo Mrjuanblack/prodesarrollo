@@ -16,7 +16,8 @@ export default function StructureTeam() {
       <Section fadeIn={true}>
         <Container>
           <IconTitle title="Directivos" />
-          <div className="mt-7 grid grid-cols-1 md:grid-cols-2 gap-7">
+
+          <div className="mt-5 lg:mt-7 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4 lg:gap-7">
             {teamMembers.map((team) => {
               return <TeamCard key={team.id} item={team} />;
             })}

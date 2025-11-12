@@ -3,6 +3,7 @@ import { SectionHeader } from "@/ui/organism";
 import { Button, ServiceCard } from "@/ui/atoms";
 import { Carousel, Container, Section } from "@/ui/molecules";
 import { ServiceItem } from "@/ui/atoms/Cards/ServiceCard/service-card.properties";
+import { ICarouselProps } from "@/ui/molecules/Carousel/carousel.properties";
 
 const services: ServiceItem[] = [
   {
@@ -65,26 +66,35 @@ const services: ServiceItem[] = [
   },
 ];
 
+const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
+  base: "basis-full",
+  sm: "sm:basis-1/2",
+  md: "md:basis-1/3",
+  lg: "lg:basis-1/3",
+};
+
 export const AreasImpact = () => {
   return (
     <Section fadeIn={true}>
-      <Container className="flex flex-col items-center w-full">
+      <Container className="w-full flex flex-col items-center">
         <SectionHeader
           icon={Settings}
           title="Áreas de Impacto"
           description="Celebramos y suscribimos convenios y contratos interadministrativos, civiles y comerciales con entidades públicas y privadas, orientados al fortalecimiento de la gestión pública y a la promoción eficiente del desarrollo territorial."
         />
 
-        <Carousel>
-          {services.map((services) => (
-            <ServiceCard key={services.id} item={services} />
-          ))}
-        </Carousel>
+        <div className="w-full">
+          <Carousel slideSizeClasses={customSlideClasses}>
+            {services.map((services) => (
+              <ServiceCard key={services.id} item={services} />
+            ))}
+          </Carousel>
+        </div>
 
         <Button
           text="Ver más"
           variant="bordered"
-          className="font-semibold w-fit mt-10"
+          className="font-semibold w-fit mt-7 lg:mt-10"
           onClick={() => console.log("Ver más")}
         />
       </Container>

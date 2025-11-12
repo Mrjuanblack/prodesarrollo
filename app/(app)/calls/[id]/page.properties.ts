@@ -1,47 +1,53 @@
+import { Project, ProjectStatus } from "@/domain/Projects";
 import noticiaExample from "@/public/noticia-example.svg";
 
-interface ImgItem {
-  id: number;
-  img: string;
-  alt: string;
-}
-
-export const imgs: ImgItem[] = [
+export const projects: Project[] = [
   {
-    id: 1,
-    img: noticiaExample,
-    alt: "img example",
+    title: "Example",
+    description: "Example",
+    photosUrls: [noticiaExample, noticiaExample],
+    documents: [
+      {
+        id: "1",
+        name: "Example",
+        url: "Example",
+        createdAt: new Date(),
+      },
+    ],
+    createdAt: new Date(),
+    id: "1",
+    date: new Date(),
+    updatedAt: new Date(),
+    relatedProjects: [
+      {
+        id: "1",
+        title: "Example",
+      },
+    ],
+    status: ProjectStatus.STARTED,
   },
   {
-    id: 2,
-    img: noticiaExample,
-    alt: "img example",
+    title: "Example dos",
+    description: "Example dos",
+    photosUrls: [noticiaExample, noticiaExample],
+    documents: [
+      {
+        id: "1",
+        name: "Example Dos",
+        url: "Example Dos",
+        createdAt: new Date(),
+      },
+    ],
+    createdAt: new Date(),
+    id: "2",
+    date: new Date(),
+    updatedAt: new Date(),
+    relatedProjects: [
+      {
+        id: "1",
+        title: "Example Dos",
+      },
+    ],
+    status: ProjectStatus.IN_PROGRESS,
   },
-  {
-    id: 3,
-    img: noticiaExample,
-    alt: "img example",
-  },
-  {
-    id: 4,
-    img: noticiaExample,
-    alt: "img example",
-  },
-  {
-    id: 5,
-    img: noticiaExample,
-    alt: "img example",
-  },
-  {
-    id: 6,
-    img: noticiaExample,
-    alt: "img example",
-  },
-];
-
-export const actas = [
-  { id: 1, nombre: "Acta 1 - Aviso" },
-  { id: 2, nombre: "Acta 2 - Estudios" },
-  { id: 3, nombre: "Acta 3 - Evaluación" },
-  { id: 4, nombre: "Acta 4 - Cierre" },
 ];

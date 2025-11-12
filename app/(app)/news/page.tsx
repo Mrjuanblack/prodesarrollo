@@ -16,12 +16,12 @@ export default function News() {
 
       <Section fadeIn={true}>
         <Container>
-          <div className="flex justify-end gap-5 flex-col md:flex-row">
+          <div className="flex md:justify-end gap-5">
             <OrderFilter />
             <CategoryFilter />
           </div>
 
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-13">
+          <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-13">
             {news.map((news) => (
               <NewsCard key={news.id} item={news} />
             ))}

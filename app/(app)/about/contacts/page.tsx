@@ -22,7 +22,7 @@ import { socialItems } from "@/ui/organism/Header/header.properties";
 
 const ContactCard: FC<ContactCardProps> = ({ children }) => {
   return (
-    <div className="w-full flex flex-col space-y-7 items-center border-2 border-secondary rounded-r-2xl rounded-bl-2xl p-10">
+    <div className="w-full flex flex-col space-y-5 lg:space-y-7 items-center border-2 border-secondary rounded-r-2xl rounded-bl-2xl p-10">
       {children}
     </div>
   );
@@ -33,10 +33,10 @@ const Contacts = () => {
     <>
       <Section fadeIn={true}>
         <Container className="flex flex-col">
-          <div className="flex flex-col justify-center items-center gap-5">
+          <div className="flex flex-col justify-center items-center gap-2 lg:gap-5">
             <div className="flex items-center gap-5">
-              <div className="relative w-[216px] h-40">
-                <div className="absolute w-36 h-36 top-0 left-0">
+              <div className="relative w-[150px] h-[112px] lg:w-[216px] lg:h-[160px]">
+                <div className="absolute w-[100px] h-[100px] lg:w-[144px] lg:h-[144px] top-0 left-0">
                   <Image
                     fill
                     src={message_icon_two}
@@ -45,7 +45,7 @@ const Contacts = () => {
                   />
                 </div>
 
-                <div className="absolute w-36 h-36 bottom-0 right-0">
+                <div className="absolute w-[100px] h-[100px] lg:w-[144px] lg:h-[144px] bottom-0 right-0">
                   <Image
                     fill
                     src={message_icon}
@@ -56,14 +56,9 @@ const Contacts = () => {
               </div>
 
               <div>
-                <Title
-                  text="¿Necesitas ayuda?"
-                  className="md:text-[25px]"
-                  highlightFirstLetter={false}
-                />
+                <Title text="¿Necesitas ayuda?" highlightFirstLetter={false} />
 
                 <Title
-                  className="md:text-[25px]"
                   highlightFirstLetter={false}
                   text="¡Estamos para escucharte!"
                 />
@@ -71,12 +66,12 @@ const Contacts = () => {
             </div>
 
             <Text
-              className="text-black lg:text-[20px]"
+              className="text-black text-[15px] md:text-[18px] lg:text-[20px]"
               text="Horario de atención: Lunes a Viernes - 8:00 am - 4:00pm"
             />
           </div>
 
-          <div className="flex gap-10 mt-15">
+          <div className="flex flex-col lg:flex-row gap-7 lg:gap-10 mt-7 lg:mt-15">
             <FormCard
               title="Ingresa la siguiente información para  registrar tu solicitud"
               form={
@@ -107,17 +102,13 @@ const Contacts = () => {
               }
             />
 
-            <div className="w-full max-w-[400px] space-y-10">
+            <div className="w-full xl:max-w-[400px] space-y-7 lg:space-y-10">
               <ContactCard>
-                <IconTitle
-                  Icon={MessageSquare}
-                  title="Canales de contacto"
-                  classNameTitle="lg:text-[20px]"
-                />
+                <IconTitle Icon={MessageSquare} title="Canales de contacto" />
 
                 <Text
                   text="Redes sociales"
-                  className="text-secondary font-semibold"
+                  className="text-secondary font-semibold text-[14px] md:text-[16px] lg:text-[20px]"
                 />
 
                 <div className="flex gap-7">
@@ -137,10 +128,13 @@ const Contacts = () => {
 
                 <Text
                   text="Correo electrónico"
-                  className="text-secondary font-semibold underline"
+                  className="text-secondary font-semibold underline text-[14px] md:text-[16px] lg:text-[20px]"
                 />
 
-                <Text className="text-primary" text="ejemplo@correo.com" />
+                <Text
+                  className="text-primary text-[14px] md:text-[16px] lg:text-[20px]"
+                  text="ejemplo@correo.com"
+                />
               </ContactCard>
 
               <ContactCard>

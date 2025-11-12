@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { Input } from "@heroui/react";
 import { InputProperties } from "./input.properties";
 
@@ -28,7 +28,7 @@ export const InputComponent: FC<InputProperties> = ({
       type={type ?? "text"}
       endContent={endContent}
       placeholder={placeholder}
-      className={`${className}`}
+      className={`text-[15px] md:text-[18px] lg:text-[20px] ${className}`}
       classNames={{
         inputWrapper: "bg-white",
         input: "bg-white text-black",
