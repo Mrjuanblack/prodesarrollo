@@ -12,6 +12,8 @@ export const SectionComponent: FC<SectionProps> = ({
 
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
+  const paddingClass = hasPadding ? "py-8 lg:py-12" : "py-0";
+
   if (fadeIn) {
     return (
       <motion.section
@@ -19,7 +21,7 @@ export const SectionComponent: FC<SectionProps> = ({
         initial={{ opacity: 0, y: 50 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
         className={`w-full flex justify-center ${className} ${
-          hasPadding ? "py-10 lg:py-20" : "py-0"
+          paddingClass
         }`}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       >
@@ -31,7 +33,7 @@ export const SectionComponent: FC<SectionProps> = ({
   return (
     <section
       className={`bg-white w-full flex justify-center ${className} ${
-        hasPadding ? "py-10 lg:py-20" : "py-0"
+        paddingClass
       }`}
     >
       {children}

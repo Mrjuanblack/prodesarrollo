@@ -1,29 +1,41 @@
 import React from "react";
 import Image from "next/image";
-
-export interface ProjectTypeItem {
-  id: number;
-  img: string;
-  title: string;
-}
+import { getProjectTypeLabel, ProjectType } from "@/domain/Projects";
+import noticiaExample from "@/public/noticia-example.svg";
 
 interface ProjectTypeCardProps {
-  item: ProjectTypeItem;
+  type: ProjectType;
   active?: boolean;
-  onClick?: (value: string) => void;
+  onClick?: (value: ProjectType) => void;
+}
+
+const getProjectTypeImagePath = (type: ProjectType): string => {
+  switch(type) {
+    case ProjectType.INTERVENTORY:
+      return noticiaExample;
+    case ProjectType.CIVIL_WORKS:
+      return noticiaExample;
+    case ProjectType.SUPPLY_PROCESSES:
+      return noticiaExample;
+    case ProjectType.SERVICE_DELIVERY_PROCESSES:
+      return noticiaExample;
+    case ProjectType.CONSULTING_PROCESSES:
+      return noticiaExample;
+  }
 }
 
 export const ProjectTypeCard: React.FC<ProjectTypeCardProps> = ({
-  item,
+  type,
   active = false,
   onClick,
 }) => {
-  const { img, title } = item;
+  const img = getProjectTypeImagePath(type);
+  const title = getProjectTypeLabel(type);
 
   return (
     <button
       type="button"
-      onClick={() => onClick?.(item.title)}
+      onClick={() => onClick?.(type)}
       className={`
         flex flex-col items-center rounded-2xl border overflow-hidden
         h-[278px] w-[150px] md:w-[248px] transition-all duration-300 cursor-pointer 

@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@fontsource/plus-jakarta-sans": "^5.2.8",
+    "@google-cloud/storage": "^7.17.3",
     "@heroicons/react": "^2.2.0",
     "@heroui/react": "^2.8.5",
     "@heroui/use-infinite-scroll": "^2.2.12",

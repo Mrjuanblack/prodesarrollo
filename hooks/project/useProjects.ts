@@ -1,11 +1,13 @@
 import { PaginationResponse } from "@/domain/Pagination";
-import { Project } from "@/domain/Projects";
+import { Project, ProjectType } from "@/domain/Projects";
 import apiClient from "../api-client";
 import { useQuery } from "@tanstack/react-query";
 
 interface UseProjectsProps {
     page: number;
     size: number;
+    year?: number;
+    type?: ProjectType;
 }
 
 const fetchProjects = async (props: UseProjectsProps): Promise<PaginationResponse<Project>> => {
@@ -13,6 +15,8 @@ const fetchProjects = async (props: UseProjectsProps): Promise<PaginationRespons
         params: {
             page: props.page,
             size: props.size,
+            year: props.year,
+            type: props.type,
         },
     });
     return response.data;

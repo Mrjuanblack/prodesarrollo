@@ -2,16 +2,27 @@ import { FC } from "react";
 import { useRouter } from "next/navigation";
 import { Card, CardBody } from "@heroui/react";
 import { Button, Chip, Text, Title } from "../..";
-import { CheckCircle, Clock } from "lucide-react";
+import { CheckCircle, Clock, Play, X } from "lucide-react";
 import { CallCardProps } from "./call-card.properties";
+import { getProjectStatusLabel, ProjectStatus } from "@/domain/Projects";
 
 export const CallCardComponent: FC<CallCardProps> = ({ item }) => {
   const router = useRouter();
 
-  const { estado, fechaApertura, titulo, descripcion, onViewProject } = item;
-  const isFinalizado = estado === "Finalizado";
+  const getStatusIcon = (status: ProjectStatus) => {
+    switch (status) {
+      case ProjectStatus.STARTED:
+        return <Play size={18} />;
+      case ProjectStatus.COMPLETED:
+        return <CheckCircle size={18} />;
+      case ProjectStatus.IN_PROGRESS:
+        return <Clock size={18} />;
+      case ProjectStatus.CANCELLED:
+        return <X size={18} />;
+    }
+  }
 
-  const IconoEstado = isFinalizado ? CheckCircle : Clock;
+  console.log(item);
 
   return (
     <Card
@@ -21,23 +32,23 @@ export const CallCardComponent: FC<CallCardProps> = ({ item }) => {
       <CardBody className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex-1">
           <Chip
-            category={`Estado: ${estado}`}
-            icono={<IconoEstado size={18} />}
-            isActive={isFinalizado}
+            category={`Estado: ${getProjectStatusLabel(item.status)}`}
+            icono={getStatusIcon(item.status)}
+            isActive={item.status === ProjectStatus.COMPLETED}
           />
 
           <Title
-            text={titulo}
+            text={item.title}
             className="md:text-[20px] mb-1"
             highlightFirstLetter={false}
           />
 
           <Text
-            text={`Fecha de apertura: ${fechaApertura}`}
+            text={`Fecha de apertura: ${item.date.toLocaleDateString('es-CO')}`}
             className="md:text-[20px] text-primary mb-3"
           />
           <Text
-            text={descripcion}
+            text={item.description}
             className="text-primary text-[20px] leading-relaxed"
           />
         </div>
@@ -46,7 +57,7 @@ export const CallCardComponent: FC<CallCardProps> = ({ item }) => {
           <Button
             text="Ver proyecto"
             variant="bordered"
-            onClick={() => router.push("/calls/1")}
+            onClick={() => router.push(`/calls/${item.id}`)}
             className="font-semibold w-fit"
           />
         </div>

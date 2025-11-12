@@ -1,51 +1,73 @@
-import { useCreateProject } from "@/hooks/project/useCreateProject";
-import { CreateProject, createProjectFormSchema, getProjectStatusLabel, getProjectTypeLabel, ProjectStatus, projectStatusList, ProjectType, projectTypeList } from "@/domain/Projects";
-import { DatePicker, Input, Modal, ModalBody, ModalContent, ModalHeader, Select, SelectItem, Textarea, Button, ModalFooter } from "@heroui/react";
-import { useForm } from "@tanstack/react-form";
-import { getLocalTimeZone, CalendarDate } from "@internationalized/date";
-import { I18nProvider } from "@react-aria/i18n";
-import { ProjectAutocomplete } from "@/ui/organism/ProjectAutocomplete/ProjectAutocomplete";
+"use client";
 
-export interface CreateProjectProps {
-    isOpen: boolean;
-    onClose: () => void;
-}
-const CreateProjectForm: React.FC<CreateProjectProps> = ({ isOpen, onClose }) => {
-    const createProjectMutation = useCreateProject();
+import { getProjectStatusLabel, getProjectTypeLabel, ProjectStatus, projectStatusList, ProjectType, projectTypeList, UpdateProject, updateProjectFormSchema } from "@/domain/Projects";
+import useProject from "@/hooks/project/useProject";
+import { useUpdateProject } from "@/hooks/project/useUpdateProject";
+import { GlobalLoader } from "@/ui/atoms";
+import { Container, Section } from "@/ui/molecules";
+import { Button, DatePicker, Input, Select, SelectItem, Textarea } from "@heroui/react";
+import { I18nProvider } from "@react-aria/i18n";
+import { useForm } from "@tanstack/react-form";
+import { useParams } from "next/navigation";
+import { getLocalTimeZone, CalendarDate } from "@internationalized/date";
+import { ProjectAutocomplete } from "@/ui/organism/ProjectAutocomplete/ProjectAutocomplete";
+import { useEffect } from "react";
+import ManageDocuments from "@/ui/organism/Forms/Backoffice/ManageDocuments";
+import ManagePhotos from "@/ui/organism/Forms/Backoffice/ManagePhotos";
+
+export default function ProjectPage() {
+
+    const { id } = useParams();
+    const { data: project } = useProject(id as string);
+    const updateProjectMutation = useUpdateProject({
+        id: id as string, project: {
+            title: project?.title ?? "",
+            description: project?.description ?? "",
+            type: project?.type ?? ProjectType.INTERVENTORY,
+            status: project?.status ?? ProjectStatus.STARTED,
+            date: project?.date ?? new Date(),
+            relatedProjects: project?.relatedProjects?.map(project => project.id) ?? null,
+        } satisfies UpdateProject
+    });
 
     const form = useForm({
         defaultValues: {
-            title: '',
-            description: '',
-            type: ProjectType.INTERVENTORY,
-            date: new Date(),
-            status: ProjectStatus.STARTED,
-            relatedProjects: null,
-        } as CreateProject,
+            title: project?.title ?? "",
+            description: project?.description ?? "",
+            status: project?.status ?? ProjectStatus.STARTED,
+            type: project?.type ?? ProjectType.INTERVENTORY,
+            date: project?.date ?? new Date(),
+            relatedProjects: project?.relatedProjects?.map(project => project.id) ?? null,
+        } satisfies UpdateProject,
         validators: {
-            onSubmit: createProjectFormSchema,
-            onBlur: createProjectFormSchema,
-            onChange: createProjectFormSchema,
+            onSubmit: updateProjectFormSchema,
+            onBlur: updateProjectFormSchema,
+            onChange: updateProjectFormSchema,
         },
         onSubmit: (values) => {
-            createProjectMutation.mutate(values.value);
-            form.reset();
-            onClose();
-        },
+            updateProjectMutation.mutate({
+                id: id as string,
+                project: values.value,
+            });
+        }
     });
-    return (
-        <Modal isOpen={isOpen} onClose={onClose}>
-            <ModalContent>
-                <ModalHeader>
-                    <h2 className="text-2xl font-bold">Crear proyecto</h2>
-                </ModalHeader>
-                <ModalBody>
-                    <form onSubmit={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        form.handleSubmit();
-                    }}>
-                        <div className="flex flex-col gap-4">
+
+    if (!project) {
+        return <GlobalLoader />;
+    }
+
+    return (<div>
+        <Section>
+            <Container>
+                <h1 className="text-2xl font-bold">{project.title}</h1>
+                <h2 className="text-sm text-gray-500 mb-4">{project.id}</h2>
+                <form onSubmit={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    form.handleSubmit();
+                }}>
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="col-span-2">
                             <form.Field name="title">
                                 {(field) => (
                                     <Input
@@ -64,6 +86,8 @@ const CreateProjectForm: React.FC<CreateProjectProps> = ({ isOpen, onClose }) =>
                                     />
                                 )}
                             </form.Field>
+                        </div>
+                        <div className="col-span-2">
                             <form.Field name="description">
                                 {(field) => (
                                     <Textarea
@@ -83,6 +107,8 @@ const CreateProjectForm: React.FC<CreateProjectProps> = ({ isOpen, onClose }) =>
                                     />
                                 )}
                             </form.Field>
+                        </div>
+                        <div className="col-span-2">
                             <form.Field name="type">
                                 {(field) => (
                                     <Select
@@ -107,6 +133,9 @@ const CreateProjectForm: React.FC<CreateProjectProps> = ({ isOpen, onClose }) =>
                                     </Select>
                                 )}
                             </form.Field>
+
+                        </div>
+                        <div className="col-span-2">
                             <form.Field name="date">
                                 {(field) => (
                                     <I18nProvider locale="es-CO">
@@ -114,7 +143,7 @@ const CreateProjectForm: React.FC<CreateProjectProps> = ({ isOpen, onClose }) =>
                                             label="Fecha"
                                             id="date"
                                             name="date"
-                                            value={field.state.value ? new CalendarDate(field.state.value.getFullYear(), field.state.value.getMonth() + 1, field.state.value.getDate()) : undefined}
+                                            value={field.state.value ? new CalendarDate(field.state.value.getFullYear(), field.state.value.getMonth() + 1, field.state.value.getDate()) : null}
                                             onChange={(e) => {
                                                 field.handleChange(e?.toDate(getLocalTimeZone()) ?? new Date());
                                             }}
@@ -125,6 +154,8 @@ const CreateProjectForm: React.FC<CreateProjectProps> = ({ isOpen, onClose }) =>
                                     </I18nProvider>
                                 )}
                             </form.Field>
+                        </div>
+                        <div className="col-span-2">
                             <form.Field name="status">
                                 {(field) => (
                                     <Select
@@ -149,42 +180,35 @@ const CreateProjectForm: React.FC<CreateProjectProps> = ({ isOpen, onClose }) =>
                                     </Select>
                                 )}
                             </form.Field>
+                        </div>
+                        <div className="col-span-2">
                             <form.Field name="relatedProjects">
                                 {(field) => (
                                     <ProjectAutocomplete
                                         label="Proyectos relacionados"
                                         placeholder="Buscar proyectos..."
                                         selectedProjects={field.state.value ?? []}
+                                        initialProjects={project.relatedProjects}
                                         onSelectionChange={(projects) => {
                                             field.handleChange(projects.length > 0 ? projects.map(project => project.id) : null);
                                         }}
+                                        editedProjectId={project.id}
                                         isInvalid={field.state.meta.errors.length > 0 && field.state.meta.isTouched}
                                         errorMessage={field.state.meta.errors[0]?.message}
                                     />
                                 )}
                             </form.Field>
                         </div>
-                    </form>
-                </ModalBody>
-                <ModalFooter>
-                    <Button color="danger" variant="light" onPress={onClose}>
-                        Cancelar
-                    </Button>
-                    <Button
-                        color="primary"
-                        type="submit"
-                        isLoading={createProjectMutation.isPending}
-                        onPress={() => {
-                            form.handleSubmit();
-                        }}
-                        isDisabled={createProjectMutation.isPending || form.state.isSubmitting}
-                    >
-                        Crear proyecto
-                    </Button>
-                </ModalFooter>
-            </ModalContent>
-        </Modal>
-    );
+                        <div className="col-span-2">
+                            <Button color="primary" type="submit" isLoading={updateProjectMutation.isPending} isDisabled={updateProjectMutation.isPending || form.state.isSubmitting}>
+                                Guardar
+                            </Button>
+                        </div>
+                    </div>
+                </form>
+            </Container>
+        </Section>
+        <ManageDocuments project={project} />
+        <ManagePhotos project={project} />
+    </div>)
 }
-
-export default CreateProjectForm;

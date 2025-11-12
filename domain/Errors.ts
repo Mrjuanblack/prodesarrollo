@@ -2,25 +2,21 @@ interface UserReadableError {
     getError(): string;
 }
 
-export enum GoogleDriveErrorType {
-    RESUMABLE_UPLOAD_SESSION_CREATION_FAILED = '1',
-    VISIBILITY_UPDATE_FAILED = '2',
-    LIST_FILES_FAILED = '3',
-    DELETE_FILE_FAILED = '4',
-    FOLDER_CREATION_FAILED = '5',
-    FOLDER_PATH_RESOLUTION_FAILED = '6',
-    FILE_DELETION_FAILED = '7',
+export enum GoogleStorageErrorType {
+    GET_UPLOAD_URL_FAILED = '1',
+    UPLOAD_FILE_FAILED = '2',
+    DELETE_FILE_FAILED = '3',
 }
 
-const GOOGLE_DRIVE_PREFIX = 'G';
-export class GoogleDriveError extends Error implements UserReadableError {
+const GOOGLE_STORAGE_PREFIX = 'GS';
+export class GoogleStorageError extends Error implements UserReadableError {
     constructor(
-        public readonly type: GoogleDriveErrorType,
+        public readonly type: GoogleStorageErrorType,
         public readonly cause?: unknown
     ) {
-        super(`Google Drive error: ${GOOGLE_DRIVE_PREFIX} - ${type}`);
+        super(`Google Storage error: ${GOOGLE_STORAGE_PREFIX} - ${type}`);
         // Log code
-        console.error(`Google Drive error: ${this.getError()}`);
+        console.error(`Google Storage error: ${this.getError()}`);
         // Log original error
         if (this.cause) {
             console.error('Details:');
@@ -29,9 +25,10 @@ export class GoogleDriveError extends Error implements UserReadableError {
     }
 
     getError(): string {
-        return `${GOOGLE_DRIVE_PREFIX} - ${this.type}`;
+        return `${GOOGLE_STORAGE_PREFIX} - ${this.type}`;
     }
 }
+
 
 // Repository Errors
 export enum RepositoryErrorType {
@@ -50,6 +47,7 @@ export enum RepositoryErrorType {
 export enum RepositoryErrorOrigin {
    PROJECTS = '001',
    PROJECT_DOCUMENTS = '002',
+   PROJECT_PHOTOS = '003',
 }
 
 export class RepositoryError extends Error implements UserReadableError {

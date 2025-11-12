@@ -2,20 +2,39 @@
 
 import { useState } from "react";
 import { FileText } from "lucide-react";
-import { Divider } from "@heroui/react";
+import { Divider, Spinner } from "@heroui/react";
 import { HeroSimple } from "@/ui/organism";
 import hero_simple from "@/public/hero-simple.svg";
-import { btns, calls, options } from "./page.properties";
 import { FilterByState } from "./components/filter-by-state";
 import { Carousel, Container, Section } from "@/ui/molecules";
 import { ProjectTypeCard } from "./components/project-type-card";
 import { BackgroundSection, CallCard, SearchBar } from "@/ui/atoms";
 import { CallToActionSection } from "@/ui/organism/CallToActionSection/CallToActionSection";
+import { useYearsWithProjects } from "@/hooks/project/useYearsWithProjects";
+import { ProjectType, projectTypeList } from "@/domain/Projects";
+import { useProjectsInfinite } from "@/hooks/project/useProjectsInfinite";
+import { useInfiniteScroll } from "@heroui/use-infinite-scroll";
 
 export default function Calls() {
   const [query, setQuery] = useState("");
-  const [activeBtn, setActiveBtn] = useState(2025);
-  const [active, setActive] = useState("Infraestructura");
+
+  const { data: years } = useYearsWithProjects();
+  const [activeYear, setActiveYear] = useState<number | null>(null);
+  const [activeType, setActiveType] = useState<ProjectType>(ProjectType.INTERVENTORY);
+
+  const { items, hasMore, isLoading, isFetchingNextPage, onLoadMore } = useProjectsInfinite({
+    size: 10,
+    year: activeYear ?? undefined,
+    type: activeType,
+    search: query || undefined,
+  });
+
+  // Use HeroUI's infinite scroll hook
+  const [, scrollerRef] = useInfiniteScroll({
+    hasMore,
+    isEnabled: true,
+    onLoadMore,
+  });
 
   const handleSearch = () => {
     console.log("Buscando:", query);
@@ -24,7 +43,7 @@ export default function Calls() {
   return (
     <>
       <HeroSimple
-        title="Convocatorias - Bogotá"
+        title="Convocatorias"
         backgroundImage={hero_simple}
       />
 
@@ -38,21 +57,18 @@ export default function Calls() {
             />
           </div>
 
-          <div className="my-10 w-full flex flex-row justify-center items-center gap-5">
-            {btns.map(({ id, year }) => {
-              const active = activeBtn === year;
-
+          <div className="my-10 flex flex-wrap justify-center gap-5">
+            {years?.map((year) => {
               return (
                 <button
-                  key={id}
-                  onClick={() => setActiveBtn(year)}
+                  key={year}
+                  onClick={() => setActiveYear(year)}
                   className={`
                     flex items-center gap-2 px-7 py-4 rounded-2xl transition-all duration-300
                     font-semibold text-[25px] cursor-pointer shadow-lg
-                    ${
-                      active
-                        ? "bg-[#A9BEFF] text-primary shadow-xl"
-                        : "bg-[#F3F6FF] text-primary hover:bg-[#E6EEFF]"
+                    ${activeYear === year
+                      ? "bg-[#A9BEFF] text-primary shadow-xl"
+                      : "bg-[#F3F6FF] text-primary hover:bg-[#E6EEFF]"
                     }
                   `}
                 >
@@ -60,7 +76,7 @@ export default function Calls() {
                     size={35}
                     className={`
                       transition-colors duration-300
-                      ${active ? "text-primary" : "text-[#A9BEFF]"}
+                      ${activeYear === year ? "text-primary" : "text-[#A9BEFF]"}
                     `}
                   />
                   Proyectos {year}
@@ -72,20 +88,19 @@ export default function Calls() {
           <Divider className="w-full lg:w-[1023px] bg-secondary mb-15" />
 
           <Carousel hasDots={false} slidesPerView={5}>
-            {options.map((option) => {
+            {projectTypeList.map((type) => {
               return (
                 <ProjectTypeCard
-                  key={option.id}
-                  item={option}
-                  active={active === option.title}
+                  key={type}
+                  type={type}
+                  active={activeType === type}
                   onClick={(value) => {
-                    setActive(value);
+                    setActiveType(value);
                   }}
                 />
               );
             })}
           </Carousel>
-
           <Divider className="lg:w-[1023px] bg-secondary mt-15" />
         </Container>
       </Section>
@@ -96,10 +111,20 @@ export default function Calls() {
             <FilterByState />
           </div>
 
-          <div className="space-y-5">
-            {calls.map((item) => (
-              <CallCard key={item.id} item={item} />
+          <div ref={scrollerRef as React.RefObject<HTMLDivElement>} className="space-y-5">
+            {items.map((item, index) => (
+              <CallCard key={`${items[index]?.id || index}`} item={item} />
             ))}
+            {isFetchingNextPage && (
+              <div className="flex justify-center py-5">
+                <Spinner />
+              </div>
+            )}
+            {isLoading && items.length === 0 && (
+              <div className="flex justify-center py-5">
+                <Spinner />
+              </div>
+            )}
           </div>
         </Container>
       </Section>

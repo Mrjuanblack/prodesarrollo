@@ -1,16 +1,16 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import apiClient from "../api-client";
 
-const deleteDocument = async (projectId: string, documentId: string): Promise<void> => {
-    const response = await apiClient.delete(`/project/${projectId}/document/${documentId}`);
+const deleteProjectPhoto = async (projectId: string, photoId: string): Promise<void> => {
+    const response = await apiClient.delete(`/project/${projectId}/photo/${photoId}`);
     return response.data;
 }
 
-export const useDeleteDocument = (projectId: string) => {
+export const useDeleteProjectPhoto = (projectId: string) => {
     const queryClient = useQueryClient();
     
     return useMutation({
-        mutationFn: (documentId: string) => deleteDocument(projectId, documentId),
+        mutationFn: (photoId: string) => deleteProjectPhoto(projectId, photoId),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['project', projectId] });
         },
@@ -19,3 +19,4 @@ export const useDeleteDocument = (projectId: string) => {
         }
     });
 }
+
