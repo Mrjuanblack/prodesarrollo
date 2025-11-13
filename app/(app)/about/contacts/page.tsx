@@ -22,7 +22,7 @@ import { socialItems } from "@/ui/organism/Header/header.properties";
 
 const ContactCard: FC<ContactCardProps> = ({ children }) => {
   return (
-    <div className="w-full flex flex-col space-y-5 lg:space-y-7 items-center border-2 border-secondary rounded-r-2xl rounded-bl-2xl p-10">
+    <div className="md:h-full lg:h-fit w-full flex flex-col space-y-3 lg:space-y-5 items-center border-2 border-secondary rounded-2xl lg:rounded-none lg:rounded-r-2xl px-10 py-7">
       {children}
     </div>
   );
@@ -71,8 +71,9 @@ const Contacts = () => {
             />
           </div>
 
-          <div className="flex flex-col lg:flex-row gap-7 lg:gap-10 mt-7 lg:mt-15">
+          <div className="flex flex-col items-center lg:flex-row gap-7 lg:gap-10 mt-7 lg:mt-15">
             <FormCard
+              className="rounded-2xl lg:rounded-none lg:rounded-l-2xl"
               title="Ingresa la siguiente información para  registrar tu solicitud"
               form={
                 <>
@@ -102,7 +103,7 @@ const Contacts = () => {
               }
             />
 
-            <div className="w-full xl:max-w-[400px] space-y-7 lg:space-y-10">
+            <div className="w-full 2xl:max-w-xl flex flex-col md:flex-row lg:flex-col gap-7">
               <ContactCard>
                 <IconTitle Icon={MessageSquare} title="Canales de contacto" />
 
@@ -111,7 +112,7 @@ const Contacts = () => {
                   className="text-secondary font-semibold text-[14px] md:text-[16px] lg:text-[20px]"
                 />
 
-                <div className="flex gap-7">
+                <div className="flex flex-wrap justify-center gap-3">
                   {socialItems.map(({ icon: Icon, label, href }) => (
                     <a
                       key={label}

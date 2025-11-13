@@ -9,7 +9,7 @@ import { Project } from "@/domain/Projects";
 import hero_simple from "@/public/hero-simple.svg";
 import { ArrowDownToLine, Link } from "lucide-react";
 import { formatDate } from "@/utils/date.utilities";
-import noticiaExample from "@/public/noticia-example.svg";
+import noticiaExample from "@/public/header-home.svg";
 import { Carousel, Container, IconTitle, Section } from "@/ui/molecules";
 import { BackgroundSection, Button, Chip, Text, Title } from "@/ui/atoms";
 import { ICarouselProps } from "@/ui/molecules/Carousel/carousel.properties";

@@ -52,7 +52,7 @@ export default function Pqrs() {
 
             <Text
               text="Toda persona natural o jurídica tiene derecho a presentar solicitudes respetuosas ante esta entidad (por interés particular o general) y a obtener pronta resolución, conforme al artículo 23 de la Constitución Política y la Ley 1755 de 2015."
-              className={`text-[15px] md:text-[18px] lg:text-[20px] mt-4 max-w-6xl text-justify text-gray-500`}
+              className={`text-[15px] md:text-[18px] lg:text-[20px] mt-4 max-w-6xl text-gray-500`}
             />
           </div>
         </Container>

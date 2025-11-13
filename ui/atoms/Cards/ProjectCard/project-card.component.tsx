@@ -5,7 +5,7 @@ export const ProjectCardComponent: React.FC<ProjectCardProps> = ({ item }) => {
   const { title, date, imageUrl, imageAlt } = item;
 
   return (
-    <div className="flex flex-col justify-between p-6 lg:p-8 bg-white rounded-xl shadow-md overflow-hidden transform transition-transform duration-200 hover:scale-103 cursor-pointer h-full">
+    <div className="flex flex-col justify-between p-6 lg:p-8 bg-white rounded-xl shadow-md overflow-hidden transform transition-transform duration-200 hover:scale-101 cursor-pointer h-full">
       <div>
         <h3 className="text-[15px] lg:text-[18px] font-semibold text-black leading-tight mb-2">
           {title}

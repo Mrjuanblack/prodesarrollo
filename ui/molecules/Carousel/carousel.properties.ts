@@ -6,6 +6,7 @@ export interface ISlideSizeClasses {
   sm: string;
   md: string;
   lg: string;
+  xl?: string;
 }
 
 export interface ICarouselProps {

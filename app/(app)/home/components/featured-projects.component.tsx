@@ -10,7 +10,8 @@ const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
   base: "basis-full",
   sm: "sm:basis-1/2",
   md: "md:basis-1/3",
-  lg: "lg:basis-1/4",
+  lg: "lg:basis-1/3",
+  xl: "xl:basis-1/4",
 };
 
 export const FeaturedProjects = () => {
@@ -29,7 +30,7 @@ export const FeaturedProjects = () => {
         <div className="w-full">
           <Carousel slideSizeClasses={customSlideClasses}>
             {projects.map((item) => (
-              <div key={item.id}>
+              <div key={item.id} className="h-full pb-5">
                 <ProjectCard item={item} />
               </div>
             ))}
