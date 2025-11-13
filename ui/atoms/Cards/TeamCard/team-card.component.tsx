@@ -7,12 +7,12 @@ export const TeamCardComponent: React.FC<TeamCardProps> = ({ item }) => {
 
   return (
     <div className="flex items-center justify-between bg-[#F5F8FF] rounded-2xl p-4 lg:p-6 shadow-sm border border-[#E0E6F1] hover:shadow-md transition-shadow duration-300">
-      <div className="flex md:flex-col lg:flex-row items-center gap-4 lg:gap-7">
+      <div className="flex md:flex-col lg:flex-row gap-4 lg:gap-7">
         <div className="flex items-center justify-center w-[80px] h-[80px] lg:w-[125px] lg:h-[125px] rounded-full border-3 border-primary-200">
           <User size={70} strokeWidth={1.5} className="text-primary-200" />
         </div>
 
-        <div className="text-primary md:text-center lg:text-left text-[14px] md:text-[16px] lg:text-[18px] leading-snug">
+        <div className="flex flex-col justify-center text-primary text-left text-[14px] md:text-[16px] lg:text-[18px] leading-snug">
           <p>{name}</p>
           <p>{profession}</p>
           <p>Cargo: {position}</p>

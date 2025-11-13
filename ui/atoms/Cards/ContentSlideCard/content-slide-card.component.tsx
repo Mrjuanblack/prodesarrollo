@@ -54,12 +54,12 @@ export const ContentSlideCardComponent: React.FC<ContentSlideProps> = ({
       </div>
 
       <div className="absolute inset-0 z-2 flex flex-col justify-end">
-        <div className="w-full h-auto grid grid-cols-1 md:grid-cols-2 md:p-10 lg:px-15 md:gap-7">
+        <div className="w-full h-auto grid grid-cols-1 lg:grid-cols-2 md:p-10 lg:px-15 md:gap-7">
           {items.map((item, index) => (
             <ContentBlockCard
               item={item}
               key={item.id}
-              className={`${index == 1 ? "hidden md:flex" : ""}`}
+              className={`${index == 1 ? "hidden lg:flex" : ""}`}
             />
           ))}
         </div>

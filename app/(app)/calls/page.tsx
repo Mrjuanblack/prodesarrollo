@@ -18,7 +18,8 @@ const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
   base: "basis-1/2",
   sm: "sm:basis-1/2",
   md: "md:basis-1/3",
-  lg: "lg:basis-1/5",
+  lg: "lg:basis-1/4",
+  xl: "xl:basis-1/5",
 };
 
 export default function Calls() {
@@ -88,14 +89,15 @@ export default function Calls() {
             >
               {options.map((option) => {
                 return (
-                  <ProjectTypeCard
-                    key={option.id}
-                    item={option}
-                    active={active === option.title}
-                    onClick={(value) => {
-                      setActive(value);
-                    }}
-                  />
+                  <div className="p-1" key={option.id}>
+                    <ProjectTypeCard
+                      item={option}
+                      active={active === option.title}
+                      onClick={(value) => {
+                        setActive(value);
+                      }}
+                    />
+                  </div>
                 );
               })}
             </Carousel>

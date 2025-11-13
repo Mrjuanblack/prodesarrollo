@@ -69,7 +69,7 @@ const services: ServiceItem[] = [
 const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
   base: "basis-full",
   sm: "sm:basis-1/2",
-  md: "md:basis-1/3",
+  md: "md:basis-1/2",
   lg: "lg:basis-1/3",
 };
 

@@ -10,6 +10,7 @@ interface AboutSectionProps {
   classNameDots?: string;
   classNameVideo?: string;
   children?: React.ReactNode;
+  classNameContainer?: string;
   description: React.ReactNode;
   classNameContainerVideos?: string;
 }
@@ -20,6 +21,7 @@ export const AboutSection: FC<AboutSectionProps> = ({
   videoSrc,
   description,
   reverse = false,
+  classNameContainer,
   classNameVideo = "w-[85%]",
   classNameContainerVideos = "justify-end",
   classNameDots = "h-full w-[30%] lg:w-[35%]",
@@ -28,8 +30,8 @@ export const AboutSection: FC<AboutSectionProps> = ({
     <Section fadeIn={true} hasPadding={false}>
       <Container
         className={`flex items-center justify-between ${
-          reverse ? "flex-col lg:flex-row-reverse" : "flex-col lg:flex-row"
-        }`}
+          reverse ? "flex-col lg:flex-row-reverse" : `flex-col lg:flex-row`
+        } ${classNameContainer}`}
       >
         <div className="relative w-full lg:w-[40%] flex justify-center flex-col">
           <div
@@ -75,7 +77,7 @@ export const AboutSection: FC<AboutSectionProps> = ({
             className="text-[15px] md:text-[20px] lg:text-[25px] mt-5"
           />
 
-          <div className="mt-3 text-black text-[12px] md:text-[16px] lg:text-[20px] leading-relaxed text-justify mb-5 md:mb-10">
+          <div className="mt-3 text-black text-[12px] md:text-[16px] lg:text-[20px] leading-relaxed mb-5 md:mb-10">
             {description}
           </div>
 

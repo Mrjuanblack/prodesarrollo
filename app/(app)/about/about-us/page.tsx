@@ -41,9 +41,10 @@ export default function AboutUs() {
           <AboutSection
             reverse={true}
             title="Naturaleza Institucional"
+            classNameContainer="flex-col-reverse"
             classNameContainerVideos="justify-center lg:justify-end"
             classNameDots="hidden lg:h-full lg:w-[35%] lg:grid left-0"
-            classNameVideo="w-[47.9%] md:w-[48.1%] lg:w-[85%] bg-default-100 p-1 lg:p-3 shadow-lg"
+            classNameVideo="sm:w-[47.9%] md:w-[48.1%] lg:w-[85%] bg-default-100 p-1 lg:p-3 shadow-lg"
             videoSrc={[
               "https://www.youtube.com/embed/mn64ZdDpC6k",
               "https://www.youtube.com/embed/jdOT18uUuWc",
