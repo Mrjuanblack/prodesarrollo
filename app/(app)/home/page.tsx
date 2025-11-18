@@ -18,6 +18,7 @@ export default function Home() {
         reverse={true}
         title="Sobre Nosotros"
         videoSrc={["https://www.youtube.com/embed/mn64ZdDpC6k"]}
+        classNameContainerVideos="justify-start"
         description={
           <>
             PRO. DESARROLLO promueve la preservación y fortalecimiento de la

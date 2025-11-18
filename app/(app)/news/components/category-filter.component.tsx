@@ -16,21 +16,23 @@ export const CategoryFilter = () => {
   ];
 
   return (
-    <div className="bg-[#F2F6FF] p-4 lg:p-6 rounded-3xl shadow-md flex flex-col gap-2 lg:gap-4 w-full md:w-[300px]">
-      <IconTitle
-        Icon={SlidersHorizontal}
-        highlightFirstLetter={false}
-        title="Filtrar por categoría"
-        classNameTitle="font-medium text-[15px] md:text-[18px] lg:text-[20px]"
-      />
+    <div className="md:bg-[#F2F6FF] md:p-4 lg:p-6 rounded-3xl shadow-md flex flex-col gap-2 lg:gap-4 w-full md:w-[300px]">
+      <div className="hidden md:block">
+        <IconTitle
+          Icon={SlidersHorizontal}
+          highlightFirstLetter={false}
+          title="Filtrar por categoría"
+          classNameTitle="font-medium text-[15px] md:text-[18px] lg:text-[20px]"
+        />
+      </div>
 
       <Select
+        options={options}
         className="max-w-xs"
         selectedKeys={[category]}
         label="Filtrar por estado"
         placeholder="Selecciona una opción"
         onChange={(e) => setCategory(e.target.value)}
-        options={options}
       />
     </div>
   );

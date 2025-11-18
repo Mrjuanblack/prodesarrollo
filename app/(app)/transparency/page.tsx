@@ -28,17 +28,17 @@ export default function Transparency() {
           {laws.map(({ title, description, downloadUrl, id }) => (
             <div
               key={id}
-              className="flex flex-col md:flex-row items-center justify-between bg-[#F5F8FF] rounded-xl p-6 lg:p-10 shadow-sm gap-7 lg:gap-20"
+              className="flex flex-col md:flex-row bg-[#F5F8FF] rounded-xl p-6 lg:p-10 shadow-sm gap-7 lg:gap-20"
             >
-              <p className="text-[15px] md:text-[18px] lg:text-[20px] text-black leading-relaxed text-center md:text-left">
+              <p className="text-[15px] md:text-[18px] lg:text-[20px] text-black leading-relaxed text-left">
                 <span className="font-semibold">{title}</span> {description}
               </p>
 
               <a
-                href={downloadUrl}
                 target="_blank"
+                href={downloadUrl}
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 border border-primary text-primary rounded-full px-4 py-2 text-[15px] md:text-[18px] lg:text-[20px] font-medium hover:bg-primary hover:text-white transition-all duration-300"
+                className="w-fit h-fit self-end md:self-center flex items-center gap-2 border border-primary text-primary rounded-full px-4 py-2 text-[15px] md:text-[18px] lg:text-[20px] font-medium hover:bg-primary hover:text-white transition-all duration-300"
               >
                 Descargar <Download size={23} />
               </a>

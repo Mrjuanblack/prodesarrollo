@@ -14,7 +14,7 @@ export const StepTabsComponent: FC<StepTabsProps> = ({
   };
 
   return (
-    <div className="w-full border-b border-[#cdd7f6]/60 flex justify-between">
+    <div className="w-full border-b border-[#cdd7f6]/60 flex justify-between gap-3">
       {tabs.map((tab, index) => {
         const isActive = tab.id === active;
         const Icon = tab.icon;
@@ -23,7 +23,7 @@ export const StepTabsComponent: FC<StepTabsProps> = ({
           <button
             key={tab.id}
             onClick={() => handleClick(tab.id)}
-            className={`relative cursor-pointer flex flex-col items-center justify-center w-full lg:py-2 text-[15px] md:text-[18px] lg:text-[20px] transition-colors ${
+            className={`relative cursor-pointer flex flex-col items-center justify-center w-full lg:py-2 text-[13px] sm:text-[14px] md:text-[18px] lg:text-[20px] transition-colors ${
               isActive ? "text-primary font-semibold" : "text-gray-400"
             }`}
           >
@@ -32,9 +32,14 @@ export const StepTabsComponent: FC<StepTabsProps> = ({
                 isActive ? "text-primary" : "text-gray-400"
               }`}
             />
+
             <span>
               {index + 1}.{" "}
-              <span className={isActive ? "font-semibold" : "italic"}>
+              <span
+                className={`leading-relaxed ${
+                  isActive ? "font-semibold" : "italic"
+                }`}
+              >
                 {tab.label}
               </span>
             </span>

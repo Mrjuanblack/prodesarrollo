@@ -50,7 +50,7 @@ export const CallCardComponent: FC<CallCardProps> = ({ item }) => {
 
           <Text
             text={item.description}
-            className="text-primary text-[20px] leading-relaxed"
+            className="text-primary text-[14px] md:text-[17px] lg:text-[19px] leading-relaxed"
           />
         </div>
 

@@ -25,8 +25,8 @@ const SocialLinks = () => {
 
 export const FooterComponent = () => {
   return (
-    <footer className="bg-primary md:h-[400px] relative overflow-hidden rounded-tr-[200px] lg:rounded-tr-full flex items-center -mt-[400px]">
-      <Container className="relative z-10 flex flex-row md:items-center gap-10 md:gap-20 xl:gap-30 py-15 md:py-10 lg:py-0">
+    <footer className="bg-primary md:h-[400px] relative overflow-hidden rounded-tr-[150px] md:rounded-tr-[200px] lg:rounded-tr-full flex items-center -mt-[400px]">
+      <Container className="relative z-10 flex flex-col md:flex-row md:items-center gap-10 md:gap-20 xl:gap-30 py-15 md:py-10 lg:py-0">
         <div className="flex flex-col gap-3">
           <Image
             alt="ProDesarrollo"
@@ -45,7 +45,7 @@ export const FooterComponent = () => {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-10 md:gap-20 xl:gap-30">
+        <div className="flex gap-10 md:gap-20 xl:gap-30">
           <div className="flex flex-col gap-2 text-white">
             <h3 className="text-[13px] md:text-[15px] lg:text-[18px] font-semibold text-secondary-200">
               Contacto

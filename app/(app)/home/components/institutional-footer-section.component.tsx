@@ -14,14 +14,15 @@ export const InstitutionalFooterSection = () => {
           description="Entidades que nos acompañan"
         />
 
-        <div className="grid grid-cols-3 lg:grid-cols-7 gap-10 mb-10 place-items-center">
+        <div className="flex flex-wrap justify-center gap-6 md:gap-8 lg:gap-10 mb-5 lg:mb-10">
           {entitiesObserved.map((entity) => (
-            <Image
-              key={entity.alt}
-              alt={entity.alt}
-              src={entity.img}
-              className="w-auto h-auto"
-            />
+            <div key={entity.alt} className="flex justify-center items-center">
+              <Image
+                alt={entity.alt}
+                src={entity.img}
+                className="max-h-20 w-auto object-contain"
+              />
+            </div>
           ))}
         </div>
 

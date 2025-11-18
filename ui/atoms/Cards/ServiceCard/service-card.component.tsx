@@ -17,7 +17,7 @@ export const ServiceCardComponent: React.FC<ServiceCardProps> = ({ item }) => {
       </div>
 
       <div className="mt-5 p-5 lg:p-7 bg-white rounded-lg rounded-tr-[60px] lg:rounded-tr-[70px] flex-1">
-        <p className="text-black text-[15px] lg:text-[20px] leading-relaxed text-justify">
+        <p className="text-black text-[15px] lg:text-[20px] leading-relaxed">
           {description}
         </p>
       </div>

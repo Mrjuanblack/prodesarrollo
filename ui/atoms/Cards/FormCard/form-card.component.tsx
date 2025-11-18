@@ -7,9 +7,12 @@ export const FormCardComponent: React.FC<FormCardProps> = ({
   form,
   title,
   buttonAction,
+  className = "rounded-2xl",
 }) => {
   return (
-    <Card className="bg-[#F5F8FF] rounded-2xl p-4 md:p-6 lg:p-8 w-full shadow-md border-none">
+    <Card
+      className={`bg-[#F5F8FF] p-4 md:p-6 lg:p-8 w-full shadow-md border-none ${className}`}
+    >
       <CardBody className="space-y-2 lg:space-y-4">
         <Title
           text={title}

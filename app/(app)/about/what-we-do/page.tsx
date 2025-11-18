@@ -16,8 +16,9 @@ const options = { loop: false };
 const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
   base: "basis-full",
   sm: "sm:basis-1/2",
-  md: "md:basis-1/3",
-  lg: "lg:basis-1/4",
+  md: "md:basis-1/2",
+  lg: "lg:basis-1/3",
+  xl: "xl:basis-1/4",
 };
 
 export default function WhatWeDo() {
@@ -68,7 +69,7 @@ export default function WhatWeDo() {
 
           <Carousel options={options} slideSizeClasses={customSlideClasses}>
             {infos.map((service) => (
-              <div key={service.id} className="h-full pt-10">
+              <div key={service.id} className="h-full pt-10 lg:pt-17">
                 <InfoCard item={service} />
               </div>
             ))}
