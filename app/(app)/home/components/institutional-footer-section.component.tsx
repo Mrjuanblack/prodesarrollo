@@ -11,7 +11,7 @@ export const InstitutionalFooterSection = () => {
         <SectionHeader
           icon={ExternalLink}
           title="Enlaces de interés"
-          description="Entidades que nos supervisan"
+          description="Entidades que nos acompañan"
         />
 
         <div className="grid grid-cols-3 lg:grid-cols-7 gap-10 mb-10 place-items-center">

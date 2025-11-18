@@ -148,8 +148,6 @@ export class ProjectRepository {
             
             // Combine all conditions with AND
             const whereCondition = conditions.length > 0 ? and(...conditions) : undefined;
-            console.log('whereCondition');
-            console.log(whereCondition);
             
             const [result, total] = await Promise.all([
                 db.query.projects.findMany({
@@ -237,11 +235,11 @@ export class ProjectRepository {
             })
             .from(projects)
             .groupBy(sql`EXTRACT(YEAR FROM ${projects.date})`)
-            .orderBy(sql`EXTRACT(YEAR FROM ${projects.date}) DESC`);
+            .orderBy(sql`EXTRACT(YEAR FROM ${projects.date}) ASC`);
             
             // Extract unique years and convert to numbers
             const years = [...new Set(result.map(row => row.year))];
-            return years.sort((a, b) => b - a); // Sort descending (newest first)
+            return years;
         } catch (error) {
             throw errorHandler.handleError(RepositoryErrorType.GET, error);
         }
