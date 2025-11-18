@@ -124,7 +124,7 @@ export default function Donations() {
 
       <Section fadeIn={true}>
         <Container>
-          <div className="flex justify-between items-center mb-7 lg:mb-10">
+          <div className="flex justify-between gap-3 md:items-center mb-7 flex-col md:flex-row lg:mb-10">
             <Title text="Proyectos activos que puedes apoyar" />
             <FilterByState />
           </div>
