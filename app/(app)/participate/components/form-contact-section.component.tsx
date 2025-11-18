@@ -1,12 +1,6 @@
 import { useState } from "react";
 import { Button, FormCard, Input, Select } from "@/ui/atoms";
-
-const idTypes = [
-  { key: 1, label: "Cédula de ciudadanía", value: "cc" },
-  { key: 2, label: "Tarjeta de identidad", value: "ti" },
-  { key: 3, label: "Cédula de extranjería", value: "ce" },
-  { key: 4, label: "Pasaporte", value: "pa" },
-];
+import { idTypes } from "../page.properties";
 
 export const FormContactSection = () => {
   const [files, setFiles] = useState<FileList | null>(null);

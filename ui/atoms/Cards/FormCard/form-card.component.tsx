@@ -17,9 +17,11 @@ export const FormCardComponent: React.FC<FormCardProps> = ({
         <Title
           text={title}
           highlightFirstLetter={false}
-          className="text-primary font-semibold"
+          className="text-primary font-semibold mb-7"
         />
+
         {form}
+
         <div className="flex justify-center mt-4">{buttonAction}</div>
       </CardBody>
     </Card>
