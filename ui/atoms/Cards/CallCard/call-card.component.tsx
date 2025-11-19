@@ -2,19 +2,27 @@ import { FC } from "react";
 import { useRouter } from "next/navigation";
 import { Card, CardBody } from "@heroui/react";
 import { Button, Chip, Text, Title } from "../..";
-import { CheckCircle, Clock } from "lucide-react";
+import { CheckCircle, Clock, Play, X } from "lucide-react";
 import { getProjectStatusLabel, ProjectStatus } from "@/domain/Projects";
-import { formatDate } from "@/utils/date.utilities";
 import { CallCardProps } from "./call-card.properties";
 
 export const CallCardComponent: FC<CallCardProps> = ({ item }) => {
   const router = useRouter();
 
-  const { status, date, title, description } = item;
+  const getStatusIcon = (status: ProjectStatus) => {
+    switch (status) {
+      case ProjectStatus.STARTED:
+        return <Play size={18} />;
+      case ProjectStatus.COMPLETED:
+        return <CheckCircle size={18} />;
+      case ProjectStatus.IN_PROGRESS:
+        return <Clock size={18} />;
+      case ProjectStatus.CANCELLED:
+        return <X size={18} />;
+    }
+  }
 
-  const isFinalizado = status === ProjectStatus.COMPLETED;
-
-  const IconoEstado = isFinalizado ? CheckCircle : Clock;
+  console.log(item);
 
   return (
     <Card
@@ -24,24 +32,24 @@ export const CallCardComponent: FC<CallCardProps> = ({ item }) => {
       <CardBody className="flex flex-col md:flex-row md:items-center justify-between lg:gap-4">
         <div className="flex-1">
           <Chip
-            category={`Estado: ${getProjectStatusLabel(status)}`}
-            icono={<IconoEstado size={18} />}
-            isActive={isFinalizado}
+            category={`Estado: ${getProjectStatusLabel(item.status)}`}
+            icono={getStatusIcon(item.status)}
+            isActive={item.status === ProjectStatus.COMPLETED}
           />
 
           <Title
-            text={title}
+            text={item.title}
             highlightFirstLetter={false}
             className="text-[15px] md:text-[18px] lg:text-[20px]"
           />
 
           <Text
-            text={`Fecha de apertura: ${formatDate(date)}`}
+            text={`Fecha de apertura: ${item.date.toLocaleDateString('es-CO')}`}
             className="text-[15px] md:text-[18px] lg:text-[20px] text-primary mb-2 lg:mb-3"
           />
 
           <Text
-            text={description}
+            text={item.description}
             className="text-primary text-[14px] md:text-[17px] lg:text-[19px] leading-relaxed"
           />
         </div>
@@ -50,8 +58,8 @@ export const CallCardComponent: FC<CallCardProps> = ({ item }) => {
           <Button
             variant="bordered"
             text="Ver proyecto"
+            onClick={() => router.push(`/calls/${item.id}`)}
             className="font-semibold w-fit"
-            onClick={() => router.push("/calls/1")}
           />
         </div>
       </CardBody>

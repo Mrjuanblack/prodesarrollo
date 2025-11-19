@@ -11,7 +11,7 @@ export const InstitutionalFooterSection = () => {
         <SectionHeader
           icon={ExternalLink}
           title="Enlaces de interés"
-          description="Entidades que nos supervisan"
+          description="Entidades que nos acompañan"
         />
 
         <div className="flex flex-wrap justify-center gap-6 md:gap-8 lg:gap-10 mb-5 lg:mb-10">

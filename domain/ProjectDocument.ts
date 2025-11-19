@@ -21,8 +21,17 @@ export const createProjectDocumentSchemaRequest = z.object({
 
 export type CreateProjectDocumentRequest = z.infer<typeof createProjectDocumentSchemaRequest>;
 
+export const confirmUploadProjectDocumentSchema = z.object({
+    name: z.string({ message: "El nombre del documento debe ser textual" }).min(1, 'El nombre del documento es requerido'),
+    filePath: z.string({ message: "La ruta del archivo debe ser textual" }).min(1, 'La ruta del archivo es requerida'),
+});
+
+export type ConfirmUploadProjectDocument = z.infer<typeof confirmUploadProjectDocumentSchema>;
+
 export interface CreateProjectDocumentResponse {
     url: string;
+    name: string;
+    filePath: string;
 }
 
 export const makeProjectDocumentPublicRequest = z.object({

@@ -1,17 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import Link from "next/link";
 import { HeroSimple } from "@/ui/organism";
-import { useParams } from "next/navigation";
-import { projects } from "./page.properties";
-import { Project } from "@/domain/Projects";
 import hero_simple from "@/public/hero-simple.svg";
-import { ArrowDownToLine, Link } from "lucide-react";
-import { formatDate } from "@/utils/date.utilities";
-import noticiaExample from "@/public/header-home.svg";
+import { ArrowDownToLine, CheckCircle, Clock, Link as LinkIcon, Play, X } from "lucide-react";
 import { Carousel, Container, IconTitle, Section } from "@/ui/molecules";
-import { BackgroundSection, Button, Chip, Text, Title } from "@/ui/atoms";
+import { BackgroundSection, Button, Chip, GlobalLoader, Text, Title } from "@/ui/atoms";
 import { ICarouselProps } from "@/ui/molecules/Carousel/carousel.properties";
 import { CallToActionSection } from "@/ui/organism/CallToActionSection/CallToActionSection";
 
@@ -21,48 +16,36 @@ const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
   md: "md:basis-1/3",
   lg: "lg:basis-1/4",
 };
+import useProject from "@/hooks/project/useProject";
+import { useParams } from "next/navigation";
+import { getProjectStatusLabel, getProjectTypeLabel, ProjectStatus } from "@/domain/Projects";
+import { getProdOrDevSuffix } from "@/utils/utils";
 
 const Call = () => {
-  const params = useParams();
-  const projectId = params.id as string;
+  const { id } = useParams();
+  const { data: project } = useProject(id as string);
 
-  const initialProject = projectId
-    ? projects.find((p) => p.id === projectId) || null
-    : null;
-
-  const [project, setProject] = useState<Project | null>(initialProject);
-
-  if (!project) {
-    return (
-      <Container className="py-20 text-center">
-        <Title
-          text={
-            projectId
-              ? "Proyecto no encontrado"
-              : "ID de proyecto no proporcionado"
-          }
-        />
-      </Container>
-    );
+  const getStatusIcon = (status: ProjectStatus) => {
+    switch (status) {
+      case ProjectStatus.STARTED:
+        return <Play size={18} />;
+      case ProjectStatus.COMPLETED:
+        return <CheckCircle size={18} />;
+      case ProjectStatus.IN_PROGRESS:
+        return <Clock size={18} />;
+      case ProjectStatus.CANCELLED:
+        return <X size={18} />;
+    }
   }
 
-  const { date, title, documents, photosUrls, description, relatedProjects } =
-    project;
-
-  const publishedBy = "Ana García";
-  const projectDate = formatDate(date);
-  const actas = documents;
-
-  const imgs = photosUrls.map((url, index) => ({
-    id: url,
-    img: noticiaExample,
-    alt: `Foto ${index + 1} del proyecto ${title}`,
-  }));
+  if (!project) {
+    return <GlobalLoader />;
+  }
 
   return (
     <>
       <HeroSimple
-        title={`Convocatorias - ${title}`}
+        title="Convocatorias"
         backgroundImage={hero_simple}
       />
 
@@ -70,112 +53,115 @@ const Call = () => {
         <Container className="flex flex-col items-center space-y-6">
           <IconTitle
             highlightFirstLetter={false}
-            title={`Proyecto ${title} / Obra`}
+            title={`${project.title} - ${project.date.getFullYear()} / ${getProjectTypeLabel(project.type)}`}
           />
 
           <div className="self-start space-y-5">
-            <Chip />
+            <Chip
+              category={`Estado: ${getProjectStatusLabel(project.status)}`}
+              icono={getStatusIcon(project.status)}
+              isActive={project.status === ProjectStatus.COMPLETED}
+            />
 
             <div>
-              <Title text={title} highlightFirstLetter={false} />
-
-              <Text
-                text={`Fecha: ${projectDate}`}
-                className="text-primary font-normal text-[15px] md:text-[18px] lg:text-[20px]"
+              <Title
+                text={project.id}
+                highlightFirstLetter={false}
+                className="lg:text-[20px]"
               />
 
               <Text
-                text={`Publicado por: ${publishedBy}`}
-                className="text-primary font-normal text-[15px] md:text-[18px] lg:text-[20px]"
+                text={`Fecha : ${project.date.toLocaleDateString('es-CO')}`}
+                className="text-primary font-normal text-[20px]"
               />
             </div>
 
             <Text
-              className="text-justify text-[15px] md:text-[18px] lg:text-[20px]"
-              text={<>{description}</>}
+              className="text-justify text-[20px]"
+              text={project.description}
             />
 
-            {relatedProjects && relatedProjects.length > 0 && (
-              <div className="flex items-center gap-2">
-                <IconTitle
-                  Icon={Link}
-                  highlightFirstLetter={false}
-                  classNameTitle="font-normal text-[15px] md:text-[18px] lg:text-[20px]"
-                  title="Interventoría asociada: "
-                />
-                <Title
-                  text={relatedProjects[0].title}
-                  highlightFirstLetter={false}
-                />
-              </div>
-            )}
+            <div className="flex flex-col gap-2">
+              {project.relatedProjects.map((p) => (
+                <Link
+                  key={p.id}
+                  href={`/calls/${p.id}`}
+                  className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer"
+                >
+                  <IconTitle
+                    Icon={LinkIcon}
+                    classNameTitle="md:font-normal md:text-[20px]"
+                    title="Proyecto asociado: "
+                    highlightFirstLetter={false}
+                  />
+                  <Title text={p.title} className="md:text-[20px]" />
+                </Link>
+              ))}
+            </div>
           </div>
         </Container>
       </Section>
 
-      <Section hasPadding={false} fadeIn={true}>
-        <Container className="mt-3 md:mt-0">
-          <IconTitle
-            highlightFirstLetter={false}
-            title="Documentos del proyecto"
-            className="mb-5 lg:mb-7"
-          />
+      {project.documents.length > 0 && (
+        <Section fadeIn={true}>
+          <Container>
+            <IconTitle
+              highlightFirstLetter={false}
+              title="Documentos del proyecto"
+              className="mb-10"
+            />
 
-          <div className="flex flex-col gap-2 lg:gap-4">
-            {actas.map((acta) => (
-              <a
-                key={acta.id}
-                href={acta.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 text-black hover:text-primary cursor-pointer transition-colors"
-              >
-                <div className="bg-[#D9E0FF] p-2 rounded-lg">
-                  <ArrowDownToLine size={20} className="text-primary" />
-                </div>
-
-                <span className="text-[15px] md:text-[18px] lg:text-[20px] font-medium">
-                  {acta.name}
-                </span>
-              </a>
-            ))}
-          </div>
-        </Container>
-      </Section>
-
-      <Section fadeIn={true}>
-        <Container className="w-full flex flex-col items-center mt-3 md:mt-0">
-          <IconTitle
-            highlightFirstLetter={false}
-            title="Registro fotográfico"
-            className="mb-5 lg:mb-7"
-          />
-
-          <div className="w-full">
-            <Carousel slideSizeClasses={customSlideClasses}>
-              {imgs.map((img) => (
+            <div className="flex flex-col gap-4">
+              {project.documents.map((d) => (
                 <div
-                  key={img.id}
-                  className="relative h-[281px] overflow-hidden"
+                  key={d.id}
+                  onClick={() => window.open(`https://storage.googleapis.com/${process.env.NEXT_PUBLIC_GOOGLE_STORAGE_BUCKET_NAME}/${getProdOrDevSuffix()}/${d.url}`, '_blank')}
+                  className="flex items-center gap-3 text-black hover:text-primary cursor-pointer transition-colors"
+                >
+                  <div className="bg-[#D9E0FF] p-2 rounded-lg">
+                    <ArrowDownToLine size={20} className="text-primary" />
+                  </div>
+                  <span className="text-[20px] font-medium">{d.name}</span>
+                </div>
+              ))}
+            </div>
+          </Container>
+        </Section>
+      )}
+
+      {project.photos.length > 0 && (
+        <Section fadeIn={true}>
+          <Container className="flex flex-col items-center">
+            <IconTitle
+              highlightFirstLetter={false}
+              title="Registro fotográficos"
+              className="mb-10"
+            />
+
+            <Carousel slideSizeClasses={customSlideClasses}>
+              {project.photos.map((photo) => (
+                <div
+                  key={photo.id}
+                  className="relative h-[281px] w-[421px] overflow-hidden"
                 >
                   <Image
                     fill
-                    src={img.img}
-                    alt={img.alt}
+                    src={`https://storage.googleapis.com/${process.env.NEXT_PUBLIC_GOOGLE_STORAGE_BUCKET_NAME}/${getProdOrDevSuffix()}/${photo.url}`}
+                    alt={photo.url}
                     className="object-cover"
                   />
                 </div>
               ))}
             </Carousel>
-          </div>
 
-          <Button
-            variant="solid"
-            text="Quiero apoyar este proyecto"
-            className="mt-5 lg:mt-10 bg-secondary w-fit hover:bg-secondary-400 font-bold transition-colors duration-200 shadow-md"
-          />
-        </Container>
-      </Section>
+            <Button
+              variant="solid"
+              text="Quiero apoyar este proyecto"
+              className="mt-10 bg-secondary w-fit hover:bg-secondary-400 font-bold transition-colors duration-200 shadow-md"
+            />
+          </Container>
+        </Section>
+      )}
 
       <CallToActionSection />
       <BackgroundSection background="bg-default-100" />

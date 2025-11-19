@@ -6,7 +6,7 @@ interface ProjectStatusChipProps {
     status: ProjectStatus;
 }
 
-export const ProjectStatusChip: FC<ProjectStatusChipProps> = ({ status }) => {
+const ProjectStatusChip: FC<ProjectStatusChipProps> = ({ status }) => {
     const getStatusColor = (status: ProjectStatus): "primary" | "default" | "secondary" | "success" | "warning" | "danger" => {
         switch (status) {
             case ProjectStatus.STARTED:
@@ -26,3 +26,5 @@ export const ProjectStatusChip: FC<ProjectStatusChipProps> = ({ status }) => {
         </Chip>
     );
 }
+
+export default ProjectStatusChip;

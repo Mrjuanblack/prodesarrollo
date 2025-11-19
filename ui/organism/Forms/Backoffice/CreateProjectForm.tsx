@@ -1,5 +1,5 @@
 import { useCreateProject } from "@/hooks/project/useCreateProject";
-import { CreateProject, createProjectFormSchema, getProjectStatusLabel, ProjectStatus, projectStatusList } from "@/domain/Projects";
+import { CreateProject, createProjectFormSchema, getProjectStatusLabel, getProjectTypeLabel, ProjectStatus, projectStatusList, ProjectType, projectTypeList } from "@/domain/Projects";
 import { DatePicker, Input, Modal, ModalBody, ModalContent, ModalHeader, Select, SelectItem, Textarea, Button, ModalFooter } from "@heroui/react";
 import { useForm } from "@tanstack/react-form";
 import { getLocalTimeZone, CalendarDate } from "@internationalized/date";
@@ -17,6 +17,7 @@ const CreateProjectForm: React.FC<CreateProjectProps> = ({ isOpen, onClose }) =>
         defaultValues: {
             title: '',
             description: '',
+            type: ProjectType.INTERVENTORY,
             date: new Date(),
             status: ProjectStatus.STARTED,
             relatedProjects: null,
@@ -80,6 +81,30 @@ const CreateProjectForm: React.FC<CreateProjectProps> = ({ isOpen, onClose }) =>
                                         errorMessage={field.state.meta.errors[0]?.message}
                                         minRows={2}
                                     />
+                                )}
+                            </form.Field>
+                            <form.Field name="type">
+                                {(field) => (
+                                    <Select
+                                        label="Tipo"
+                                        id="type"
+                                        name="type"
+                                        value={field.state.value ?? ""}
+                                        onChange={(e) => {
+                                            field.handleChange(e.target.value as ProjectType);
+                                        }}
+                                        onBlur={field.handleBlur}
+                                        isInvalid={field.state.meta.errors.length > 0 && field.state.meta.isTouched}
+                                        errorMessage={field.state.meta.errors[0]?.message}
+                                        defaultSelectedKeys={[field.state.value ?? ""]}
+                                        disallowEmptySelection
+                                    >
+                                        {projectTypeList.map((type) => (
+                                            <SelectItem key={type}>
+                                                {getProjectTypeLabel(type)}
+                                            </SelectItem>
+                                        ))}
+                                    </Select>
                                 )}
                             </form.Field>
                             <form.Field name="date">

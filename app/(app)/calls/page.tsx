@@ -2,16 +2,18 @@
 
 import { useState } from "react";
 import { FileText } from "lucide-react";
-import { Divider } from "@heroui/react";
+import { Divider, Spinner } from "@heroui/react";
 import { HeroSimple } from "@/ui/organism";
 import hero_simple from "@/public/hero-simple.svg";
-import { btns, options } from "./page.properties";
-import { projects } from "./[id]/page.properties";
 import { FilterByState } from "./components/filter-by-state";
 import { Carousel, Container, Section } from "@/ui/molecules";
 import { ProjectTypeCard } from "./components/project-type-card";
 import { BackgroundSection, CallCard, SearchBar } from "@/ui/atoms";
 import { CallToActionSection } from "@/ui/organism/CallToActionSection/CallToActionSection";
+import { useYearsWithProjects } from "@/hooks/project/useYearsWithProjects";
+import { ProjectType, projectTypeList } from "@/domain/Projects";
+import { useProjectsInfinite } from "@/hooks/project/useProjectsInfinite";
+import { useInfiniteScroll } from "@heroui/use-infinite-scroll";
 import { ICarouselProps } from "@/ui/molecules/Carousel/carousel.properties";
 
 const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
@@ -24,8 +26,24 @@ const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
 
 export default function Calls() {
   const [query, setQuery] = useState("");
-  const [activeBtn, setActiveBtn] = useState(2025);
-  const [active, setActive] = useState("Infraestructura");
+
+  const { data: years } = useYearsWithProjects();
+  const [activeYear, setActiveYear] = useState<number | null>(null);
+  const [activeType, setActiveType] = useState<ProjectType>(ProjectType.INTERVENTORY);
+
+  const { items, hasMore, isLoading, isFetchingNextPage, onLoadMore } = useProjectsInfinite({
+    size: 10,
+    year: activeYear ?? undefined,
+    type: activeType,
+    search: query || undefined,
+  });
+
+  // Use HeroUI's infinite scroll hook
+  const [, scrollerRef] = useInfiniteScroll({
+    hasMore,
+    isEnabled: true,
+    onLoadMore,
+  });
 
   const handleSearch = () => {
     console.log("Buscando:", query);
@@ -34,7 +52,7 @@ export default function Calls() {
   return (
     <>
       <HeroSimple
-        title="Convocatorias - Bogotá"
+        title="Convocatorias"
         backgroundImage={hero_simple}
       />
 
@@ -48,21 +66,18 @@ export default function Calls() {
             />
           </div>
 
-          <div className="my-10 w-full flex flex-wrap justify-center gap-3 lg:gap-5">
-            {btns.map(({ id, year }) => {
-              const active = activeBtn === year;
-
+          <div className="my-10 flex flex-wrap justify-center gap-5">
+            {years?.map((year) => {
               return (
                 <button
-                  key={id}
-                  onClick={() => setActiveBtn(year)}
+                  key={year}
+                  onClick={() => setActiveYear(year)}
                   className={`
-                    w-full md:w-fit flex items-center gap-2 px-5 lg:px-7 py-4 rounded-2xl transition-all duration-300
-                    font-semibold text-[17px] md:text-[22px] lg:text-[25px] cursor-pointer shadow-lg
-                    ${
-                      active
-                        ? "bg-[#A9BEFF] text-primary shadow-xl"
-                        : "bg-[#F3F6FF] text-primary hover:bg-[#E6EEFF]"
+                    flex items-center gap-2 px-7 py-4 rounded-2xl transition-all duration-300
+                    font-semibold text-[25px] cursor-pointer shadow-lg
+                    ${activeYear === year
+                      ? "bg-[#A9BEFF] text-primary shadow-xl"
+                      : "bg-[#F3F6FF] text-primary hover:bg-[#E6EEFF]"
                     }
                   `}
                 >
@@ -70,7 +85,7 @@ export default function Calls() {
                     size={35}
                     className={`
                       transition-colors duration-300
-                      ${active ? "text-primary" : "text-[#A9BEFF]"}
+                      ${activeYear === year ? "text-primary" : "text-[#A9BEFF]"}
                     `}
                   />
                   Proyectos {year}
@@ -87,14 +102,14 @@ export default function Calls() {
               showDots={false}
               slideSizeClasses={customSlideClasses}
             >
-              {options.map((option) => {
+              {projectTypeList.map((option) => {
                 return (
-                  <div className="p-1" key={option.id}>
+                  <div className="p-1" key={option}>
                     <ProjectTypeCard
-                      item={option}
-                      active={active === option.title}
+                      type={option}
+                      active={activeType === option}
                       onClick={(value) => {
-                        setActive(value);
+                        setActiveType(value);
                       }}
                     />
                   </div>
@@ -113,10 +128,20 @@ export default function Calls() {
             <FilterByState />
           </div>
 
-          <div className="space-y-4 lg:space-y-5">
-            {projects.map((item) => (
-              <CallCard key={item.id} item={item} />
+          <div ref={scrollerRef as React.RefObject<HTMLDivElement>} className="space-y-5">
+            {items.map((item, index) => (
+              <CallCard key={`${items[index]?.id || index}`} item={item} />
             ))}
+            {isFetchingNextPage && (
+              <div className="flex justify-center py-5">
+                <Spinner />
+              </div>
+            )}
+            {isLoading && items.length === 0 && (
+              <div className="flex justify-center py-5">
+                <Spinner />
+              </div>
+            )}
           </div>
         </Container>
       </Section>
