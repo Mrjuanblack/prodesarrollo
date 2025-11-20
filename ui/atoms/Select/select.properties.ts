@@ -10,7 +10,6 @@ export interface SelectProperties {
   id?: string;
   name?: string;
   label?: string;
-  value?: string;
   required?: boolean;
   shadow?: boolean;
   className?: string;

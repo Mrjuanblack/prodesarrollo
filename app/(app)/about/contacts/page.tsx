@@ -12,15 +12,15 @@ import {
 import { FC } from "react";
 import Image from "next/image";
 import { Sedes } from "@/ui/organism";
-import { Divider } from "@heroui/react";
 import { MessageSquare } from "lucide-react";
 import { useForm } from "@tanstack/react-form";
+import { addToast, Divider } from "@heroui/react";
 import { ContactCardProps } from "./page.properties";
 import message_icon from "@/public/message-icono.svg";
+import { sendRequestFormSchema, SendRequestFormType } from "@/domain/contact";
 import message_icon_two from "@/public/message-icono-2.svg";
 import { Container, IconTitle, Section } from "@/ui/molecules";
 import { useSendRequest } from "@/hooks/contact/useSendRequest";
-import { SendRequest, sendRequestSchema } from "@/domain/contact";
 import { socialItems } from "@/ui/organism/Header/header.properties";
 
 const ContactCard: FC<ContactCardProps> = ({ children }) => {
@@ -34,21 +34,38 @@ const ContactCard: FC<ContactCardProps> = ({ children }) => {
 const Contacts = () => {
   const sendRequestMutation = useSendRequest();
 
+  const defaultValues: SendRequestFormType = {
+    email: "",
+    phone: "",
+    fullName: "",
+    description: "",
+  };
+
   const form = useForm({
-    defaultValues: {
-      email: "",
-      phone: "",
-      fullName: "",
-      description: "",
-    } satisfies SendRequest,
+    defaultValues,
     validators: {
-      onBlur: sendRequestSchema,
-      onSubmit: sendRequestSchema,
-      onChange: sendRequestSchema,
+      onBlur: sendRequestFormSchema,
+      onSubmit: sendRequestFormSchema,
+      onChange: sendRequestFormSchema,
     },
-    onSubmit: (values) => {
-      sendRequestMutation.mutate(values.value);
-      form.reset();
+    onSubmit: ({ value }) => {
+      sendRequestMutation.mutate(value, {
+        onError: () => {
+          addToast({
+            title: "Toast Title error",
+            description: "Toast Description error",
+            color: "danger",
+          });
+        },
+        onSuccess: () => {
+          form.reset();
+          addToast({
+            title: "Toast Title",
+            description: "Toast Description",
+            color: "success",
+          });
+        },
+      });
     },
   });
 

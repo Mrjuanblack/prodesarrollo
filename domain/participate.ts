@@ -1,17 +1,11 @@
 import { z } from "zod/v4";
 import { IdTypeOptions } from "./shared";
 
-export const submitParticipateSchema = z.object({
-  idType: z
-    .enum(IdTypeOptions, {
-      message:
-        "El tipo de identificación es requerido y debe ser una opción válida.",
-    })
-    .nullable()
-    .refine((val) => val !== null, {
-      message: "El tipo de identificación es requerido.",
-      path: ["idType"],
-    }),
+export const submitParticipateFormSchema = z.object({
+  idType: z.enum(IdTypeOptions, {
+    message:
+      "El tipo de identificación es requerido y debe ser una opción válida.",
+  }),
 
   idNumber: z
     .string({ message: "El número de identificación es requerido." })
@@ -31,4 +25,10 @@ export const submitParticipateSchema = z.object({
     .email("El formato del correo electrónico no es válido."),
 });
 
-export type SubmitParticipate = z.infer<typeof submitParticipateSchema>;
+export type SubmitParticipateFormType = {
+  idType: IdTypeOptions;
+  idNumber: string;
+  fullName: string;
+  phone: string;
+  email: string;
+};

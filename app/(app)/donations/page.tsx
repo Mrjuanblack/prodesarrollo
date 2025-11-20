@@ -123,7 +123,7 @@ export default function Donations() {
                         options={donationTypes}
                         onBlur={field.handleBlur}
                         label="Tipo de donación"
-                        value={field.state.value ?? ""}
+                        // selectedKeys={field.state.value ?? ""}
                         placeholder="Selecciona una opción"
                         errorMessage={field.state.meta.errors[0]?.message}
                         onChange={(e) => {
@@ -189,7 +189,7 @@ export default function Donations() {
                           options={idTypes}
                           onBlur={field.handleBlur}
                           label="Tipo de identificación"
-                          value={field.state.value ?? ""}
+                          // value={field.state.value ?? ""}
                           placeholder="Selecciona una opción"
                           errorMessage={field.state.meta.errors[0]?.message}
                           onChange={(e) => {

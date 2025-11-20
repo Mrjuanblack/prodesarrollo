@@ -6,7 +6,6 @@ export const SelectComponent: FC<SelectProperties> = ({
   id,
   name,
   label,
-  value,
   required,
   className,
   isInvalid,
@@ -23,7 +22,6 @@ export const SelectComponent: FC<SelectProperties> = ({
       id={id}
       size="lg"
       name={name}
-      value={value}
       label={label}
       onBlur={onBlur}
       required={required}

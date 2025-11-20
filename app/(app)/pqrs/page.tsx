@@ -13,14 +13,15 @@ import {
   BackgroundSection,
 } from "@/ui/atoms";
 import { useState } from "react";
+import { addToast } from "@heroui/react";
 import { useForm } from "@tanstack/react-form";
 import { IdTypeOptions } from "@/domain/shared";
 import { transparencies } from "./page.properties";
+import { idTypes } from "../participate/page.properties";
 import { useSubmitPqrs } from "@/hooks/pqrs/useSubmitPqrs";
-import { SubmitPqrs, submitPqrsSchema } from "@/domain/pqrs";
 import { Container, IconTitle, Section } from "@/ui/molecules";
 import { AlertCircle, Menu, MessageSquare } from "lucide-react";
-import { idTypes } from "../participate/page.properties";
+import { SubmitPqrsFormType, submitPqrsFormSchema } from "@/domain/pqrs";
 
 export default function Pqrs() {
   const submitPqrsMutation = useSubmitPqrs();
@@ -37,23 +38,40 @@ export default function Pqrs() {
     setFiles(e.target.files);
   };
 
+  const defaultValues: SubmitPqrsFormType = {
+    email: "",
+    phone: "",
+    fullName: "",
+    idNumber: "",
+    description: "",
+    idType: IdTypeOptions.CEDULA_CIUDADANIA,
+  };
+
   const form = useForm({
-    defaultValues: {
-      email: "",
-      phone: "",
-      fullName: "",
-      idNumber: "",
-      description: "",
-      idType: null as IdTypeOptions | null,
-    } satisfies SubmitPqrs,
+    defaultValues,
     validators: {
-      onBlur: submitPqrsSchema,
-      onSubmit: submitPqrsSchema,
-      onChange: submitPqrsSchema,
+      onBlur: submitPqrsFormSchema,
+      onSubmit: submitPqrsFormSchema,
+      onChange: submitPqrsFormSchema,
     },
-    onSubmit: (values) => {
-      submitPqrsMutation.mutate(values.value);
-      form.reset();
+    onSubmit: ({ value }) => {
+      submitPqrsMutation.mutate(value, {
+        onError: () => {
+          addToast({
+            title: "Toast Title error",
+            description: "Toast Description error",
+            color: "danger",
+          });
+        },
+        onSuccess: () => {
+          form.reset();
+          addToast({
+            title: "Toast Title",
+            description: "Toast Description",
+            color: "success",
+          });
+        },
+      });
     },
   });
 
@@ -117,7 +135,7 @@ export default function Pqrs() {
                             options={idTypes}
                             onBlur={field.handleBlur}
                             label="Tipo de identificación"
-                            value={field.state.value ?? ""}
+                            selectedKeys={[field.state.value]}
                             placeholder="Selecciona una opción"
                             errorMessage={field.state.meta.errors[0]?.message}
                             onChange={(e) => {

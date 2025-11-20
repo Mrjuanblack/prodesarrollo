@@ -1,8 +1,9 @@
 import {
-  SubmitParticipate,
-  submitParticipateSchema,
+  submitParticipateFormSchema,
+  SubmitParticipateFormType,
 } from "@/domain/participate";
 import { useState } from "react";
+import { addToast } from "@heroui/react";
 import { idTypes } from "../page.properties";
 import { useForm } from "@tanstack/react-form";
 import { IdTypeOptions } from "@/domain/shared";
@@ -18,22 +19,39 @@ export const FormContactSection = () => {
     setFiles(e.target.files);
   };
 
+  const defaultValues: SubmitParticipateFormType = {
+    email: "",
+    phone: "",
+    fullName: "",
+    idNumber: "",
+    idType: IdTypeOptions.CEDULA_CIUDADANIA,
+  };
+
   const form = useForm({
-    defaultValues: {
-      email: "",
-      phone: "",
-      fullName: "",
-      idNumber: "",
-      idType: null as IdTypeOptions | null,
-    } satisfies SubmitParticipate,
+    defaultValues,
     validators: {
-      onSubmit: submitParticipateSchema,
-      onBlur: submitParticipateSchema,
-      onChange: submitParticipateSchema,
+      onSubmit: submitParticipateFormSchema,
+      onBlur: submitParticipateFormSchema,
+      onChange: submitParticipateFormSchema,
     },
-    onSubmit: (values) => {
-      submitParticipateMutation.mutate(values.value);
-      form.reset();
+    onSubmit: ({ value }) => {
+      submitParticipateMutation.mutate(value, {
+        onError: () => {
+          addToast({
+            title: "Toast Title error",
+            description: "Toast Description error",
+            color: "danger",
+          });
+        },
+        onSuccess: () => {
+          form.reset();
+          addToast({
+            title: "Toast Title",
+            description: "Toast Description",
+            color: "success",
+          });
+        },
+      });
     },
   });
 
@@ -45,28 +63,30 @@ export const FormContactSection = () => {
         <>
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-2 lg:gap-4">
             <form.Field name="idType">
-              {(field) => (
-                <Select
-                  id="idType"
-                  name="idType"
-                  options={idTypes}
-                  onBlur={field.handleBlur}
-                  label="Tipo de identificación"
-                  value={field.state.value ?? ""}
-                  placeholder="Selecciona una opción"
-                  errorMessage={field.state.meta.errors[0]?.message}
-                  onChange={(e) => {
-                    const value: IdTypeOptions = e.target
-                      .value as IdTypeOptions;
+              {(field) => {
+                return (
+                  <Select
+                    id="idType"
+                    name="idType"
+                    options={idTypes}
+                    onBlur={field.handleBlur}
+                    label="Tipo de identificación"
+                    selectedKeys={[field.state.value]}
+                    placeholder="Selecciona una opción"
+                    errorMessage={field.state.meta.errors[0]?.message}
+                    onChange={(e) => {
+                      const value: IdTypeOptions = e.target
+                        .value as IdTypeOptions;
 
-                    field.handleChange(value);
-                  }}
-                  isInvalid={
-                    field.state.meta.errors.length > 0 &&
-                    field.state.meta.isTouched
-                  }
-                />
-              )}
+                      field.handleChange(value);
+                    }}
+                    isInvalid={
+                      field.state.meta.errors.length > 0 &&
+                      field.state.meta.isTouched
+                    }
+                  />
+                );
+              }}
             </form.Field>
 
             <form.Field name="idNumber">
