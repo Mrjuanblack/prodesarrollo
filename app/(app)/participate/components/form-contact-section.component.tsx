@@ -160,8 +160,8 @@ export const FormContactSection = () => {
             {(field) => (
               <Input
                 type="email"
-                id="idNumber"
-                name="idNumber"
+                id="email"
+                name="email"
                 label="Correo electrónico"
                 onBlur={field.handleBlur}
                 value={field.state.value ?? ""}

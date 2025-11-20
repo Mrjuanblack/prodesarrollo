@@ -19,17 +19,18 @@ import {
   anonymousDonation,
 } from "./page.properties";
 import {
-  CreateDonation,
   PersonTypeOptions,
   DonationTypeOptions,
-  createDonationSchema,
+  CreateDonationFormType,
+  createDonationFormSchema,
 } from "@/domain/donation";
 import {
   Divider,
   Spinner,
+  addToast,
   ButtonGroup,
-  Button as ButtonEconomic,
   NumberInput,
+  Button as ButtonEconomic,
 } from "@heroui/react";
 import { useMemo, useState } from "react";
 import { HeroSimple } from "@/ui/organism";
@@ -39,8 +40,8 @@ import { IdTypeOptions } from "@/domain/shared";
 import { idTypes } from "../participate/page.properties";
 import { Container, IconTitle, Section } from "@/ui/molecules";
 import { useInfiniteScroll } from "@heroui/use-infinite-scroll";
-import { FilterByState } from "../calls/components/filter-by-state";
 import hero_donaciones_img from "@/public/hero-donaciones-img.svg";
+import { FilterByState } from "../calls/components/filter-by-state";
 import { useCreateDonation } from "@/hooks/donation/useCreateDonation";
 import { useProjectsInfinite } from "@/hooks/project/useProjectsInfinite";
 
@@ -69,27 +70,47 @@ export default function Donations() {
     onLoadMore,
   });
 
+  const defaultValues: CreateDonationFormType = {
+    email: "",
+    phone: "",
+    fullName: "",
+    idNumber: "",
+    anonymousDonation: "no",
+    personType: PersonTypeOptions.NATURAL,
+    idType: IdTypeOptions.CEDULA_CIUDADANIA,
+    donatioType: DonationTypeOptions.ECONOMICA,
+  };
+
   const form = useForm({
-    defaultValues: {
-      email: "",
-      phone: "",
-      fullName: "",
-      idNumber: "",
-      anonymousDonation: "no",
-      donateValue: null as number | null,
-      description: null as string | null,
-      idType: null as IdTypeOptions | null,
-      personType: null as PersonTypeOptions | null,
-      donatioType: null as DonationTypeOptions | null,
-    } satisfies CreateDonation,
+    defaultValues,
     validators: {
-      onSubmit: createDonationSchema,
-      onBlur: createDonationSchema,
-      onChange: createDonationSchema,
+      onSubmit: createDonationFormSchema,
+      onBlur: createDonationFormSchema,
+      onChange: createDonationFormSchema,
     },
-    onSubmit: (values) => {
-      createDonationMutation.mutate(values.value);
-      form.reset();
+    onSubmit: ({ value }) => {
+      createDonationMutation.mutate(value, {
+        onError: () => {
+          addToast({
+            title: "Toast Title error",
+            description: "Toast Description error",
+            color: "danger",
+          });
+        },
+        onSuccess: () => {
+          setDonationValue(null);
+          setIsJuridicPerson(false);
+          setIsEconomicDonation(false);
+          setActiveType(ProjectType.INTERVENTORY);
+
+          form.reset();
+          addToast({
+            title: "Toast Title",
+            description: "Toast Description",
+            color: "success",
+          });
+        },
+      });
     },
   });
 
@@ -123,7 +144,7 @@ export default function Donations() {
                         options={donationTypes}
                         onBlur={field.handleBlur}
                         label="Tipo de donación"
-                        // selectedKeys={field.state.value ?? ""}
+                        selectedKeys={[field.state.value]}
                         placeholder="Selecciona una opción"
                         errorMessage={field.state.meta.errors[0]?.message}
                         onChange={(e) => {
@@ -139,9 +160,9 @@ export default function Donations() {
 
                           if (!validDonation) {
                             setDonationValue(null);
-                            form.setFieldValue("donateValue", null);
+                            form.setFieldValue("donateValue", undefined);
                           } else {
-                            form.setFieldValue("description", null);
+                            form.setFieldValue("description", undefined);
                           }
                         }}
                         isInvalid={
@@ -189,7 +210,7 @@ export default function Donations() {
                           options={idTypes}
                           onBlur={field.handleBlur}
                           label="Tipo de identificación"
-                          // value={field.state.value ?? ""}
+                          selectedKeys={[field.state.value]}
                           placeholder="Selecciona una opción"
                           errorMessage={field.state.meta.errors[0]?.message}
                           onChange={(e) => {
@@ -281,8 +302,8 @@ export default function Donations() {
                     {(field) => (
                       <Input
                         type="email"
-                        id="idNumber"
-                        name="idNumber"
+                        id="email"
+                        name="email"
                         label="Correo electrónico"
                         onBlur={field.handleBlur}
                         value={field.state.value ?? ""}

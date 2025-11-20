@@ -13,37 +13,19 @@ export enum PersonTypeOptions {
   JURIDICA = "juridica",
 }
 
-export const createDonationSchema = z.object({
-  donatioType: z
-    .enum(DonationTypeOptions, {
-      message: "El tipo de donación es requerido y debe ser una opción válida.",
-    })
-    .nullable()
-    .refine((val) => val !== null, {
-      message: "El tipo de donación es requerido.",
-      path: ["donationType"],
-    }),
+export const createDonationFormSchema = z.object({
+  donatioType: z.enum(DonationTypeOptions, {
+    message: "El tipo de donación es requerido y debe ser una opción válida.",
+  }),
 
-  personType: z
-    .enum(PersonTypeOptions, {
-      message: "El tipo de persona es requerido y debe ser una opción válida.",
-    })
-    .nullable()
-    .refine((val) => val !== null, {
-      message: "El tipo de persona es requerido.",
-      path: ["personType"],
-    }),
+  personType: z.enum(PersonTypeOptions, {
+    message: "El tipo de persona es requerido y debe ser una opción válida.",
+  }),
 
-  idType: z
-    .enum(IdTypeOptions, {
-      message:
-        "El tipo de identificación es requerido y debe ser una opción válida.",
-    })
-    .nullable()
-    .refine((val) => val !== null, {
-      message: "El tipo de identificación es requerido.",
-      path: ["idType"],
-    }),
+  idType: z.enum(IdTypeOptions, {
+    message:
+      "El tipo de identificación es requerido y debe ser una opción válida.",
+  }),
 
   idNumber: z
     .string({ message: "El número de identificación es requerido." })
@@ -64,19 +46,32 @@ export const createDonationSchema = z.object({
 
   description: z
     .string()
-    .nullable()
-    .refine((val) => val === null || val.length >= 3, {
+    .optional()
+    .refine((val) => val === undefined || val.length >= 3, {
       message: "La descripción debe tener al menos 3 caracteres.",
     }),
 
-  anonymousDonation: z.string(),
+  anonymousDonation: z.string({
+    message: "Debes indicar si la donación es anónima.",
+  }),
 
   donateValue: z
     .number()
-    .nullable()
-    .refine((val) => val === null || val >= 20000, {
+    .optional()
+    .refine((val) => val === undefined || val >= 20000, {
       message: "El valor de la donación debe ser al menos 20,000.",
     }),
 });
 
-export type CreateDonation = z.infer<typeof createDonationSchema>;
+export type CreateDonationFormType = {
+  email: string;
+  phone: string;
+  fullName: string;
+  idNumber: string;
+  idType: IdTypeOptions;
+  anonymousDonation: string;
+  donateValue?: number | undefined;
+  description?: string | undefined;
+  personType: PersonTypeOptions;
+  donatioType: DonationTypeOptions;
+};
