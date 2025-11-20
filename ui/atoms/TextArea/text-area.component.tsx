@@ -3,6 +3,7 @@ import { Textarea } from "@heroui/react";
 import { TextAreaProperties } from "./text-area.properties";
 
 export const TextAreaComponent: FC<TextAreaProperties> = ({
+  id,
   name,
   label,
   value,
@@ -14,10 +15,12 @@ export const TextAreaComponent: FC<TextAreaProperties> = ({
   startContent,
   errorMessage,
   isInvalid,
+  onBlur,
   onChange,
 }) => {
   return (
     <Textarea
+      id={id}
       size="lg"
       name={name}
       value={value}
@@ -26,15 +29,16 @@ export const TextAreaComponent: FC<TextAreaProperties> = ({
       isInvalid={isInvalid}
       endContent={endContent}
       placeholder={placeholder}
-      className={`text-[15px] md:text-[18px] lg:text-[20px] ${className}`}
       startContent={startContent}
       errorMessage={errorMessage}
       labelPlacement={labelPlacement ?? "inside"}
-      onChange={onChange}
+      className={`text-[15px] md:text-[18px] lg:text-[20px] ${className}`}
       classNames={{
         inputWrapper: "bg-white",
         input: "bg-white text-black",
       }}
+      onBlur={onBlur}
+      onChange={onChange}
     />
   );
 };

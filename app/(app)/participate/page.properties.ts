@@ -1,4 +1,5 @@
 import { StaticImageData } from "next/image";
+import { IdTypeOptions } from "@/domain/shared";
 import noticiaExample from "@/public/noticia-example.svg";
 
 export interface LawItem {
@@ -72,8 +73,20 @@ export const profileTypes: ProfileTypeItem[] = [
 ];
 
 export const idTypes = [
-  { key: 1, label: "Cédula de ciudadanía", value: "cc" },
-  { key: 2, label: "Tarjeta de identidad", value: "ti" },
-  { key: 3, label: "Cédula de extranjería", value: "ce" },
-  { key: 4, label: "Pasaporte", value: "pa" },
+  {
+    key: 1,
+    label: "Cédula de ciudadanía",
+    value: IdTypeOptions.CEDULA_CIUDADANIA,
+  },
+  {
+    key: 2,
+    label: "Tarjeta de identidad",
+    value: IdTypeOptions.TARJETA_IDENTIDAD,
+  },
+  {
+    key: 3,
+    label: "Cédula de extranjería",
+    value: IdTypeOptions.CEDULA_EXTRANJERIA,
+  },
+  { key: 4, label: "Pasaporte", value: IdTypeOptions.PASAPORTE },
 ];

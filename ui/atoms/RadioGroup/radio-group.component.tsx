@@ -3,6 +3,7 @@ import { Radio, RadioGroup } from "@heroui/react";
 import { RadioGroupProperties } from "./radio-group.properties";
 
 export const RadioGroupComponent: FC<RadioGroupProperties> = ({
+  id,
   name,
   label,
   value,
@@ -12,22 +13,25 @@ export const RadioGroupComponent: FC<RadioGroupProperties> = ({
   orientation = "vertical",
   isInvalid,
   options,
+  onBlur,
   onChange,
 }) => {
   return (
     <RadioGroup
+      id={id}
       size="md"
       name={name}
       value={value}
       label={label}
       isRequired={required}
       isInvalid={isInvalid}
-      errorMessage={errorMessage}
       orientation={orientation}
+      errorMessage={errorMessage}
+      className={`${className}`}
       classNames={{
         label: "text-[15px] md:text-[16px] lg:text-[18px] text-primary",
       }}
-      className={`${className}`}
+      onBlur={onBlur}
       onChange={onChange}
     >
       {options.map((option) => (

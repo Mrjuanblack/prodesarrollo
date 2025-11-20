@@ -7,6 +7,7 @@ export interface Option {
 }
 
 export interface RadioGroupProperties {
+  id?: string;
   name?: string;
   label?: string;
   value?: string;
@@ -16,6 +17,7 @@ export interface RadioGroupProperties {
   orientation?: "horizontal" | "vertical";
   isInvalid?: boolean;
   options: Option[];
+  onBlur?: () => void;
   onChange?: (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => void;

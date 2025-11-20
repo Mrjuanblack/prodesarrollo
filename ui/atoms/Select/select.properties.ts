@@ -7,6 +7,7 @@ export interface Option {
 }
 
 export interface SelectProperties {
+  id?: string;
   name?: string;
   label?: string;
   value?: string;
@@ -18,5 +19,6 @@ export interface SelectProperties {
   isInvalid?: boolean;
   options?: Array<Option>;
   selectedKeys?: Array<string>;
+  onBlur?: () => void;
   onChange?: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
