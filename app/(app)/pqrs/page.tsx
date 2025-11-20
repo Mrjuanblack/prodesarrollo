@@ -13,11 +13,19 @@ import {
   BackgroundSection,
 } from "@/ui/atoms";
 import { useState } from "react";
+import { addToast } from "@heroui/react";
+import { useForm } from "@tanstack/react-form";
+import { IdTypeOptions } from "@/domain/shared";
 import { transparencies } from "./page.properties";
+import { idTypes } from "../participate/page.properties";
+import { useSubmitPqrs } from "@/hooks/pqrs/useSubmitPqrs";
 import { Container, IconTitle, Section } from "@/ui/molecules";
 import { AlertCircle, Menu, MessageSquare } from "lucide-react";
+import { SubmitPqrsFormType, submitPqrsFormSchema } from "@/domain/pqrs";
 
 export default function Pqrs() {
+  const submitPqrsMutation = useSubmitPqrs();
+
   const [active, setActive] = useState("step-1");
   const [files, setFiles] = useState<FileList | null>(null);
 
@@ -26,16 +34,46 @@ export default function Pqrs() {
     { id: "step-2", label: "Registrar solicitud", icon: Menu },
   ];
 
-  const idTypes = [
-    { key: 1, label: "Cédula de ciudadanía", value: "cc" },
-    { key: 2, label: "Tarjeta de identidad", value: "ti" },
-    { key: 3, label: "Cédula de extranjería", value: "ce" },
-    { key: 4, label: "Pasaporte", value: "pa" },
-  ];
-
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFiles(e.target.files);
   };
+
+  const defaultValues: SubmitPqrsFormType = {
+    email: "",
+    phone: "",
+    fullName: "",
+    idNumber: "",
+    description: "",
+    idType: IdTypeOptions.CEDULA_CIUDADANIA,
+  };
+
+  const form = useForm({
+    defaultValues,
+    validators: {
+      onBlur: submitPqrsFormSchema,
+      onSubmit: submitPqrsFormSchema,
+      onChange: submitPqrsFormSchema,
+    },
+    onSubmit: ({ value }) => {
+      submitPqrsMutation.mutate(value, {
+        onError: () => {
+          addToast({
+            title: "Toast Title error",
+            description: "Toast Description error",
+            color: "danger",
+          });
+        },
+        onSuccess: () => {
+          form.reset();
+          addToast({
+            title: "Toast Title",
+            description: "Toast Description",
+            color: "success",
+          });
+        },
+      });
+    },
+  });
 
   return (
     <>
@@ -84,32 +122,147 @@ export default function Pqrs() {
 
             {active === "step-2" && (
               <FormCard
+                onSubmit={form.handleSubmit}
                 title="Ingresa la siguiente información para registrar tu solicitud"
                 form={
                   <>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2 lg:gap-4">
-                      <Select
-                        options={idTypes}
-                        label="Tipo de identificación"
-                        placeholder="Selecciona una opción"
-                      />
+                      <form.Field name="idType">
+                        {(field) => (
+                          <Select
+                            id="idType"
+                            name="idType"
+                            options={idTypes}
+                            onBlur={field.handleBlur}
+                            label="Tipo de identificación"
+                            selectedKeys={[field.state.value]}
+                            placeholder="Selecciona una opción"
+                            errorMessage={field.state.meta.errors[0]?.message}
+                            onChange={(e) => {
+                              const value: IdTypeOptions = e.target
+                                .value as IdTypeOptions;
 
-                      <Input placeholder="" label="Número de identificación" />
+                              field.handleChange(value);
+                            }}
+                            isInvalid={
+                              field.state.meta.errors.length > 0 &&
+                              field.state.meta.isTouched
+                            }
+                          />
+                        )}
+                      </form.Field>
+
+                      <form.Field name="idNumber">
+                        {(field) => (
+                          <Input
+                            id="idNumber"
+                            name="idNumber"
+                            placeholder=""
+                            onBlur={field.handleBlur}
+                            value={field.state.value ?? ""}
+                            label="Número de identificación"
+                            errorMessage={field.state.meta.errors[0]?.message}
+                            onChange={(e) => {
+                              const value: string = e.target.value;
+                              field.handleChange(value);
+                            }}
+                            isInvalid={
+                              field.state.meta.errors.length > 0 &&
+                              field.state.meta.isTouched
+                            }
+                          />
+                        )}
+                      </form.Field>
                     </div>
 
-                    <Input label="Nombre completo" placeholder="" />
+                    <form.Field name="fullName">
+                      {(field) => (
+                        <Input
+                          id="fullName"
+                          name="fullName"
+                          placeholder=""
+                          label="Nombre completo"
+                          onBlur={field.handleBlur}
+                          value={field.state.value ?? ""}
+                          errorMessage={field.state.meta.errors[0]?.message}
+                          onChange={(e) => {
+                            const value: string = e.target.value;
+                            field.handleChange(value);
+                          }}
+                          isInvalid={
+                            field.state.meta.errors.length > 0 &&
+                            field.state.meta.isTouched
+                          }
+                        />
+                      )}
+                    </form.Field>
 
-                    <Input label="Teléfono" placeholder="" />
+                    <form.Field name="phone">
+                      {(field) => (
+                        <Input
+                          id="phone"
+                          name="phone"
+                          placeholder=""
+                          label="Teléfono"
+                          onBlur={field.handleBlur}
+                          value={field.state.value ?? ""}
+                          errorMessage={field.state.meta.errors[0]?.message}
+                          onChange={(e) => {
+                            const value: string = e.target.value;
+                            field.handleChange(value);
+                          }}
+                          isInvalid={
+                            field.state.meta.errors.length > 0 &&
+                            field.state.meta.isTouched
+                          }
+                        />
+                      )}
+                    </form.Field>
 
-                    <Input
-                      label="Correo electrónico"
-                      placeholder="ejemplo@correo.com"
-                    />
+                    <form.Field name="email">
+                      {(field) => (
+                        <Input
+                          type="email"
+                          id="email"
+                          name="email"
+                          label="Correo electrónico"
+                          onBlur={field.handleBlur}
+                          value={field.state.value ?? ""}
+                          placeholder="ejemplo@correo.com"
+                          errorMessage={field.state.meta.errors[0]?.message}
+                          onChange={(e) => {
+                            const value: string = e.target.value;
+                            field.handleChange(value);
+                          }}
+                          isInvalid={
+                            field.state.meta.errors.length > 0 &&
+                            field.state.meta.isTouched
+                          }
+                        />
+                      )}
+                    </form.Field>
 
-                    <TextArea
-                      placeholder=""
-                      label="Descripción de la solicitud"
-                    />
+                    <form.Field name="description">
+                      {(field) => (
+                        <TextArea
+                          placeholder=""
+                          id="description"
+                          name="description"
+                          onBlur={field.handleBlur}
+                          value={field.state.value ?? ""}
+                          label="Descripción de la solicitud"
+                          errorMessage={field.state.meta.errors[0]?.message}
+                          onChange={(e) => {
+                            const value: string = e.target.value;
+                            field.handleChange(value);
+                          }}
+                          isInvalid={
+                            field.state.meta.errors.length > 0 &&
+                            field.state.meta.isTouched
+                          }
+                        />
+                      )}
+                    </form.Field>
 
                     <div className="flex flex-col md:flex-row md:items-center justify-between lg:gap-2 text-[15px] md:text-[18px] lg:text-[20px]">
                       <span className="text-black font-medium">
@@ -136,9 +289,17 @@ export default function Pqrs() {
                 buttonAction={
                   <>
                     <Button
+                      type="submit"
                       variant="solid"
                       text="Enviar solicitud"
+                      isLoading={submitPqrsMutation.isPending}
                       className="bg-secondary w-fit hover:bg-secondary-400 font-bold transition-colors duration-200 shadow-md"
+                      onClick={() => {
+                        form.handleSubmit();
+                      }}
+                      isDisabled={
+                        submitPqrsMutation.isPending || form.state.isSubmitting
+                      }
                     />
                   </>
                 }

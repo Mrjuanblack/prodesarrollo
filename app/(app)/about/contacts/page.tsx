@@ -12,12 +12,15 @@ import {
 import { FC } from "react";
 import Image from "next/image";
 import { Sedes } from "@/ui/organism";
-import { Divider } from "@heroui/react";
 import { MessageSquare } from "lucide-react";
+import { useForm } from "@tanstack/react-form";
+import { addToast, Divider } from "@heroui/react";
 import { ContactCardProps } from "./page.properties";
 import message_icon from "@/public/message-icono.svg";
+import { sendRequestFormSchema, SendRequestFormType } from "@/domain/contact";
 import message_icon_two from "@/public/message-icono-2.svg";
 import { Container, IconTitle, Section } from "@/ui/molecules";
+import { useSendRequest } from "@/hooks/contact/useSendRequest";
 import { socialItems } from "@/ui/organism/Header/header.properties";
 
 const ContactCard: FC<ContactCardProps> = ({ children }) => {
@@ -29,6 +32,43 @@ const ContactCard: FC<ContactCardProps> = ({ children }) => {
 };
 
 const Contacts = () => {
+  const sendRequestMutation = useSendRequest();
+
+  const defaultValues: SendRequestFormType = {
+    email: "",
+    phone: "",
+    fullName: "",
+    description: "",
+  };
+
+  const form = useForm({
+    defaultValues,
+    validators: {
+      onBlur: sendRequestFormSchema,
+      onSubmit: sendRequestFormSchema,
+      onChange: sendRequestFormSchema,
+    },
+    onSubmit: ({ value }) => {
+      sendRequestMutation.mutate(value, {
+        onError: () => {
+          addToast({
+            title: "Toast Title error",
+            description: "Toast Description error",
+            color: "danger",
+          });
+        },
+        onSuccess: () => {
+          form.reset();
+          addToast({
+            title: "Toast Title",
+            description: "Toast Description",
+            color: "success",
+          });
+        },
+      });
+    },
+  });
+
   return (
     <>
       <Section fadeIn={true}>
@@ -73,31 +113,115 @@ const Contacts = () => {
 
           <div className="flex flex-col items-center lg:flex-row gap-7 lg:gap-10 mt-7 lg:mt-15">
             <FormCard
+              onSubmit={form.handleSubmit}
               className="rounded-2xl lg:rounded-none lg:rounded-l-2xl"
               title="Ingresa la siguiente información para  registrar tu solicitud"
               form={
                 <>
-                  <Input label="Nombre completo" placeholder="" />
+                  <form.Field name="fullName">
+                    {(field) => (
+                      <Input
+                        id="fullName"
+                        name="fullName"
+                        placeholder=""
+                        onBlur={field.handleBlur}
+                        label="Nombre completo"
+                        value={field.state.value ?? ""}
+                        errorMessage={field.state.meta.errors[0]?.message}
+                        onChange={(e) => {
+                          const value: string = e.target.value;
+                          field.handleChange(value);
+                        }}
+                        isInvalid={
+                          field.state.meta.errors.length > 0 &&
+                          field.state.meta.isTouched
+                        }
+                      />
+                    )}
+                  </form.Field>
 
-                  <Input label="Teléfono" placeholder="" />
+                  <form.Field name="phone">
+                    {(field) => (
+                      <Input
+                        id="phone"
+                        name="phone"
+                        placeholder=""
+                        label="Teléfono"
+                        onBlur={field.handleBlur}
+                        value={field.state.value ?? ""}
+                        errorMessage={field.state.meta.errors[0]?.message}
+                        onChange={(e) => {
+                          const value: string = e.target.value;
+                          field.handleChange(value);
+                        }}
+                        isInvalid={
+                          field.state.meta.errors.length > 0 &&
+                          field.state.meta.isTouched
+                        }
+                      />
+                    )}
+                  </form.Field>
 
-                  <Input
-                    label="Correo electrónico"
-                    placeholder="ejemplo@correo.com"
-                  />
+                  <form.Field name="email">
+                    {(field) => (
+                      <Input
+                        type="email"
+                        id="email"
+                        name="email"
+                        label="Correo electrónico"
+                        onBlur={field.handleBlur}
+                        value={field.state.value ?? ""}
+                        placeholder="ejemplo@correo.com"
+                        errorMessage={field.state.meta.errors[0]?.message}
+                        onChange={(e) => {
+                          const value: string = e.target.value;
+                          field.handleChange(value);
+                        }}
+                        isInvalid={
+                          field.state.meta.errors.length > 0 &&
+                          field.state.meta.isTouched
+                        }
+                      />
+                    )}
+                  </form.Field>
 
-                  <TextArea
-                    placeholder=""
-                    label="Descripción de la solicitud"
-                  />
+                  <form.Field name="description">
+                    {(field) => (
+                      <TextArea
+                        placeholder=""
+                        id="description"
+                        name="description"
+                        onBlur={field.handleBlur}
+                        value={field.state.value ?? ""}
+                        label="Descripción de la solicitud"
+                        errorMessage={field.state.meta.errors[0]?.message}
+                        onChange={(e) => {
+                          const value: string = e.target.value;
+                          field.handleChange(value);
+                        }}
+                        isInvalid={
+                          field.state.meta.errors.length > 0 &&
+                          field.state.meta.isTouched
+                        }
+                      />
+                    )}
+                  </form.Field>
                 </>
               }
               buttonAction={
                 <>
                   <Button
                     text="Enviar"
+                    type="submit"
                     variant="solid"
+                    isLoading={sendRequestMutation.isPending}
                     className="bg-secondary w-fit hover:bg-secondary-400 font-bold transition-colors duration-200 shadow-md"
+                    onClick={() => {
+                      form.handleSubmit();
+                    }}
+                    isDisabled={
+                      sendRequestMutation.isPending || form.state.isSubmitting
+                    }
                   />
                 </>
               }

@@ -6,18 +6,19 @@ export interface Option {
   value: string;
 }
 
-export interface SelectProperties {
+export interface RadioGroupProperties {
   id?: string;
   name?: string;
   label?: string;
+  value?: string;
   required?: boolean;
-  shadow?: boolean;
   className?: string;
-  placeholder?: string;
   errorMessage?: string;
+  orientation?: "horizontal" | "vertical";
   isInvalid?: boolean;
-  options?: Array<Option>;
-  selectedKeys?: Array<string>;
+  options: Option[];
   onBlur?: () => void;
-  onChange?: (e: ChangeEvent<HTMLSelectElement>) => void;
+  onChange?: (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
+  ) => void;
 }

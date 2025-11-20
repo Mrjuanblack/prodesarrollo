@@ -3,22 +3,25 @@ import { Input } from "@heroui/react";
 import { InputProperties } from "./input.properties";
 
 export const InputComponent: FC<InputProperties> = ({
+  id,
   type,
   name,
   label,
   value,
   required,
+  className,
+  isInvalid,
   endContent,
   placeholder,
-  className,
-  labelPlacement,
   startContent,
   errorMessage,
-  isInvalid,
+  labelPlacement,
+  onBlur,
   onChange,
 }) => {
   return (
     <Input
+      id={id}
       size="lg"
       name={name}
       value={value}
@@ -28,14 +31,15 @@ export const InputComponent: FC<InputProperties> = ({
       type={type ?? "text"}
       endContent={endContent}
       placeholder={placeholder}
+      startContent={startContent}
+      errorMessage={errorMessage}
+      labelPlacement={labelPlacement ?? "inside"}
       className={`text-[15px] md:text-[18px] lg:text-[20px] ${className}`}
       classNames={{
         inputWrapper: "bg-white",
         input: "bg-white text-black",
       }}
-      startContent={startContent}
-      errorMessage={errorMessage}
-      labelPlacement={labelPlacement ?? "inside"}
+      onBlur={onBlur}
       onChange={onChange}
     />
   );

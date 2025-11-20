@@ -2,6 +2,7 @@ import React, { ChangeEvent } from "react";
 import { labelPlacementInput } from "@/types";
 
 export interface TextAreaProperties {
+  id?: string;
   name?: string;
   label?: string;
   value?: string;
@@ -13,6 +14,7 @@ export interface TextAreaProperties {
   errorMessage?: string;
   isInvalid?: boolean;
   labelPlacement?: labelPlacementInput;
+  onBlur?: () => void;
   onChange?: (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => void;

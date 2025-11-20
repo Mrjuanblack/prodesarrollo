@@ -15,4 +15,4 @@ export { SearchBarComponent as SearchBar } from "./SearchBar/search-bar.componen
 export { GlobalLoaderComponent as GlobalLoader } from "./GlobalLoader/global-loader.component";
 export { BackgroundSectionComponent as BackgroundSection } from "./BackgroundSection/background-section.component";
 export { FileUploadButtonComponent as FileUploadButton } from "./FileUploadButton/file-upload-button.component";
-export type { FileUploadButtonProperties } from "./FileUploadButton/file-upload-button.properties";
+export { RadioGroupComponent as RadioGroup } from "./RadioGroup/radio-group.component";
