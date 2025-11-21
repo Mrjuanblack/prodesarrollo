@@ -14,6 +14,7 @@ export interface InputProperties {
   startContent?: React.ReactNode;
   errorMessage?: string;
   isInvalid?: boolean;
+  canTogglePassword?: boolean;
   labelPlacement?: labelPlacementInput;
   onBlur?: () => void;
   onChange?: (

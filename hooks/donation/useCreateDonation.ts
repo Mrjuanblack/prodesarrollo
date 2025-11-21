@@ -1,10 +1,12 @@
 import apiClient from "../api-client";
 import { useMutation } from "@tanstack/react-query";
-import { SubmitParticipate } from "@/domain/participate";
+import { SubmitParticipateFormType } from "@/domain/participate";
 
 const BASE_URL = "/donations";
 
-const createDonation = async (donation: SubmitParticipate): Promise<void> => {
+const createDonation = async (
+  donation: SubmitParticipateFormType
+): Promise<void> => {
   const response = await apiClient.post(BASE_URL, donation);
   return response.data;
 };
