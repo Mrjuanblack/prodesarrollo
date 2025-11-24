@@ -29,3 +29,10 @@ export type CreateUserFormType = {
   username: string;
   confirmPassword: string;
 };
+
+export interface User
+  extends Omit<CreateUserFormType, "password" | "confirmPassword"> {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+}

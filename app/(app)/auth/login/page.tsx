@@ -1,15 +1,16 @@
 "use client";
 
 import { addToast } from "@heroui/react";
+import { redirect } from "next/navigation";
+import { useAuth } from "@/hooks/auth/useAuth";
 import { useForm } from "@tanstack/react-form";
-import { useLogin } from "@/hooks/auth/useLogin";
-import { loginFormSchema } from "@/domain/auth";
 import { Button, FormCard, Input } from "@/ui/atoms";
+import { loginFormSchema, LoginFormType } from "@/domain/auth";
 
 const LoginPage = () => {
-  const loginMutation = useLogin();
+  const { loading, login } = useAuth();
 
-  const defaultValues = {
+  const defaultValues: LoginFormType = {
     email: "",
     password: "",
   };
@@ -21,24 +22,25 @@ const LoginPage = () => {
       onSubmit: loginFormSchema,
       onChange: loginFormSchema,
     },
-    onSubmit: ({ value }) => {
-      loginMutation.mutate(value, {
-        onError: () => {
-          addToast({
-            title: "Error al iniciar sesión",
-            description: "Verifica tus datos e inténtalo nuevamente.",
-            color: "danger",
-          });
-        },
-        onSuccess: () => {
-          form.reset();
-          addToast({
-            title: "Bienvenido",
-            description: "Inicio de sesión exitoso.",
-            color: "success",
-          });
-        },
-      });
+    onSubmit: async ({ value }) => {
+      try {
+        await login(value);
+        form.reset();
+
+        addToast({
+          color: "success",
+          title: "Bienvenido",
+          description: "Inicio de sesión exitoso.",
+        });
+
+        redirect("/internal");
+      } catch {
+        addToast({
+          color: "danger",
+          title: "Error al iniciar sesión",
+          description: "Verifica tus datos e inténtalo nuevamente.",
+        });
+      }
     },
   });
 
@@ -97,10 +99,10 @@ const LoginPage = () => {
               type="submit"
               variant="solid"
               text="Iniciar sesión"
-              isLoading={loginMutation.isPending}
+              isLoading={loading}
               className="mt-4 bg-secondary hover:bg-secondary-400 w-full font-bold shadow-md"
               onClick={() => form.handleSubmit()}
-              isDisabled={loginMutation.isPending || form.state.isSubmitting}
+              isDisabled={form.state.isSubmitting || loading}
             />
 
             <div className="flex justify-between gap-2 mt-5 text-sm text-center text-primary">
