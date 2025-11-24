@@ -42,24 +42,31 @@ const CreateUserForm: FC<CreateUserProps> = ({ isOpen, onClose }) => {
       onChange: createUserFormSchema,
     },
     onSubmit: ({ value }) => {
-      registerMutation.mutate(value, {
-        onError: () => {
-          addToast({
-            title: "Error al registrarte",
-            description: "Por favor verifica tus datos.",
-            color: "danger",
-          });
+      registerMutation.mutate(
+        {
+          email: value.email,
+          password: value.password,
+          username: value.username,
         },
-        onSuccess: () => {
-          onClose();
-          form.reset();
-          addToast({
-            title: "Registro exitoso",
-            description: "Tu cuenta ha sido creada correctamente.",
-            color: "success",
-          });
-        },
-      });
+        {
+          onError: () => {
+            addToast({
+              title: "Error al crear el usuario",
+              description: "Por favor verifica tus datos.",
+              color: "danger",
+            });
+          },
+          onSuccess: () => {
+            onClose();
+            form.reset();
+            addToast({
+              title: "Registro exitoso",
+              description: "El usuario ha sido creado correctamente.",
+              color: "success",
+            });
+          },
+        }
+      );
     },
   });
 

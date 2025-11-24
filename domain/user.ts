@@ -23,6 +23,24 @@ export const createUserFormSchema = z
     path: ["confirmPassword"],
   });
 
+export const createUserSchema = z.object({
+  username: z
+    .string()
+    .min(3, "El nombre de usuario debe tener al menos 3 caracteres"),
+
+  email: z.string().email("El correo electrónico no es válido"),
+
+  password: z
+    .string()
+    .min(8, "La contraseña debe tener al menos 8 caracteres")
+    .regex(/[A-Z]/, "Debe incluir al menos una letra mayúscula")
+    .regex(/[a-z]/, "Debe incluir al menos una letra minúscula")
+    .regex(/[0-9]/, "Debe incluir al menos un número")
+    .regex(/[^A-Za-z0-9]/, "Debe incluir un carácter especial"),
+});
+
+export type CreateUser = z.infer<typeof createUserSchema>;
+
 export type CreateUserFormType = {
   email: string;
   password: string;

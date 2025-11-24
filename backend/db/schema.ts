@@ -1,5 +1,3 @@
-import { relations, sql } from "drizzle-orm";
-import { ProjectStatus, ProjectType } from "@/domain/Projects";
 import {
   text,
   uuid,
@@ -9,6 +7,8 @@ import {
   timestamp,
   primaryKey,
 } from "drizzle-orm/pg-core";
+import { relations, sql } from "drizzle-orm";
+import { ProjectStatus, ProjectType } from "@/domain/Projects";
 
 export const projectStatusEnum = pgEnum("project_status", ProjectStatus);
 export const projectTypeEnum = pgEnum("project_type", ProjectType);
@@ -119,3 +119,16 @@ export const projectsToProjectsRelations = relations(
     }),
   })
 );
+
+export const users = pgTable("users", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  username: text("username").notNull(),
+  email: text("email").notNull().unique(),
+  password: text("password").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});

@@ -1,41 +1,33 @@
-import { RepositoryErrorOrigin, RepositoryErrorType } from "@/domain/Errors";
-import { ErrorHandler_Repository } from "./ErrorHanlder";
-import {
-  CreateProject,
-  Project,
-  ProjectType,
-  SimpleProject,
-  UpdateProject,
-} from "@/domain/Projects";
 import { db } from "../config";
-import { projects, projectsToProjects } from "../schema";
+import { CreateUser, User } from "@/domain/user";
+import { ProjectPhoto } from "@/domain/ProjectPhoto";
+import { ErrorHandler_Repository } from "./ErrorHanlder";
+import { users, projectsToProjects } from "../schema";
+import { ProjectDocument } from "@/domain/ProjectDocument";
 import { count, eq, or, ilike, inArray, and, sql } from "drizzle-orm";
 import { PaginationRequest, PaginationResponse } from "@/domain/Pagination";
-import { ProjectDocument } from "@/domain/ProjectDocument";
-import { ProjectPhoto } from "@/domain/ProjectPhoto";
+import { RepositoryErrorOrigin, RepositoryErrorType } from "@/domain/Errors";
 
-const errorHandler = new ErrorHandler_Repository(
-  RepositoryErrorOrigin.PROJECTS
-);
+const errorHandler = new ErrorHandler_Repository(RepositoryErrorOrigin.USERS);
 
-export class ProjectRepository {
-  public static async createProject(project: CreateProject): Promise<Project> {
+export class UserRepository {
+  public static async createUser(user: CreateUser): Promise<User> {
     try {
-      const newProject = await db.insert(projects).values(project).returning();
-      // Create related projects
+      const newUser = await db.insert(users).values(user).returning();
+
       const finalRelatedProjects: SimpleProject[] = [];
-      if (project.relatedProjects && project.relatedProjects.length > 0) {
+      if (user.relatedProjects && user.relatedProjects.length > 0) {
         await db.insert(projectsToProjects).values(
-          project.relatedProjects.map((projectId) => ({
-            projectOneId: newProject[0].id,
+          user.relatedProjects.map((projectId) => ({
+            projectOneId: newUser[0].id,
             projectTwoId: projectId,
           }))
         );
 
         const relatedProjects = await db.query.projectsToProjects.findMany({
           where: and(
-            inArray(projectsToProjects.projectTwoId, project.relatedProjects),
-            eq(projectsToProjects.projectOneId, newProject[0].id)
+            inArray(projectsToProjects.projectTwoId, user.relatedProjects),
+            eq(projectsToProjects.projectOneId, newUser[0].id)
           ),
           with: {
             projectTwo: {
@@ -54,8 +46,8 @@ export class ProjectRepository {
         );
       }
 
-      return ProjectRepository.mapToDomain({
-        ...newProject[0],
+      return UserRepository.mapToDomain({
+        ...newUser[0],
         photos: null,
         documents: null,
         relatedProjects:
@@ -66,10 +58,10 @@ export class ProjectRepository {
     }
   }
 
-  public static async getProjectById(id: string): Promise<Project> {
+  public static async getUserById(id: string): Promise<Project> {
     try {
       const result = await db.query.projects.findFirst({
-        where: eq(projects.id, id),
+        where: eq(users.id, id),
         with: {
           photos: {
             columns: {
@@ -127,7 +119,7 @@ export class ProjectRepository {
         })),
       ];
 
-      return ProjectRepository.mapToDomain({
+      return UserRepository.mapToDomain({
         ...result,
         photos: result.photos
           ? result.photos.map((photo) => ({
@@ -144,7 +136,7 @@ export class ProjectRepository {
     }
   }
 
-  public static async getPaginatedProjects(
+  public static async getPaginatedUsers(
     pRequest: PaginationRequest,
     search?: string,
     year?: number,
@@ -157,15 +149,15 @@ export class ProjectRepository {
       const conditions = [];
 
       if (search) {
-        conditions.push(ilike(projects.title, `%${search}%`));
+        conditions.push(ilike(users.title, `%${search}%`));
       }
 
       if (year !== undefined) {
-        conditions.push(sql`EXTRACT(YEAR FROM ${projects.date}) = ${year}`);
+        conditions.push(sql`EXTRACT(YEAR FROM ${users.date}) = ${year}`);
       }
 
       if (type) {
-        conditions.push(eq(projects.type, type));
+        conditions.push(eq(users.type, type));
       }
 
       // Combine all conditions with AND
@@ -214,7 +206,7 @@ export class ProjectRepository {
             },
           },
         }),
-        db.select({ count: count() }).from(projects).where(whereCondition),
+        db.select({ count: count() }).from(users).where(whereCondition),
       ]);
 
       return {
@@ -231,7 +223,7 @@ export class ProjectRepository {
             })),
           ];
 
-          return ProjectRepository.mapToDomain({
+          return UserRepository.mapToDomain({
             ...project,
             photos: project.photos
               ? project.photos.map((photo) => ({
@@ -254,17 +246,17 @@ export class ProjectRepository {
     }
   }
 
-  public static async getYearsWithProjects(): Promise<number[]> {
+  public static async getYearsWithUsers(): Promise<number[]> {
     try {
       const result = await db
         .select({
-          year: sql<number>`EXTRACT(YEAR FROM ${projects.date})::integer`.as(
+          year: sql<number>`EXTRACT(YEAR FROM ${users.date})::integer`.as(
             "year"
           ),
         })
-        .from(projects)
-        .groupBy(sql`EXTRACT(YEAR FROM ${projects.date})`)
-        .orderBy(sql`EXTRACT(YEAR FROM ${projects.date}) ASC`);
+        .from(users)
+        .groupBy(sql`EXTRACT(YEAR FROM ${users.date})`)
+        .orderBy(sql`EXTRACT(YEAR FROM ${users.date}) ASC`);
 
       // Extract unique years and convert to numbers
       const years = [...new Set(result.map((row) => row.year))];
@@ -274,13 +266,13 @@ export class ProjectRepository {
     }
   }
 
-  public static async updateProject(
+  public static async updateUser(
     id: string,
     project: UpdateProject
   ): Promise<Project> {
     try {
       const result = await db
-        .update(projects)
+        .update(users)
         .set({
           title: project.title,
           description: project.description,
@@ -288,12 +280,12 @@ export class ProjectRepository {
           date: project.date,
           updatedAt: new Date(),
         })
-        .where(eq(projects.id, id))
+        .where(eq(users.id, id))
         .returning();
 
       // Fetch documents and photos
       const additionalData = await db.query.projects.findFirst({
-        where: eq(projects.id, id),
+        where: eq(users.id, id),
         with: {
           photos: {
             columns: {
@@ -352,7 +344,7 @@ export class ProjectRepository {
         );
       }
 
-      return ProjectRepository.mapToDomain({
+      return UserRepository.mapToDomain({
         ...result[0],
         photos: null,
         documents: null,
@@ -365,7 +357,7 @@ export class ProjectRepository {
   }
 
   public static mapToDomain(
-    project: typeof projects.$inferSelect & {
+    project: typeof users.$inferSelect & {
       photos: ProjectPhoto[] | null;
       relatedProjects: SimpleProject[] | null;
     } & { documents: ProjectDocument[] | null }

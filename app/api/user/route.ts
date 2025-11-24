@@ -1,37 +1,23 @@
 import { z } from "zod/v4";
 import { NextResponse } from "next/server";
+import { createUserSchema } from "@/domain/user";
 import { PaginationRequest } from "@/domain/Pagination";
-import { ProjectService } from "@/backend/services/project-service";
-import { createProjectSchema, ProjectType } from "@/domain/Projects";
+import { UserService } from "@/backend/services/user-service";
 
 export async function GET(request: Request) {
   try {
-    //read query params
     const { searchParams } = new URL(request.url);
     const page = Number(searchParams.get("page")) || 0;
     const size = Number(searchParams.get("size")) || 10;
-    const year = Number(searchParams.get("year")) || undefined;
-    const type = searchParams.get("type") || undefined;
-    const search = searchParams.get("search") || undefined;
-
-    const typeEnum =
-      type && Object.values(ProjectType).includes(type as ProjectType)
-        ? (type as ProjectType)
-        : undefined;
 
     const pRequest: PaginationRequest = {
       page,
       size,
     };
 
-    const projects = await ProjectService.getPaginatedProjects(
-      pRequest,
-      search,
-      year,
-      typeEnum
-    );
+    const users = await UserService.getPaginatedUsers(pRequest);
 
-    return NextResponse.json(projects);
+    return NextResponse.json(users);
   } catch {
     return NextResponse.json(
       { error: "Internal server error" },
@@ -43,9 +29,10 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const validatedBody = createProjectSchema.parse(body);
-    const project = await ProjectService.createProject(validatedBody);
-    return NextResponse.json(project);
+    const validatedBody = createUserSchema.parse(body);
+    const user = await UserService.createUser(validatedBody);
+
+    return NextResponse.json(user);
   } catch (error) {
     console.error(error);
     if (error instanceof z.ZodError) {

@@ -1,5 +1,5 @@
-import apiClient from "../api-client";
 import { User } from "@/domain/user";
+import apiClient from "../api-client";
 import { useQuery } from "@tanstack/react-query";
 import { PaginationResponse } from "@/domain/Pagination";
 
