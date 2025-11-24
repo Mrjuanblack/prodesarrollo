@@ -93,7 +93,7 @@ const LoginPage = () => {
             </form.Field>
           </>
         }
-        buttonAction={
+        buttonActions={
           <div className="flex flex-col space-y-5">
             <Button
               type="submit"

@@ -201,7 +201,7 @@ export const FormContactSection = () => {
           </div>
         </>
       }
-      buttonAction={
+      buttonActions={
         <>
           <Button
             text="Enviar"

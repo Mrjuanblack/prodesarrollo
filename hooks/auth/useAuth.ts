@@ -29,17 +29,17 @@ export function useAuth() {
   const validate = async () => {
     setLoading(true);
 
-    try {
-      await validateUserMutation.mutateAsync({
-        token: token ?? "",
-        userId: user?.id ?? "",
-      });
-    } catch {
-      logout();
-      return null;
-    } finally {
-      setLoading(false);
-    }
+    // try {
+    //   await validateUserMutation.mutateAsync({
+    //     token: token ?? "",
+    //     userId: user?.id ?? "",
+    //   });
+    // } catch {
+    //   logout();
+    //   return null;
+    // } finally {
+    setLoading(false);
+    // }
   };
 
   const logoutUser = async () => {
