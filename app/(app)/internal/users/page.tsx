@@ -15,7 +15,7 @@ import { useState } from "react";
 import { PencilIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Container, Section } from "@/ui/molecules";
-import { useUsers } from "@/hooks/users/useProjects";
+import { useUsers } from "@/hooks/users/useUsers";
 import CreateUserForm from "@/ui/organism/Forms/Backoffice/CreateUserForm";
 
 const UserList = () => {
