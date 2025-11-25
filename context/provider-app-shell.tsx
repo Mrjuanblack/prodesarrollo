@@ -11,6 +11,7 @@ interface ProviderAppShellProps {
 
 export default function ProviderAppShell({ children }: ProviderAppShellProps) {
   const pathname = usePathname();
+
   const isInternal = pathname.startsWith("/internal");
   const isAuth = pathname.startsWith("/auth");
 

@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 import { NextResponse } from "next/server";
-import { createUserSchema } from "@/domain/user";
+import { updateUserSchema } from "@/domain/user";
 import { UserService } from "@/backend/services/user-service";
 
 export async function GET(
@@ -26,7 +26,7 @@ export async function PUT(
   try {
     const { id } = await context.params;
     const body = await request.json();
-    const validatedBody = createUserSchema.parse(body);
+    const validatedBody = updateUserSchema.parse(body);
     const user = await UserService.updateUser(id, validatedBody);
     return NextResponse.json(user);
   } catch (error) {

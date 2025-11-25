@@ -8,6 +8,13 @@
       "when": 1763503326369,
       "tag": "0000_rich_luke_cage",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1764073985267,
+      "tag": "0001_normal_sersi",
+      "breakpoints": true
     }
   ]
 }

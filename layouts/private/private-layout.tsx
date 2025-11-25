@@ -4,6 +4,7 @@ import { Button } from "@heroui/react";
 import { UsersIcon } from "@heroicons/react/24/outline";
 import { usePathname, useRouter } from "next/navigation";
 import { DocumentDuplicateIcon } from "@heroicons/react/24/solid";
+import pro_desarrollo_logo from "@/public/pro-desarrollo-logo.svg";
 
 const PrivateLayout: FC<{ children: React.ReactNode }> = ({ children }) => {
   const router = useRouter();
@@ -30,12 +31,7 @@ const PrivateLayout: FC<{ children: React.ReactNode }> = ({ children }) => {
     <div className="flex h-screen">
       <div className="w-70 h-full border-r border-gray-200">
         <div className="flex justify-center items-center py-4">
-          <Image
-            alt="logo"
-            width={200}
-            height={0}
-            src="/pro-desarrollo-logo.svg"
-          />
+          <Image alt="logo" width={200} height={0} src={pro_desarrollo_logo} />
         </div>
 
         <div className="flex flex-col gap-2 px-4">

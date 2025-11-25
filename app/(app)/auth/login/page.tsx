@@ -1,14 +1,17 @@
 "use client";
 
 import { addToast } from "@heroui/react";
-import { redirect } from "next/navigation";
-import { useAuth } from "@/hooks/auth/useAuth";
+import { useRouter } from "next/navigation";
 import { useForm } from "@tanstack/react-form";
+import { useAuth } from "@/hooks/auth/useAuth";
+import { useLogin } from "@/hooks/auth/useLogin";
 import { Button, FormCard, Input } from "@/ui/atoms";
 import { loginFormSchema, LoginFormType } from "@/domain/auth";
 
 const LoginPage = () => {
-  const { loading, login } = useAuth();
+  const router = useRouter();
+  const loginMutation = useLogin();
+  const { loading, setToken, setUser, setLoading } = useAuth();
 
   const defaultValues: LoginFormType = {
     email: "",
@@ -24,7 +27,11 @@ const LoginPage = () => {
     },
     onSubmit: async ({ value }) => {
       try {
-        await login(value);
+        const result = await loginMutation.mutateAsync(value);
+
+        setUser(result.user);
+        setToken(result.token);
+        setLoading(true);
         form.reset();
 
         addToast({
@@ -33,13 +40,15 @@ const LoginPage = () => {
           description: "Inicio de sesión exitoso.",
         });
 
-        redirect("/internal");
+        router.push("/internal");
       } catch {
         addToast({
           color: "danger",
           title: "Error al iniciar sesión",
           description: "Verifica tus datos e inténtalo nuevamente.",
         });
+      } finally {
+        setLoading(false);
       }
     },
   });

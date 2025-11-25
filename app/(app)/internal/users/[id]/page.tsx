@@ -4,11 +4,11 @@ import { useState } from "react";
 import { GlobalLoader } from "@/ui/atoms";
 import { useParams } from "next/navigation";
 import useUser from "@/hooks/users/useUser";
-import { addToast, Button, Input } from "@heroui/react";
 import { useForm } from "@tanstack/react-form";
 import { Container, Section } from "@/ui/molecules";
+import { addToast, Button, Input } from "@heroui/react";
+import { UpdateUser, updateUserSchema } from "@/domain/user";
 import { useUpdateUser } from "@/hooks/users/useUpdateCreate";
-import { createUserFormSchema, UpdateUser } from "@/domain/user";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 
 const UserEdit = () => {
@@ -22,29 +22,24 @@ const UserEdit = () => {
   const updateUserMutation = useUpdateUser({
     id: id as string,
     user: {
-      password: undefined,
       email: user?.email ?? "",
       username: user?.username ?? "",
     } satisfies UpdateUser,
   });
 
+  const defaultValues: UpdateUser = {
+    email: user?.email ?? "",
+    username: user?.username ?? "",
+  };
+
   const form = useForm({
-    defaultValues: {
-      password: "",
-      email: user?.email ?? "",
-      username: user?.username ?? "",
-    } satisfies UpdateUser,
+    defaultValues,
     validators: {
-      onBlur: createUserFormSchema,
-      onSubmit: createUserFormSchema,
-      onChange: createUserFormSchema,
+      onBlur: updateUserSchema,
+      onSubmit: updateUserSchema,
+      onChange: updateUserSchema,
     },
     onSubmit: (values) => {
-      updateUserMutation.mutate({
-        id: id as string,
-        user: values.value,
-      });
-
       updateUserMutation.mutate(
         {
           id: id as string,
@@ -136,8 +131,8 @@ const UserEdit = () => {
                     id="password"
                     name="password"
                     label="Contraseña"
-                    type={finalType ?? "text"}
                     onBlur={field.handleBlur}
+                    type={finalType ?? "text"}
                     value={field.state.value ?? ""}
                     errorMessage={field.state.meta.errors[0]?.message}
                     onChange={(e) => field.handleChange(e.target.value)}
@@ -148,8 +143,8 @@ const UserEdit = () => {
                     endContent={
                       <button
                         type="button"
-                        onClick={() => setShowPassword((prev) => !prev)}
                         className="focus:outline-none"
+                        onClick={() => setShowPassword((prev) => !prev)}
                       >
                         {showPassword ? (
                           <EyeSlashIcon className="w-5 h-5 text-gray-600" />

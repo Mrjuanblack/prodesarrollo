@@ -1,4 +1,5 @@
 import { z } from "zod/v4";
+import { User } from "./user";
 
 export const loginFormSchema = z.object({
   password: z
@@ -13,4 +14,9 @@ export const loginFormSchema = z.object({
 export type LoginFormType = {
   email: string;
   password: string;
+};
+
+export type LoginResponse = {
+  user: User;
+  token: string;
 };

@@ -1,3 +1,4 @@
+import argon2 from "argon2";
 import { db } from "../config";
 import { users } from "../schema";
 import { count, eq } from "drizzle-orm";
@@ -9,15 +10,68 @@ import { RepositoryErrorOrigin, RepositoryErrorType } from "@/domain/Errors";
 const errorHandler = new ErrorHandler_Repository(RepositoryErrorOrigin.USERS);
 
 export class UserRepository {
+  private static async hashPassword(password: string) {
+    return argon2.hash(password, {
+      type: argon2.argon2id,
+      memoryCost: 19456,
+      timeCost: 2,
+      parallelism: 1,
+    });
+  }
+
   public static async createUser(user: CreateUser): Promise<User> {
     try {
-      const newUser = await db.insert(users).values(user).returning();
+      const passwordHash = await this.hashPassword(user.password);
 
-      return UserRepository.mapToDomain({
+      const newUser = await db
+        .insert(users)
+        .values({
+          username: user.username,
+          email: user.email,
+          password: passwordHash,
+        })
+        .returning();
+
+      return this.mapToDomain({
         ...newUser[0],
       });
     } catch (error) {
       throw errorHandler.handleError(RepositoryErrorType.CREATE, error);
+    }
+  }
+
+  public static async updateUser(id: string, user: UpdateUser): Promise<User> {
+    try {
+      const updateData = {
+        email: user.email,
+        username: user.username,
+        updatedAt: new Date(),
+      };
+
+      if (user.password && user.password.length > 0) {
+        updateData.password = await this.hashPassword(user.password);
+      }
+
+      const result = await db
+        .update(users)
+        .set(updateData)
+        .where(eq(users.id, id))
+        .returning();
+
+      const additionalData = await db.query.users.findFirst({
+        where: eq(users.id, id),
+      });
+
+      if (!additionalData) {
+        throw errorHandler.handleError(
+          RepositoryErrorType.NOT_FOUND,
+          new Error("User not found")
+        );
+      }
+
+      return this.mapToDomain({ ...result[0] });
+    } catch (error) {
+      throw errorHandler.handleError(RepositoryErrorType.UPDATE, error);
     }
   }
 
@@ -34,7 +88,7 @@ export class UserRepository {
         );
       }
 
-      return UserRepository.mapToDomain({
+      return this.mapToDomain({
         ...result,
       });
     } catch (error) {
@@ -58,7 +112,7 @@ export class UserRepository {
 
       return {
         data: result.map((user) => {
-          return UserRepository.mapToDomain({
+          return this.mapToDomain({
             ...user,
           });
         }),
@@ -68,38 +122,6 @@ export class UserRepository {
       };
     } catch (error) {
       throw errorHandler.handleError(RepositoryErrorType.GET, error);
-    }
-  }
-
-  public static async updateUser(id: string, user: UpdateUser): Promise<User> {
-    try {
-      const result = await db
-        .update(users)
-        .set({
-          email: user.email,
-          username: user.username,
-          password: user.password,
-          updatedAt: new Date(),
-        })
-        .where(eq(users.id, id))
-        .returning();
-
-      const additionalData = await db.query.users.findFirst({
-        where: eq(users.id, id),
-      });
-
-      if (!additionalData) {
-        throw errorHandler.handleError(
-          RepositoryErrorType.NOT_FOUND,
-          new Error("User not found")
-        );
-      }
-
-      return UserRepository.mapToDomain({
-        ...result[0],
-      });
-    } catch (error) {
-      throw errorHandler.handleError(RepositoryErrorType.UPDATE, error);
     }
   }
 

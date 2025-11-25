@@ -1,13 +1,10 @@
-import { User } from "@/domain/user";
 import apiClient from "../api-client";
-import { LoginFormType } from "@/domain/auth";
 import { useMutation } from "@tanstack/react-query";
+import { LoginFormType, LoginResponse } from "@/domain/auth";
 
-const BASE_URL = "/login";
+const BASE_URL = "/auth/login";
 
-const login = async (
-  login: LoginFormType
-): Promise<{ user: User; token: string }> => {
+const login = async (login: LoginFormType): Promise<LoginResponse> => {
   const response = await apiClient.post(BASE_URL, login);
   return response.data;
 };
