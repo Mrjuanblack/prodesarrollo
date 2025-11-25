@@ -5,5 +5,5 @@ export interface FormCardProps {
   className?: string;
   form: React.ReactNode;
   onSubmit: () => Promise<void>;
-  buttonAction: React.ReactNode;
+  buttonActions: React.ReactNode;
 }

@@ -1,10 +1,10 @@
 import apiClient from "../api-client";
-import { SendRequest } from "@/domain/contact";
 import { useMutation } from "@tanstack/react-query";
+import { SendRequestFormType } from "@/domain/contact";
 
 const BASE_URL = "/contact";
 
-const sendRequest = async (request: SendRequest): Promise<void> => {
+const sendRequest = async (request: SendRequestFormType): Promise<void> => {
   const response = await apiClient.post(BASE_URL, request);
   return response.data;
 };

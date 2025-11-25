@@ -443,7 +443,7 @@ export default function Donations() {
                   </form.Field>
                 </>
               }
-              buttonAction={
+              buttonActions={
                 <>
                   <Button
                     type="submit"

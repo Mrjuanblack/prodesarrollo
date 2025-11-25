@@ -20,6 +20,7 @@ import ProviderHeroUi from "@/context/provider-hero-ui";
 import LoaderProvider from "@/context/provider-loader";
 import ProviderAppShell from "@/context/provider-app-shell";
 import QueryProvider from "@/context/provider-query";
+import AuthProvider from "@/context/provider-auth";
 
 export const metadata: Metadata = {
   title: "Prodesarrollo",
@@ -44,7 +45,9 @@ export default function RootLayout({
         <QueryProvider>
           <ProviderHeroUi>
             <LoaderProvider>
-              <ProviderAppShell>{children}</ProviderAppShell>
+              <AuthProvider>
+                <ProviderAppShell>{children}</ProviderAppShell>
+              </AuthProvider>
             </LoaderProvider>
           </ProviderHeroUi>
         </QueryProvider>

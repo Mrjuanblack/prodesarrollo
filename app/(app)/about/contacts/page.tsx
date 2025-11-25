@@ -208,7 +208,7 @@ const Contacts = () => {
                   </form.Field>
                 </>
               }
-              buttonAction={
+              buttonActions={
                 <>
                   <Button
                     text="Enviar"

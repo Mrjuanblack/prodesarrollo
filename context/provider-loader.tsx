@@ -4,7 +4,7 @@ import { GlobalLoader } from "@/ui/atoms";
 import { createContext, useState, useContext, ReactNode } from "react";
 
 interface LoaderContextType {
-  isLoading: boolean;
+  isLoading?: boolean;
   setLoading: (loading: boolean) => void;
 }
 
@@ -23,7 +23,7 @@ interface LoaderProviderProps {
 }
 
 export default function LoaderProvider({ children }: LoaderProviderProps) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean | undefined>(undefined);
 
   const setLoading = (loading: boolean) => {
     setIsLoading(loading);

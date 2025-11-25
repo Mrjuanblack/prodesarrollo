@@ -6,7 +6,7 @@ import { FormCardProps } from "./form-card.properties";
 export const FormCardComponent: React.FC<FormCardProps> = ({
   form,
   title,
-  buttonAction,
+  buttonActions,
   className = "rounded-2xl",
   onSubmit,
 }) => {
@@ -31,7 +31,7 @@ export const FormCardComponent: React.FC<FormCardProps> = ({
         >
           {form}
 
-          <div className="flex justify-center">{buttonAction}</div>
+          <div className="flex justify-center">{buttonActions}</div>
         </form>
       </CardBody>
     </Card>

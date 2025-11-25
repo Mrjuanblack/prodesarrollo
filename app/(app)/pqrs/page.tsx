@@ -286,7 +286,7 @@ export default function Pqrs() {
                     </div>
                   </>
                 }
-                buttonAction={
+                buttonActions={
                   <>
                     <Button
                       type="submit"
