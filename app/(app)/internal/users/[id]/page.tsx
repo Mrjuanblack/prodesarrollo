@@ -7,8 +7,8 @@ import useUser from "@/hooks/users/useUser";
 import { useForm } from "@tanstack/react-form";
 import { Container, Section } from "@/ui/molecules";
 import { addToast, Button, Input } from "@heroui/react";
-import { UpdateUser, updateUserSchema } from "@/domain/user";
 import { useUpdateUser } from "@/hooks/users/useUpdateCreate";
+import { UpdateFormUser, updateUserFormSchema } from "@/domain/user";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 
 const UserEdit = () => {
@@ -24,10 +24,10 @@ const UserEdit = () => {
     user: {
       email: user?.email ?? "",
       username: user?.username ?? "",
-    } satisfies UpdateUser,
+    } satisfies UpdateFormUser,
   });
 
-  const defaultValues: UpdateUser = {
+  const defaultValues: UpdateFormUser = {
     email: user?.email ?? "",
     username: user?.username ?? "",
   };
@@ -35,9 +35,9 @@ const UserEdit = () => {
   const form = useForm({
     defaultValues,
     validators: {
-      onBlur: updateUserSchema,
-      onSubmit: updateUserSchema,
-      onChange: updateUserSchema,
+      onBlur: updateUserFormSchema,
+      onSubmit: updateUserFormSchema,
+      onChange: updateUserFormSchema,
     },
     onSubmit: (values) => {
       updateUserMutation.mutate(
