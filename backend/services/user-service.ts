@@ -1,4 +1,4 @@
-import { CreateUser, UpdateUser, User } from "@/domain/user";
+import { CreateUser, UpdateFormUser, User } from "@/domain/user";
 import { UserRepository } from "../db/repositories/user-repository";
 import { PaginationRequest, PaginationResponse } from "@/domain/Pagination";
 
@@ -17,7 +17,10 @@ export class UserService {
     return UserRepository.getPaginatedUsers(pRequest);
   }
 
-  public static async updateUser(id: string, user: UpdateUser): Promise<User> {
+  public static async updateUser(
+    id: string,
+    user: UpdateFormUser
+  ): Promise<User> {
     return await UserRepository.updateUser(id, user);
   }
 }

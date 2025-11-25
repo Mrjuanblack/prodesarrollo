@@ -41,7 +41,7 @@ export const createUserSchema = z.object({
 
 export type CreateUser = z.infer<typeof createUserSchema>;
 
-export const updateUserSchema = z.object({
+export const updateUserFormSchema = z.object({
   username: z
     .string()
     .min(3, "El nombre de usuario debe tener al menos 3 caracteres"),
@@ -58,6 +58,28 @@ export const updateUserSchema = z.object({
     .optional(),
 });
 
+export const updateUserSchema = z.object({
+  username: z
+    .string()
+    .min(3, "El nombre de usuario debe tener al menos 3 caracteres"),
+
+  email: z.string().email("El correo electrónico no es válido"),
+
+  password: z
+    .string()
+    .min(8, "La contraseña debe tener al menos 8 caracteres")
+    .regex(/[A-Z]/, "Debe incluir al menos una letra mayúscula")
+    .regex(/[a-z]/, "Debe incluir al menos una letra minúscula")
+    .regex(/[0-9]/, "Debe incluir al menos un número")
+    .regex(/[^A-Za-z0-9]/, "Debe incluir un carácter especial")
+    .optional(),
+
+  updatedAt: z
+    .date({ message: "La fecha debe ser una fecha válida" })
+    .optional(),
+});
+
+export type UpdateFormUser = z.infer<typeof updateUserFormSchema>;
 export type UpdateUser = z.infer<typeof updateUserSchema>;
 
 export type CreateUserFormType = {

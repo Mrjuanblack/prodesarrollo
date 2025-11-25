@@ -3,7 +3,7 @@ import { db } from "../config";
 import { users } from "../schema";
 import { count, eq } from "drizzle-orm";
 import { ErrorHandler_Repository } from "./ErrorHanlder";
-import { CreateUser, UpdateUser, User } from "@/domain/user";
+import { CreateUser, UpdateFormUser, UpdateUser, User } from "@/domain/user";
 import { PaginationRequest, PaginationResponse } from "@/domain/Pagination";
 import { RepositoryErrorOrigin, RepositoryErrorType } from "@/domain/Errors";
 
@@ -42,7 +42,7 @@ export class UserRepository {
 
   public static async updateUser(id: string, user: UpdateUser): Promise<User> {
     try {
-      const updateData = {
+      const updateData: UpdateUser = {
         email: user.email,
         username: user.username,
         updatedAt: new Date(),

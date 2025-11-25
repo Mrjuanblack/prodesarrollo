@@ -1,10 +1,10 @@
 import apiClient from "../api-client";
-import { UpdateUser, User } from "@/domain/user";
+import { UpdateFormUser, User } from "@/domain/user";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface UseUpdateUserProps {
   id: string;
-  user: UpdateUser;
+  user: UpdateFormUser;
 }
 
 const updateUser = async (props: UseUpdateUserProps): Promise<User> => {
