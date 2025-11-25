@@ -1,4 +1,4 @@
-import { CreateUser, User } from "@/domain/user";
+import { CreateUser, UpdateUser, User } from "@/domain/user";
 import { UserRepository } from "../db/repositories/user-repository";
 import { PaginationRequest, PaginationResponse } from "@/domain/Pagination";
 
@@ -17,14 +17,7 @@ export class UserService {
     return UserRepository.getPaginatedUsers(pRequest);
   }
 
-  public static async getYearsWithUsers(): Promise<number[]> {
-    return UserRepository.getYearsWithUsers();
-  }
-
-  public static async updateUser(
-    id: string,
-    user: UpdateProject
-  ): Promise<User> {
+  public static async updateUser(id: string, user: UpdateUser): Promise<User> {
     return await UserRepository.updateUser(id, user);
   }
 }

@@ -1,18 +1,18 @@
-import { RepositoryErrorOrigin, RepositoryErrorType } from "@/domain/Errors";
-import { ErrorHandler_Repository } from "./ErrorHanlder";
 import {
-  CreateProject,
   Project,
   ProjectType,
   SimpleProject,
   UpdateProject,
+  CreateProject,
 } from "@/domain/Projects";
 import { db } from "../config";
+import { ProjectPhoto } from "@/domain/ProjectPhoto";
+import { ErrorHandler_Repository } from "./ErrorHanlder";
 import { projects, projectsToProjects } from "../schema";
+import { ProjectDocument } from "@/domain/ProjectDocument";
 import { count, eq, or, ilike, inArray, and, sql } from "drizzle-orm";
 import { PaginationRequest, PaginationResponse } from "@/domain/Pagination";
-import { ProjectDocument } from "@/domain/ProjectDocument";
-import { ProjectPhoto } from "@/domain/ProjectPhoto";
+import { RepositoryErrorOrigin, RepositoryErrorType } from "@/domain/Errors";
 
 const errorHandler = new ErrorHandler_Repository(
   RepositoryErrorOrigin.PROJECTS
@@ -22,8 +22,10 @@ export class ProjectRepository {
   public static async createProject(project: CreateProject): Promise<Project> {
     try {
       const newProject = await db.insert(projects).values(project).returning();
+
       // Create related projects
       const finalRelatedProjects: SimpleProject[] = [];
+
       if (project.relatedProjects && project.relatedProjects.length > 0) {
         await db.insert(projectsToProjects).values(
           project.relatedProjects.map((projectId) => ({
