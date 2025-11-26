@@ -14,7 +14,6 @@ import gobierno_digital from "@/public/gobierno-digital-logo.svg";
 import cecop from "@/public/secop-logo.svg";
 import { BookOpen, Globe, HeartHandshake, User } from "lucide-react";
 import { NewsItem } from "@/ui/atoms/Cards/NewsCard/news-card.properties";
-import { ProjectItem } from "@/ui/atoms/Cards/ProjectCard/project-card.properties";
 
 export interface EntityObserved {
   alt: string;
@@ -82,37 +81,6 @@ export const news: NewsItem[] = [
     category: "Categoría",
     title: "Un quinto ejemplo",
     date: "25/11/2025",
-  },
-];
-
-export const projects: ProjectItem[] = [
-  {
-    id: 1,
-    imageUrl: proyectoExample,
-    date: "Noviembre 23 de 2025",
-    title: "Ejemplo proyecto de obra social en Bucaramanga",
-    imageAlt: "Vista aérea de una obra social en construcción.",
-  },
-  {
-    id: 2,
-    imageUrl: proyectoExample,
-    date: "Octubre 10 de 2024",
-    title: "Restauración de parque histórico en Medellín",
-    imageAlt: "Parque histórico con fuentes y jardines.",
-  },
-  {
-    id: 3,
-    date: "Enero 5 de 2026",
-    imageUrl: proyectoExample,
-    imageAlt: "Trabajos de pavimentación en una carretera rural.",
-    title: "Implementación de infraestructura vial en Cundinamarca",
-  },
-  {
-    id: 4,
-    imageUrl: proyectoExample,
-    date: "Septiembre 1 de 2024",
-    title: "Desarrollo de Vivienda de Interés Social (VIS) en Cali",
-    imageAlt: "Conjunto de viviendas terminadas con áreas verdes.",
   },
 ];
 

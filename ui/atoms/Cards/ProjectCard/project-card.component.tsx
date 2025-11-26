@@ -21,7 +21,6 @@ export const ProjectCardComponent: React.FC<ProjectCardProps> = ({ item }) => {
       case ProjectType.CONSULTING_PROCESSES:
         return "/img/project-type/consulting-processes.jpg"
     }
-    
   }
 
   return (
