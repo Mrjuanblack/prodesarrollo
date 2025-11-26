@@ -13,7 +13,6 @@ import alcaldia from "@/public/alcaldia-san-alberto-logo.svg";
 import gobierno_digital from "@/public/gobierno-digital-logo.svg";
 import cecop from "@/public/secop-logo.svg";
 import { BookOpen, Globe, HeartHandshake, User } from "lucide-react";
-import { NewsItem } from "@/ui/atoms/Cards/NewsCard/news-card.properties";
 
 export interface EntityObserved {
   alt: string;
@@ -48,39 +47,6 @@ export const entitiesObserved: EntityObserved[] = [
   {
     img: gobierno_digital,
     alt: "Logo de Gobierno digital",
-  },
-];
-
-export const news: NewsItem[] = [
-  {
-    id: 1,
-    date: "23/11/2025",
-    category: "Categoría",
-    title: "Ejemplo título de noticia",
-  },
-  {
-    id: 2,
-    category: "Categoría",
-    title: "Ejemplo título de noticia",
-    date: "23/11/2025",
-  },
-  {
-    id: 3,
-    category: "Categoría",
-    title: "Ejemplo título de noticia",
-    date: "23/11/2025",
-  },
-  {
-    id: 4,
-    category: "Categoría",
-    title: "Otra noticia importante",
-    date: "24/11/2025",
-  },
-  {
-    id: 5,
-    category: "Categoría",
-    title: "Un quinto ejemplo",
-    date: "25/11/2025",
   },
 ];
 
