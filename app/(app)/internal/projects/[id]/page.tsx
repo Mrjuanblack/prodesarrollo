@@ -17,6 +17,7 @@ import {
   Textarea,
   DatePicker,
   SelectItem,
+  Switch,
 } from "@heroui/react";
 import { GlobalLoader } from "@/ui/atoms";
 import { useParams } from "next/navigation";
@@ -34,35 +35,29 @@ export default function ProjectPage() {
   const { id } = useParams();
   const { data: project } = useProject(id as string);
 
-  const updateProjectMutation = useUpdateProject({
-    id: id as string,
-    project: {
-      title: project?.title ?? "",
-      description: project?.description ?? "",
-      type: project?.type ?? ProjectType.INTERVENTORY,
-      status: project?.status ?? ProjectStatus.STARTED,
-      date: project?.date ?? new Date(),
-      relatedProjects:
-        project?.relatedProjects?.map((project) => project.id) ?? null,
-    } satisfies UpdateProject,
-  });
+  const updateProjectMutation = useUpdateProject(id as string);
+
+  const defaultValues: UpdateProject = {
+    code: project?.code ?? "",
+    title: project?.title ?? "",
+    description: project?.description ?? "",
+    type: project?.type ?? ProjectType.INTERVENTORY,
+    status: project?.status ?? ProjectStatus.STARTED,
+    date: project?.date ?? new Date(),
+    relatedProjects: project?.relatedProjects?.map((project) => project.id) ?? null,
+    highlight: project?.highlight ?? false,
+    donationProject: project?.donationProject ?? false,
+  };
 
   const form = useForm({
-    defaultValues: {
-      title: project?.title ?? "",
-      description: project?.description ?? "",
-      status: project?.status ?? ProjectStatus.STARTED,
-      type: project?.type ?? ProjectType.INTERVENTORY,
-      date: project?.date ?? new Date(),
-      relatedProjects:
-        project?.relatedProjects?.map((project) => project.id) ?? null,
-    } satisfies UpdateProject,
+    defaultValues: defaultValues,
     validators: {
       onSubmit: updateProjectFormSchema,
       onBlur: updateProjectFormSchema,
       onChange: updateProjectFormSchema,
     },
     onSubmit: (values) => {
+      console.log(values.value);
       updateProjectMutation.mutate({
         id: id as string,
         project: values.value,
@@ -88,6 +83,29 @@ export default function ProjectPage() {
             }}
           >
             <div className="grid grid-cols-2 gap-4">
+              <div className="col-span-2">
+                <form.Field name="code">
+                  {(field) => (
+                    <Input
+                      label="Código"
+                      id="code"
+                      name="code"
+                      type="text"
+                      placeholder="Ingresa el código del proyecto"
+                      value={field.state.value ?? ""}
+                      onChange={(e) => {
+                        field.handleChange(e.target.value);
+                      }}
+                      onBlur={field.handleBlur}
+                      isInvalid={
+                        field.state.meta.errors.length > 0 &&
+                        field.state.meta.isTouched
+                      }
+                      errorMessage={field.state.meta.errors[0]?.message}
+                    />
+                  )}
+                </form.Field>
+              </div>
               <div className="col-span-2">
                 <form.Field name="title">
                   {(field) => (
@@ -142,9 +160,9 @@ export default function ProjectPage() {
                       label="Tipo"
                       id="type"
                       name="type"
-                      value={field.state.value ?? ""}
-                      onChange={(e) => {
-                        field.handleChange(e.target.value as ProjectType);
+                      selectedKeys={[field.state.value ?? ""]}
+                      onSelectionChange={(e) => {
+                        field.handleChange(e.currentKey as ProjectType);
                       }}
                       onBlur={field.handleBlur}
                       isInvalid={
@@ -175,10 +193,10 @@ export default function ProjectPage() {
                         value={
                           field.state.value
                             ? new CalendarDate(
-                                field.state.value.getFullYear(),
-                                field.state.value.getMonth() + 1,
-                                field.state.value.getDate()
-                              )
+                              field.state.value.getFullYear(),
+                              field.state.value.getMonth() + 1,
+                              field.state.value.getDate()
+                            )
                             : null
                         }
                         onChange={(e) => {
@@ -248,6 +266,34 @@ export default function ProjectPage() {
                       }
                       errorMessage={field.state.meta.errors[0]?.message}
                     />
+                  )}
+                </form.Field>
+              </div>
+              <div className="col-span-2">
+                <form.Field name="highlight">
+                  {(field) => (
+                    <Switch
+                      isSelected={field.state.value}
+                      onValueChange={(value) => {
+                        field.handleChange(value);
+                      }}
+                    >
+                      Destacado
+                    </Switch>
+                  )}
+                </form.Field>
+              </div>
+              <div className="col-span-2">
+                <form.Field name="donationProject">
+                  {(field) => (
+                    <Switch
+                      isSelected={field.state.value}
+                      onValueChange={(value) => {
+                        field.handleChange(value);
+                      }}
+                    >
+                      Proyecto de donación
+                    </Switch>
                   )}
                 </form.Field>
               </div>

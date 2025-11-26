@@ -1,11 +1,5 @@
-export interface ProjectItem {
-  id: number;
-  date: string;
-  title: string;
-  imageUrl: string;
-  imageAlt: string;
-}
+import { Project } from "@/domain/Projects";
 
 export interface ProjectCardProps {
-  item: ProjectItem;
+  item: Project;
 }

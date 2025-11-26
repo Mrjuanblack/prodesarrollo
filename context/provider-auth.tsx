@@ -19,10 +19,14 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     setLoading(true);
     const tokenCookie = getCookie("token");
 
+    console.log("1");
     if (!tokenCookie) {
+      console.log("2");
       router.push("/auth/login");
     } else {
+      console.log("3");
       if (!token) {
+        console.log("4");
         setToken(tokenCookie);
       }
     }

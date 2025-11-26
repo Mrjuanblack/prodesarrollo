@@ -12,14 +12,14 @@ const updateProject = async (props: UseUpdateProjectProps): Promise<Project> => 
     return response.data;
 }
 
-export const useUpdateProject = (props: UseUpdateProjectProps) => {
+export const useUpdateProject = (id: string) => {
     const queryClient = useQueryClient();
 
     return useMutation({
         mutationFn: updateProject,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['projects'] });
-            queryClient.invalidateQueries({ queryKey: ['project', props.id] });
+            queryClient.invalidateQueries({ queryKey: ['project', id] });
         },
         onError: (error) => {
             console.error(error);

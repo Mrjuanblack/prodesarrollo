@@ -6,6 +6,7 @@ import {
   pgTable,
   timestamp,
   primaryKey,
+  boolean,
 } from "drizzle-orm/pg-core";
 import { relations, sql } from "drizzle-orm";
 import { ProjectStatus, ProjectType } from "@/domain/Projects";
@@ -15,11 +16,14 @@ export const projectTypeEnum = pgEnum("project_type", ProjectType);
 
 export const projects = pgTable("projects", {
   id: uuid("id").primaryKey().defaultRandom(),
+  code: text("code").notNull(),
   title: text("title").notNull(),
   description: text("description").notNull(),
   type: projectTypeEnum("type").notNull(),
   status: projectStatusEnum("status").notNull(),
   date: timestamp("date", { withTimezone: true }).notNull().defaultNow(),
+  highlight: boolean("highlight").notNull().default(false),
+  donationProject: boolean("donation_project").notNull(),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
     .defaultNow(),

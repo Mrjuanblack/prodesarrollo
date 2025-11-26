@@ -8,6 +8,8 @@ interface UseProjectsProps {
     size: number;
     year?: number;
     type?: ProjectType;
+    highlight?: boolean;
+    donationProject?: boolean;
 }
 
 const fetchProjects = async (props: UseProjectsProps): Promise<PaginationResponse<Project>> => {
@@ -17,6 +19,8 @@ const fetchProjects = async (props: UseProjectsProps): Promise<PaginationRespons
             size: props.size,
             year: props.year,
             type: props.type,
+            highlight: props.highlight,
+            donationProject: props.donationProject,
         },
     });
     return response.data;

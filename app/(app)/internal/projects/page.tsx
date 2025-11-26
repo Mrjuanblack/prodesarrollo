@@ -19,6 +19,8 @@ import { useProjects } from "@/hooks/project/useProjects";
 import ProjectStatusChip from "@/ui/atoms/Chips/project-status-chip";
 import ProjectTypeChip from "@/ui/atoms/Chips/project-type-chip";
 import CreateProjectForm from "@/ui/organism/Forms/Backoffice/CreateProjectForm";
+import ProjectHighlightChip from "@/ui/atoms/Chips/project-highlight-chip";
+import ProjectDonationChip from "@/ui/atoms/Chips/project-donation-chip";
 
 export default function ProjectsPage() {
   const router = useRouter();
@@ -69,7 +71,7 @@ export default function ProjectsPage() {
             }
           >
             <TableHeader>
-              <TableColumn key="name">Nombre</TableColumn>
+              <TableColumn key="code">Código</TableColumn>
               <TableColumn key="date">Fecha</TableColumn>
               <TableColumn key="status">Estado</TableColumn>
               <TableColumn key="type">Tipo</TableColumn>
@@ -87,7 +89,12 @@ export default function ProjectsPage() {
                   key={item.id}
                   className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                 >
-                  <TableCell>{item.title}</TableCell>
+                  <TableCell className="flex gap-2">
+                    <span>{item.code}</span>
+                    {item.highlight && <ProjectHighlightChip />}
+                    {item.donationProject && <ProjectDonationChip />}
+                    
+                  </TableCell>
                   <TableCell>{item.date.toLocaleDateString()}</TableCell>
                   <TableCell>
                     <ProjectStatusChip status={item.status} />
