@@ -3,7 +3,7 @@ import { db } from "../config";
 import { users } from "../schema";
 import { count, eq } from "drizzle-orm";
 import { ErrorHandler_Repository } from "./ErrorHanlder";
-import { CreateUser, UpdateFormUser, UpdateUser, User } from "@/domain/user";
+import { CreateUser, PrivateUser, UpdateUser, User } from "@/domain/user";
 import { PaginationRequest, PaginationResponse } from "@/domain/Pagination";
 import { RepositoryErrorOrigin, RepositoryErrorType } from "@/domain/Errors";
 
@@ -96,6 +96,48 @@ export class UserRepository {
     }
   }
 
+  public static async getUserByEmail(email: string): Promise<User> {
+    try {
+      const result = await db.query.users.findFirst({
+        where: eq(users.email, email),
+      });
+
+      if (!result) {
+        throw errorHandler.handleError(
+          RepositoryErrorType.NOT_FOUND,
+          new Error("User not found")
+        );
+      }
+
+      return this.mapToDomain({
+        ...result,
+      });
+    } catch (error) {
+      throw errorHandler.handleError(RepositoryErrorType.GET, error);
+    }
+  }
+
+  public static async getUserPassWord(email: string): Promise<PrivateUser> {
+    try {
+      const result = await db.query.users.findFirst({
+        where: eq(users.email, email),
+      });
+
+      if (!result) {
+        throw errorHandler.handleError(
+          RepositoryErrorType.NOT_FOUND,
+          new Error("User not found")
+        );
+      }
+
+      return this.mapToDomainPrivate({
+        ...result,
+      });
+    } catch (error) {
+      throw errorHandler.handleError(RepositoryErrorType.GET, error);
+    }
+  }
+
   public static async getPaginatedUsers(
     pRequest: PaginationRequest
   ): Promise<PaginationResponse<User>> {
@@ -130,6 +172,19 @@ export class UserRepository {
       id: user.id,
       email: user.email,
       username: user.username,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    };
+  }
+
+  public static mapToDomainPrivate(
+    user: typeof users.$inferSelect
+  ): PrivateUser {
+    return {
+      id: user.id,
+      email: user.email,
+      username: user.username,
+      password: user.password,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     };

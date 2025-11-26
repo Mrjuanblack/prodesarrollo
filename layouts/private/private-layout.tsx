@@ -5,10 +5,13 @@ import { UsersIcon } from "@heroicons/react/24/outline";
 import { usePathname, useRouter } from "next/navigation";
 import { DocumentDuplicateIcon } from "@heroicons/react/24/solid";
 import pro_desarrollo_logo from "@/public/pro-desarrollo-logo.svg";
+import { LogOutIcon } from "lucide-react";
+import { useAuth } from "@/hooks/auth/useAuth";
 
 const PrivateLayout: FC<{ children: React.ReactNode }> = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
+  const { logout } = useAuth();
 
   const isActive = (href: string) => pathname.endsWith(href);
 
@@ -48,6 +51,20 @@ const PrivateLayout: FC<{ children: React.ReactNode }> = ({ children }) => {
               {route.label}
             </Button>
           ))}
+
+          <Button
+            size="lg"
+            color="primary"
+            variant="bordered"
+            onClick={() => {
+              logout();
+              router.push("/auth/login");
+            }}
+            style={{ justifyContent: "flex-start" }}
+            startContent={<LogOutIcon className="w-6 h-6" />}
+          >
+            Cerrar Sesión
+          </Button>
         </div>
       </div>
 
