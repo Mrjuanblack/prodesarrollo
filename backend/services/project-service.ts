@@ -19,6 +19,10 @@ export class ProjectService {
         return ProjectRepository.getYearsWithProjects();
     }
 
+    public static async getHighlightedProjects(): Promise<Project[]> {
+        return ProjectRepository.getHighlightedProjects();
+    }
+
     public static async updateProject(id: string, project: UpdateProject): Promise<Project> {
         return await ProjectRepository.updateProject(id, project);
     }

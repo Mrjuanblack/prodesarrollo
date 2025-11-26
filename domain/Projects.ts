@@ -43,7 +43,7 @@ export const getProjectTypeLabel = (type: ProjectType): string => {
     case ProjectType.SUPPLY_PROCESSES:
       return "Procesos de suministros";
     case ProjectType.SERVICE_DELIVERY_PROCESSES:
-      return "Procesos de presentación de servicios";
+      return "Prestación de Servicios";
     case ProjectType.CONSULTING_PROCESSES:
       return "Procesos de consultoría";
   }
@@ -51,6 +51,9 @@ export const getProjectTypeLabel = (type: ProjectType): string => {
 
 // Frontend schema - validates form input (Date objects)
 export const createProjectFormSchema = z.object({
+  code: z
+    .string({ message: "El código debe ser textual" })
+    .min(1, "El código es requerido"),
   title: z
     .string({ message: "El título debe ser textual" })
     .min(1, "El título es requerido"),
@@ -62,6 +65,7 @@ export const createProjectFormSchema = z.object({
     message: "El estado debe ser un estado válido",
   }),
   date: z.date({ message: "La fecha debe ser una fecha válida" }),
+  donationProject: z.boolean({ message: "Debe ser booleano" }),
   relatedProjects: z
     .array(z.string({ message: "El proyecto relacionado debe ser textual" }))
     .nullable(),
@@ -69,6 +73,9 @@ export const createProjectFormSchema = z.object({
 
 // Backend schema - validates API input (coerces strings to dates)
 export const createProjectSchema = z.object({
+  code: z
+    .string({ message: "El código debe ser textual" })
+    .min(1, "El código es requerido"),
   title: z
     .string({ message: "El título debe ser textual" })
     .min(1, "El título es requerido"),
@@ -80,6 +87,7 @@ export const createProjectSchema = z.object({
     message: "El estado debe ser un estado válido",
   }),
   date: z.coerce.date({ message: "La fecha debe ser una fecha válida" }),
+  donationProject: z.boolean({ message: "Debe ser booleano" }),
   relatedProjects: z
     .array(z.string({ message: "El proyecto relacionado debe ser textual" }))
     .nullable(),
@@ -89,6 +97,9 @@ export type CreateProject = z.infer<typeof createProjectSchema>;
 export type CreateProjectForm = z.infer<typeof createProjectFormSchema>;
 
 export const updateProjectFormSchema = z.object({
+  code: z
+    .string({ message: "El código debe ser textual" })
+    .min(1, "El código es requerido"),
   title: z
     .string({ message: "El título debe ser textual" })
     .min(1, "El título es requerido"),
@@ -103,9 +114,14 @@ export const updateProjectFormSchema = z.object({
   relatedProjects: z
     .array(z.string({ message: "El proyecto relacionado debe ser textual" }))
     .nullable(),
+  highlight: z.boolean({ message: "El proyecto debe ser destacado" }),
+  donationProject: z.boolean({ message: "Debe ser booleano" }),
 });
 
 export const updateProjectSchema = z.object({
+  code: z
+    .string({ message: "El código debe ser textual" })
+    .min(1, "El código es requerido"),
   title: z
     .string("El título debe ser textual")
     .min(1, "El título es requerido"),
@@ -118,12 +134,15 @@ export const updateProjectSchema = z.object({
   relatedProjects: z
     .array(z.string("El proyecto relacionado debe ser textual"))
     .nullable(),
+  highlight: z.boolean({ message: "El proyecto debe ser destacado" }),
+  donationProject: z.boolean({ message: "Debe ser booleano" }),
 });
 
 export type UpdateProject = z.infer<typeof updateProjectSchema>;
 
 export interface SimpleProject {
   id: string;
+  code: string;
   title: string;
 }
 
@@ -134,4 +153,5 @@ export interface Project extends Omit<CreateProject, "relatedProjects"> {
   createdAt: Date;
   updatedAt: Date;
   relatedProjects: SimpleProject[];
+  highlight: boolean;
 }

@@ -44,6 +44,7 @@ export class ProjectRepository {
               columns: {
                 id: true,
                 title: true,
+                code: true,
               },
             },
           },
@@ -51,6 +52,7 @@ export class ProjectRepository {
         finalRelatedProjects.push(
           ...relatedProjects.map((relatedProject) => ({
             id: relatedProject.projectTwo.id,
+            code: relatedProject.projectTwo.code,
             title: relatedProject.projectTwo.title,
           }))
         );
@@ -90,6 +92,7 @@ export class ProjectRepository {
                 columns: {
                   id: true,
                   title: true,
+                  code: true,
                 },
               },
             },
@@ -103,6 +106,7 @@ export class ProjectRepository {
                 columns: {
                   id: true,
                   title: true,
+                  code: true,
                 },
               },
             },
@@ -121,10 +125,12 @@ export class ProjectRepository {
       const relatedProjects: SimpleProject[] = [
         ...result.relatedProjectsAsOne.map((rel) => ({
           id: rel.projectTwo.id,
+          code: rel.projectTwo.code,
           title: rel.projectTwo.title,
         })),
         ...result.relatedProjectsAsTwo.map((rel) => ({
           id: rel.projectOne.id,
+          code: rel.projectOne.code,
           title: rel.projectOne.title,
         })),
       ];
@@ -197,6 +203,7 @@ export class ProjectRepository {
                   columns: {
                     id: true,
                     title: true,
+                    code: true,
                   },
                 },
               },
@@ -210,6 +217,7 @@ export class ProjectRepository {
                   columns: {
                     id: true,
                     title: true,
+                    code: true,
                   },
                 },
               },
@@ -225,10 +233,12 @@ export class ProjectRepository {
           const relatedProjects = [
             ...project.relatedProjectsAsOne.map((rel) => ({
               id: rel.projectTwo.id,
+              code: rel.projectTwo.code,
               title: rel.projectTwo.title,
             })),
             ...project.relatedProjectsAsTwo.map((rel) => ({
               id: rel.projectOne.id,
+              code: rel.projectOne.code,
               title: rel.projectOne.title,
             })),
           ];
@@ -276,6 +286,23 @@ export class ProjectRepository {
     }
   }
 
+  public static async getHighlightedProjects(): Promise<Project[]> {
+    try {
+      const result = await db.query.projects.findMany({
+        where: eq(projects.highlight, true),
+      });
+      // No need to fetch extra data for this query
+      return result.map((project) => ProjectRepository.mapToDomain({
+        ...project,
+        photos: null,
+        documents: null,
+        relatedProjects: null,
+      }));
+    } catch (error) {
+      throw errorHandler.handleError(RepositoryErrorType.GET, error);
+    }
+  }
+
   public static async updateProject(
     id: string,
     project: UpdateProject
@@ -284,10 +311,14 @@ export class ProjectRepository {
       const result = await db
         .update(projects)
         .set({
+          code: project.code,
           title: project.title,
           description: project.description,
+          type: project.type,
           status: project.status,
           date: project.date,
+          highlight: project.highlight,
+          donationProject: project.donationProject,
           updatedAt: new Date(),
         })
         .where(eq(projects.id, id))
@@ -342,6 +373,7 @@ export class ProjectRepository {
               columns: {
                 id: true,
                 title: true,
+                code: true,
               },
             },
           },
@@ -350,6 +382,7 @@ export class ProjectRepository {
           ...relatedProjects.map((relatedProject) => ({
             id: relatedProject.projectTwo.id,
             title: relatedProject.projectTwo.title,
+            code: relatedProject.projectTwo.code,
           }))
         );
       }
@@ -374,6 +407,7 @@ export class ProjectRepository {
   ): Project {
     return {
       id: project.id,
+      code: project.code,
       title: project.title,
       description: project.description,
       type: project.type,
@@ -382,6 +416,8 @@ export class ProjectRepository {
       photos: project.photos ?? [],
       documents: project.documents ?? [],
       relatedProjects: project.relatedProjects ?? [],
+      highlight: project.highlight,
+      donationProject: project.donationProject,
       createdAt: project.createdAt,
       updatedAt: project.updatedAt,
     };

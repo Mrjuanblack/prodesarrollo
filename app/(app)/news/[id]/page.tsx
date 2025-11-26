@@ -4,10 +4,14 @@ import Image from "next/image";
 import { imgs } from "./page.properties";
 import { HeroSimple } from "@/ui/organism";
 import hero_simple from "@/public/hero-simple.svg";
-import { BackgroundSection, Chip, Text } from "@/ui/atoms";
+import { BackgroundSection, Chip, GlobalLoader, Text } from "@/ui/atoms";
 import { Carousel, Container, IconTitle, Section } from "@/ui/molecules";
 import { CallToActionSection } from "@/ui/organism/CallToActionSection/CallToActionSection";
 import { ICarouselProps } from "@/ui/molecules/Carousel/carousel.properties";
+import { useParams } from "next/navigation";
+import useNews from "@/hooks/news/useNews";
+import { getNewsCategoryLabel } from "@/domain/News";
+import { getProdOrDevSuffix } from "@/utils/utils";
 
 const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
   base: "basis-1/2",
@@ -17,6 +21,11 @@ const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
 };
 
 export default function New() {
+  const { id } = useParams();
+  const { data: news } = useNews(id as string);
+  if (!news) {
+    return <GlobalLoader />;
+  }
   return (
     <>
       <HeroSimple title="Noticias" backgroundImage={hero_simple} />
@@ -25,58 +34,31 @@ export default function New() {
         <Container className="flex flex-col items-center space-y-6">
           <IconTitle
             highlightFirstLetter={false}
-            title="PRO. DESARROLLO entrega uniformes deportivos"
+            title={news.title}
           />
 
           <div className="self-start space-y-5">
-            <Chip category="Categoría: Social" />
+            <Chip category={`Categoría: ${getNewsCategoryLabel(news.category)}`} />
 
             <div>
               <Text
-                text="Fecha : 27/10/2025"
+                text={`Fecha : ${news.createdAt.toLocaleDateString()}`}
                 className="text-primary font-normal text-[15px] md:text-[18px] lg:text-[20px]"
               />
 
-              <Text
+              {/* <Text
                 text="Publicado por: Ana García"
                 className="text-primary font-normal text-[15px] md:text-[18px] lg:text-[20px]"
-              />
+              /> */}
             </div>
 
-            <Text
-              className="text-justify text-[15px] md:text-[18px] lg:text-[20px]"
-              text={
-                <>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
-                  efficitur quam et mi dignissim, aliquam malesuada mi gravida.
-                  Integer dictum metus erat, ultricies convallis odio interdum
-                  sed. Integer non tempus neque. Phasellus vitae quam sed risus
-                  viverra lacinia ac in nunc. Ut eu leo ullamcorper, hendrerit
-                  ipsum vel, malesuada purus. Quisque tincidunt blandit urna.
-                  Proin sit amet tortor tortor. Nunc ac nunc ultrices, euismod
-                  urna id, congue enim. Etiam lectus urna, ultricies eget lorem
-                  a, vulputate sollicitudin urna. Integer diam risus, hendrerit
-                  at lacus nec, vestibulum porta est. Sed sit amet turpis
-                  bibendum, aliquet nibh quis, consectetur diam.
-                  <br />
-                  <br />
-                  Nunc quis consequat orci, eu tempor risus. Aliquam erat
-                  volutpat. Suspendisse accumsan tortor nunc, id pharetra urna
-                  eleifend ac. Etiam et nibh auctor magna blandit finibus. Proin
-                  sit amet rutrum dolor. Duis et arcu velit. Cras rutrum
-                  vehicula nibh, in aliquam augue ultrices porttitor. Integer a
-                  efficitur tortor, nec varius nibh.
-                  <br />
-                  <br />
-                  Curabitur sagittis tempor magna eget pellentesque. Donec
-                  auctor et quam non volutpat. Pellentesque et purus turpis.
-                  Nullam velit ante, convallis non elit sed, finibus aliquam
-                  urna. Etiam justo eros, maximus efficitur dolor nec, imperdiet
-                  tincidunt arcu. Fusce euismod at metus a tempus. Sed leo est,
-                  interdum at dolor sed, tincidunt congue purus.
-                </>
-              }
-            />
+            <div className="text-justify text-[15px] md:text-[18px] lg:text-[20px] font-normal text-black space-y-4">
+              {news.content.split('\n\n').filter(paragraph => paragraph.trim()).map((paragraph, index) => (
+                <p key={index} className="mb-4">
+                  {paragraph.trim()}
+                </p>
+              ))}
+            </div>
 
             <IconTitle
               highlightFirstLetter={false}
@@ -85,15 +67,15 @@ export default function New() {
             />
 
             <Carousel slideSizeClasses={customSlideClasses}>
-              {imgs.map((img) => (
+              {news.photos.map((photo) => (
                 <div
-                  key={img.id}
+                  key={photo.id}
                   className="relative h-[135px] md:h-[200px] lg:h-[281px] overflow-hidden"
                 >
                   <Image
                     fill
-                    src={img.img}
-                    alt={img.alt}
+                    src={`https://storage.googleapis.com/${process.env.NEXT_PUBLIC_GOOGLE_STORAGE_BUCKET_NAME}/${getProdOrDevSuffix()}/${photo.url}`}
+                    alt={photo.url}
                     className="object-cover"
                   />
                 </div>

@@ -1,9 +1,11 @@
+"use client";
+
 import { Newspaper } from "lucide-react";
-import { news } from "../page.properties";
 import { Button, NewsCard } from "@/ui/atoms";
 import { SectionHeader } from "@/ui/organism";
 import { Carousel, Container, Section } from "@/ui/molecules";
 import { ICarouselProps } from "@/ui/molecules/Carousel/carousel.properties";
+import { useNewsList } from "@/hooks/news/useNewsList";
 
 const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
   base: "basis-full",
@@ -13,6 +15,11 @@ const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
 };
 
 export const NewsCarousel = () => {
+  const { data: news } = useNewsList({
+    page: 0,
+    size: 10,
+  });
+
   return (
     <Section hasPadding={false} fadeIn={true}>
       <Container className="mt-5 lg:mt-0 w-full flex flex-col items-center">
@@ -20,7 +27,7 @@ export const NewsCarousel = () => {
 
         <div className="w-full">
           <Carousel slideSizeClasses={customSlideClasses}>
-            {news.map((news) => (
+            {news?.data?.map((news) => (
               <NewsCard key={news.id} item={news} />
             ))}
           </Carousel>

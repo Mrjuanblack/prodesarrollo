@@ -20,6 +20,7 @@ import {
   ModalHeader,
   ModalContent,
   ModalFooter,
+  Switch,
 } from "@heroui/react";
 import { useForm } from "@tanstack/react-form";
 import { I18nProvider } from "@react-aria/i18n";
@@ -38,15 +39,19 @@ const CreateProjectForm: React.FC<CreateProjectProps> = ({
 }) => {
   const createProjectMutation = useCreateProject();
 
+  const defaultValues: CreateProject = {
+    code: "",
+    title: "",
+    description: "",
+    type: ProjectType.INTERVENTORY,
+    date: new Date(),
+    status: ProjectStatus.STARTED,
+    relatedProjects: null,
+    donationProject: false,
+  };
+
   const form = useForm({
-    defaultValues: {
-      title: "",
-      description: "",
-      type: ProjectType.INTERVENTORY,
-      date: new Date(),
-      status: ProjectStatus.STARTED,
-      relatedProjects: null,
-    } as CreateProject,
+    defaultValues: defaultValues,
     validators: {
       onSubmit: createProjectFormSchema,
       onBlur: createProjectFormSchema,
@@ -75,6 +80,27 @@ const CreateProjectForm: React.FC<CreateProjectProps> = ({
             }}
           >
             <div className="flex flex-col gap-4">
+              <form.Field name="code">
+                {(field) => (
+                  <Input
+                    label="Código"
+                    id="code"
+                    name="code"
+                    type="text"
+                    placeholder="Ingresa el código del proyecto"
+                    value={field.state.value ?? ""}
+                    onChange={(e) => {
+                      field.handleChange(e.target.value);
+                    }}
+                    onBlur={field.handleBlur}
+                    isInvalid={
+                      field.state.meta.errors.length > 0 &&
+                      field.state.meta.isTouched
+                    }
+                    errorMessage={field.state.meta.errors[0]?.message}
+                  />
+                )}
+              </form.Field>
               <form.Field name="title">
                 {(field) => (
                   <Input
@@ -155,10 +181,10 @@ const CreateProjectForm: React.FC<CreateProjectProps> = ({
                       value={
                         field.state.value
                           ? new CalendarDate(
-                              field.state.value.getFullYear(),
-                              field.state.value.getMonth() + 1,
-                              field.state.value.getDate()
-                            )
+                            field.state.value.getFullYear(),
+                            field.state.value.getMonth() + 1,
+                            field.state.value.getDate()
+                          )
                           : undefined
                       }
                       onChange={(e) => {
@@ -222,6 +248,18 @@ const CreateProjectForm: React.FC<CreateProjectProps> = ({
                     }
                     errorMessage={field.state.meta.errors[0]?.message}
                   />
+                )}
+              </form.Field>
+              <form.Field name="donationProject">
+                {(field) => (
+                  <Switch
+                    isSelected={field.state.value}
+                    onValueChange={(value) => {
+                      field.handleChange(value);
+                    }}
+                  >
+                    Proyecto de donación
+                  </Switch>
                 )}
               </form.Field>
             </div>

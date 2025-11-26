@@ -1,0 +1,1 @@
+ALTER TABLE "projects" ADD COLUMN "donation_project" boolean NOT NULL;

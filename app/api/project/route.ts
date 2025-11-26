@@ -1,8 +1,8 @@
 import { z } from "zod/v4";
 import { NextResponse } from "next/server";
-import { PaginationRequest } from "@/domain/Pagination";
+import { PaginationRequest, PaginationResponse } from "@/domain/Pagination";
 import { ProjectService } from "@/backend/services/project-service";
-import { createProjectSchema, ProjectType } from "@/domain/Projects";
+import { createProjectSchema, Project, ProjectType } from "@/domain/Projects";
 
 export async function GET(request: Request) {
   try {
@@ -13,6 +13,8 @@ export async function GET(request: Request) {
     const year = Number(searchParams.get("year")) || undefined;
     const type = searchParams.get("type") || undefined;
     const search = searchParams.get("search") || undefined;
+    const highlight = searchParams.get("highlight") || undefined;
+    const donationProject = searchParams.get("donationProject") || undefined;
 
     const typeEnum =
       type && Object.values(ProjectType).includes(type as ProjectType)
@@ -23,6 +25,20 @@ export async function GET(request: Request) {
       page,
       size,
     };
+
+    if (highlight) {
+      const parsedBoolean = Boolean(highlight);
+      if(parsedBoolean) {
+        const projects = await ProjectService.getHighlightedProjects();
+        const paginationResponse: PaginationResponse<Project> = {
+          data: projects,
+          page: 0,
+          size: 10,
+          total: projects.length,
+        }
+        return NextResponse.json(paginationResponse);
+      }
+    }
 
     const projects = await ProjectService.getPaginatedProjects(
       pRequest,

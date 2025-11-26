@@ -45,9 +45,9 @@ export default function RootLayout({
         <QueryProvider>
           <ProviderHeroUi>
             <LoaderProvider>
-              <AuthProvider>
+              {/* <AuthProvider> */}
                 <ProviderAppShell>{children}</ProviderAppShell>
-              </AuthProvider>
+              {/* </AuthProvider> */}
             </LoaderProvider>
           </ProviderHeroUi>
         </QueryProvider>

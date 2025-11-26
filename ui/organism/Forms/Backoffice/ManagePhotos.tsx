@@ -18,8 +18,8 @@ import { useForm } from "@tanstack/react-form";
 import { getProdOrDevSuffix } from "@/utils/utils";
 import { Container, Section } from "@/ui/molecules";
 import GenericConfirmAction from "./GenericConfirmAction";
-import { useCreateProjectPhoto } from "@/hooks/photo/useCreateProjectPhoto";
-import { useDeleteProjectPhoto } from "@/hooks/photo/useDeleteProjectPhoto";
+import { useCreateProjectPhoto } from "@/hooks/projectPhoto/useCreateProjectPhoto";
+import { useDeleteProjectPhoto } from "@/hooks/projectPhoto/useDeleteProjectPhoto";
 import { FileUploadButtonComponent } from "@/ui/atoms/FileUploadButton/file-upload-button.component";
 
 interface ManagePhotosProps {

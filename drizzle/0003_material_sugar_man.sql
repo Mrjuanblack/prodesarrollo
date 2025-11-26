@@ -1,0 +1,1 @@
+ALTER TABLE "projects" ADD COLUMN "highlight" boolean DEFAULT false NOT NULL;
