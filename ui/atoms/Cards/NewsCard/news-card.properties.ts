@@ -1,12 +1,6 @@
-export interface NewsItem {
-  id: number;
-  title: string;
-  date: string;
-  image?: string;
-  category: string;
-  href?: string;
-}
+import { News } from "@/domain/News";
 
 export interface NewsCardProps {
-  item: NewsItem;
+  showImage?: boolean;
+  item: News;
 }

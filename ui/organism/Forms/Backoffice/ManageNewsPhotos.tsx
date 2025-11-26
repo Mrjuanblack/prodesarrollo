@@ -9,42 +9,42 @@ import {
   ModalHeader,
 } from "@heroui/react";
 import {
-  createProjectPhotoFrontendSchema,
-  CreateProjectPhotoFrontendSchema,
-} from "@/domain/ProjectPhoto";
+  createNewsPhotoFrontendSchema,
+  CreateNewsPhotoFrontendSchema,
+} from "@/domain/NewsPhoto";
 import { useState } from "react";
-import { Project } from "@/domain/Projects";
+import { News } from "@/domain/News";
 import { useForm } from "@tanstack/react-form";
 import { getProdOrDevSuffix } from "@/utils/utils";
 import { Container, Section } from "@/ui/molecules";
 import GenericConfirmAction from "./GenericConfirmAction";
-import { useCreateProjectPhoto } from "@/hooks/projectPhoto/useCreateProjectPhoto";
-import { useDeleteProjectPhoto } from "@/hooks/projectPhoto/useDeleteProjectPhoto";
+import { useCreateNewsPhoto } from "@/hooks/newsPhoto/useCreateNewsPhoto";
+import { useDeleteNewsPhoto } from "@/hooks/newsPhoto/useDeleteNewsPhoto";
 import { FileUploadButtonComponent } from "@/ui/atoms/FileUploadButton/file-upload-button.component";
 
-interface ManagePhotosProps {
-  project: Project;
+interface ManageNewsPhotosProps {
+  news: News;
 }
 
-const ManagePhotos: React.FC<ManagePhotosProps> = ({ project }) => {
+const ManageNewsPhotos: React.FC<ManageNewsPhotosProps> = ({ news }) => {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
   const [photoToDelete, setPhotoToDelete] = useState<string | null>(null);
 
-  const createProjectPhotoMutation = useCreateProjectPhoto(project.id);
-  const deleteProjectPhotoMutation = useDeleteProjectPhoto(project.id);
+  const createNewsPhotoMutation = useCreateNewsPhoto(news.id);
+  const deleteNewsPhotoMutation = useDeleteNewsPhoto(news.id);
 
   const formCreateFrontend = useForm({
     defaultValues: {
       file: null,
-    } as CreateProjectPhotoFrontendSchema,
+    } as CreateNewsPhotoFrontendSchema,
     validators: {
-      onSubmit: createProjectPhotoFrontendSchema,
-      onBlur: createProjectPhotoFrontendSchema,
-      onChange: createProjectPhotoFrontendSchema,
+      onSubmit: createNewsPhotoFrontendSchema,
+      onBlur: createNewsPhotoFrontendSchema,
+      onChange: createNewsPhotoFrontendSchema,
     },
     onSubmit: ({ value }) => {
-      createProjectPhotoMutation.mutate(value.file as File);
+      createNewsPhotoMutation.mutate(value.file as File);
       formCreateFrontend.reset();
       setIsCreateOpen(false);
     },
@@ -62,7 +62,7 @@ const ManagePhotos: React.FC<ManagePhotosProps> = ({ project }) => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {project.photos.map((photo) => (
+            {news.photos.map((photo) => (
               <div
                 key={photo.id}
                 className="relative rounded-lg overflow-hidden"
@@ -128,9 +128,9 @@ const ManagePhotos: React.FC<ManagePhotosProps> = ({ project }) => {
               onPress={() => formCreateFrontend.handleSubmit()}
               type="submit"
               color="primary"
-              isLoading={createProjectPhotoMutation.isPending}
+              isLoading={createNewsPhotoMutation.isPending}
               isDisabled={
-                createProjectPhotoMutation.isPending ||
+                createNewsPhotoMutation.isPending ||
                 formCreateFrontend.state.isSubmitting
               }
             >
@@ -150,16 +150,17 @@ const ManagePhotos: React.FC<ManagePhotosProps> = ({ project }) => {
         content="¿Estás seguro de que deseas eliminar esta foto? Esta acción no se puede deshacer."
         onConfirm={() => {
           if (photoToDelete) {
-            deleteProjectPhotoMutation.mutate(photoToDelete);
+            deleteNewsPhotoMutation.mutate(photoToDelete);
           }
         }}
         confirmLabel="Eliminar"
         cancelLabel="Cancelar"
         confirmColor="danger"
-        isLoading={deleteProjectPhotoMutation.isPending}
+        isLoading={deleteNewsPhotoMutation.isPending}
       />
     </div>
   );
 };
 
-export default ManagePhotos;
+export default ManageNewsPhotos;
+

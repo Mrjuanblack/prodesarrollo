@@ -9,6 +9,7 @@ const errorHandler = (errorType: GoogleStorageErrorType, error: unknown) => {
 export enum GoogleStorageFolder {
     PROJECTS = 'projects',
     IMAGES = 'images',
+    NEWS = 'news',
 }
 
 const storage = new Storage({

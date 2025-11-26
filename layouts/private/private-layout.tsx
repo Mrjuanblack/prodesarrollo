@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React, { FC } from "react";
 import { Button } from "@heroui/react";
-import { UsersIcon } from "@heroicons/react/24/outline";
+import { NewspaperIcon, UsersIcon } from "@heroicons/react/24/outline";
 import { usePathname, useRouter } from "next/navigation";
 import { DocumentDuplicateIcon } from "@heroicons/react/24/solid";
 import pro_desarrollo_logo from "@/public/pro-desarrollo-logo.svg";
@@ -19,6 +19,11 @@ const PrivateLayout: FC<{ children: React.ReactNode }> = ({ children }) => {
       label: "Proyectos",
       icon: DocumentDuplicateIcon,
       href: `${internalPrefix}/projects`,
+    },
+    {
+      label: "Noticias",
+      icon: NewspaperIcon,
+      href: `${internalPrefix}/news`,
     },
     {
       label: "Usuarios",
