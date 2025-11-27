@@ -6,6 +6,7 @@ import { SectionHeader } from "@/ui/organism";
 import { Carousel, Container, Section } from "@/ui/molecules";
 import { ICarouselProps } from "@/ui/molecules/Carousel/carousel.properties";
 import { useNewsList } from "@/hooks/news/useNewsList";
+import { useRouter } from "next/navigation";
 
 const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
   base: "basis-full",
@@ -15,6 +16,8 @@ const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
 };
 
 export const NewsCarousel = () => {
+  const router = useRouter();
+  
   const { data: news } = useNewsList({
     page: 0,
     size: 10,
@@ -39,7 +42,7 @@ export const NewsCarousel = () => {
           variant="bordered"
           text="Ver más noticias"
           className="font-semibold w-fit mt-5 lg:mt-10"
-          onClick={() => console.log("Navegar a noticias")}
+          onClick={() => router.push("/news")}
         />
       </Container>
     </Section>

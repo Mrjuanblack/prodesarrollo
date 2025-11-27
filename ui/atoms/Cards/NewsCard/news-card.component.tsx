@@ -17,11 +17,18 @@ export const NewsCardComponent: React.FC<NewsCardProps> = ({ item, showImage = f
     process.env.NEXT_PUBLIC_GOOGLE_STORAGE_BUCKET_NAME
   }/${getProdOrDevSuffix()}/${image}`
 
+  const handleClick = () => {
+    if(!hasImage) {
+      router.push(`/news/${item.id}`);
+    }
+  }
+
   return (
     <div
       className={`relative ${
-        hasImage ? "h-fit md:h-[303px]" : "h-[360px]"
+        hasImage ? "h-fit md:h-[303px]" : "h-[360px] cursor-pointer"
       } rounded-xl overflow-hidden transform hover:scale-[1.02] transition-transform duration-300 shadow-lg`}
+      onClick={handleClick}
     >
       <div className="absolute inset-0 z-0">
         <Image
