@@ -26,12 +26,13 @@ const LoginPage = () => {
       onChange: loginFormSchema,
     },
     onSubmit: async ({ value }) => {
+      setLoading(true);
+
       try {
         const result = await loginMutation.mutateAsync(value);
 
         setUser(result.user);
         setToken(result.token);
-        setLoading(true);
         form.reset();
 
         addToast({
@@ -109,9 +110,9 @@ const LoginPage = () => {
               variant="solid"
               text="Iniciar sesión"
               isLoading={loading}
+              isDisabled={loading}
               className="mt-4 bg-secondary hover:bg-secondary-400 w-full font-bold shadow-md"
               onClick={() => form.handleSubmit()}
-              isDisabled={form.state.isSubmitting || loading}
             />
 
             <div className="flex justify-between gap-2 mt-5 text-sm text-center text-primary">

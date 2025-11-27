@@ -21,8 +21,5 @@ export const useUpdateUser = (props: UseUpdateUserProps) => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
       queryClient.invalidateQueries({ queryKey: ["user", props.id] });
     },
-    onError: (error) => {
-      console.error(error);
-    },
   });
 };

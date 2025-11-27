@@ -2,12 +2,15 @@ import { z } from "zod/v4";
 import { NextResponse } from "next/server";
 import { loginFormSchema } from "@/domain/auth";
 import { AuthService } from "@/backend/services/auth-service";
+import { CookieKey, setCookie } from "@/backend/utilities/auth/cookie";
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
     const validatedBody = loginFormSchema.parse(body);
     const response = await AuthService.loginUser(validatedBody);
+
+    await setCookie(CookieKey.TOKEN, response.token);
 
     return NextResponse.json(response);
   } catch (error) {

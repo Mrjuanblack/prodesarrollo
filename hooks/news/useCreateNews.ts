@@ -15,9 +15,5 @@ export const useCreateNews = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["news-list"] });
     },
-    onError: (error) => {
-      console.error(error);
-    },
   });
 };
-

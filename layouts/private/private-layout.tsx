@@ -1,14 +1,19 @@
 import Image from "next/image";
 import React, { FC } from "react";
-import { Button } from "@heroui/react";
-import { NewspaperIcon, UsersIcon } from "@heroicons/react/24/outline";
+import { LogOutIcon } from "lucide-react";
+import { useAuth } from "@/hooks/auth/useAuth";
+import { addToast, Button } from "@heroui/react";
+import { useLogout } from "@/hooks/auth/useLogout";
 import { usePathname, useRouter } from "next/navigation";
 import { DocumentDuplicateIcon } from "@heroicons/react/24/solid";
 import pro_desarrollo_logo from "@/public/pro-desarrollo-logo.svg";
+import { NewspaperIcon, UsersIcon } from "@heroicons/react/24/outline";
 
 const PrivateLayout: FC<{ children: React.ReactNode }> = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
+  const logoutMutation = useLogout();
+  const { loading, setLoading, logout } = useAuth();
 
   const isActive = (href: string) => pathname.endsWith(href);
 
@@ -32,6 +37,32 @@ const PrivateLayout: FC<{ children: React.ReactNode }> = ({ children }) => {
     },
   ];
 
+  const userLogout = async () => {
+    setLoading(true);
+
+    try {
+      await logoutMutation.mutateAsync();
+
+      logout();
+
+      addToast({
+        color: "success",
+        title: "Sesión Cerrada",
+        description: "Has cerrado sesión exitosamente. ¡Vuelve pronto!",
+      });
+
+      router.push("/auth/login");
+    } catch {
+      addToast({
+        color: "danger",
+        title: "Error al cerrar sesión",
+        description:
+          "Hubo un problema al intentar cerrar la sesión. Inténtalo de nuevo.",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div className="flex h-screen">
       <div className="w-70 h-full border-r border-gray-200">
@@ -53,6 +84,21 @@ const PrivateLayout: FC<{ children: React.ReactNode }> = ({ children }) => {
               {route.label}
             </Button>
           ))}
+
+          <Button
+            size="lg"
+            color="primary"
+            variant="bordered"
+            isLoading={loading}
+            isDisabled={loading}
+            style={{ justifyContent: "flex-start" }}
+            startContent={<LogOutIcon className="w-6 h-6" />}
+            onClick={() => {
+              userLogout();
+            }}
+          >
+            Cerrar Sesión
+          </Button>
         </div>
       </div>
 

@@ -12,8 +12,5 @@ const sendRequest = async (request: SendRequestFormType): Promise<void> => {
 export const useSendRequest = () => {
   return useMutation({
     mutationFn: sendRequest,
-    onError: (error) => {
-      console.error(error);
-    },
   });
 };

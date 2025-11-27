@@ -93,8 +93,8 @@ export default function ProjectsPage() {
                     <span>{item.code}</span>
                     {item.highlight && <ProjectHighlightChip />}
                     {item.donationProject && <ProjectDonationChip />}
-                    
                   </TableCell>
+
                   <TableCell>{item.date.toLocaleDateString()}</TableCell>
                   <TableCell>
                     <ProjectStatusChip status={item.status} />

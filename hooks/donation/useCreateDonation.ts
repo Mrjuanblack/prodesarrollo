@@ -14,8 +14,5 @@ const createDonation = async (
 export const useCreateDonation = () => {
   return useMutation({
     mutationFn: createDonation,
-    onError: (error) => {
-      console.error(error);
-    },
   });
 };

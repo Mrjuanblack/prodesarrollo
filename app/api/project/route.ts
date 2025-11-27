@@ -1,7 +1,8 @@
 import { z } from "zod/v4";
 import { NextResponse } from "next/server";
-import { PaginationRequest, PaginationResponse } from "@/domain/Pagination";
 import { ProjectService } from "@/backend/services/project-service";
+import { validateUser } from "@/backend/utilities/auth/validateUser";
+import { PaginationRequest, PaginationResponse } from "@/domain/Pagination";
 import { createProjectSchema, Project, ProjectType } from "@/domain/Projects";
 
 export async function GET(request: Request) {
@@ -28,14 +29,34 @@ export async function GET(request: Request) {
 
     if (highlight) {
       const parsedBoolean = Boolean(highlight);
-      if(parsedBoolean) {
+
+      if (parsedBoolean) {
         const projects = await ProjectService.getHighlightedProjects();
+
         const paginationResponse: PaginationResponse<Project> = {
           data: projects,
           page: 0,
           size: 10,
           total: projects.length,
-        }
+        };
+
+        return NextResponse.json(paginationResponse);
+      }
+    }
+
+    if (donationProject) {
+      const parsedBoolean = Boolean(donationProject);
+
+      if (parsedBoolean) {
+        const projects = await ProjectService.getDonationProjects();
+
+        const paginationResponse: PaginationResponse<Project> = {
+          page: 0,
+          size: 10,
+          data: projects,
+          total: projects.length,
+        };
+
         return NextResponse.json(paginationResponse);
       }
     }
@@ -58,12 +79,17 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
+    const result = await validateUser();
+
+    if (result instanceof NextResponse) {
+      return result;
+    }
+
     const body = await request.json();
     const validatedBody = createProjectSchema.parse(body);
     const project = await ProjectService.createProject(validatedBody);
     return NextResponse.json(project);
   } catch (error) {
-    console.error(error);
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { error: z.treeifyError(error) },

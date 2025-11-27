@@ -14,8 +14,5 @@ const submitParticipate = async (
 export const useSubmitParticipate = () => {
   return useMutation({
     mutationFn: submitParticipate,
-    onError: (error) => {
-      console.error(error);
-    },
   });
 };

@@ -95,3 +95,10 @@ export interface User
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface PrivateUser
+  extends Omit<CreateUserFormType, "confirmPassword"> {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+}

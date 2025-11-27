@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useEffect } from "react";
+import { addToast } from "@heroui/react";
 import { useLoader } from "./provider-loader";
-import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/auth/useAuth";
-import { getCookie } from "@/hooks/auth/cookie";
+import { usePathname, useRouter } from "next/navigation";
+import { useValidateUser } from "@/hooks/auth/useValidate";
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -12,27 +13,35 @@ interface AuthProviderProps {
 
 export default function AuthProvider({ children }: AuthProviderProps) {
   const router = useRouter();
-  const { token, setToken } = useAuth();
+  const pathname = usePathname();
+  const { setUser, logout } = useAuth();
+  const validateMutation = useValidateUser();
+
   const { isLoading, setLoading } = useLoader();
 
   useEffect(() => {
     setLoading(true);
-    const tokenCookie = getCookie("token");
 
-    console.log("1");
-    if (!tokenCookie) {
-      console.log("2");
-      router.push("/auth/login");
-    } else {
-      console.log("3");
-      if (!token) {
-        console.log("4");
-        setToken(tokenCookie);
-      }
-    }
+    validateMutation.mutate(undefined, {
+      onError: () => {
+        addToast({
+          title: "Sesión Expirada",
+          description:
+            "Tu sesión ha expirado o es inválida. Inicia sesión nuevamente.",
+          color: "danger",
+        });
 
-    setLoading(false);
-  }, []);
+        logout();
+        router.replace("/auth/login");
+      },
+      onSuccess: (user) => {
+        setUser(user);
+      },
+      onSettled: () => {
+        setLoading(false);
+      },
+    });
+  }, [pathname]);
 
   if (isLoading === false) {
     return <>{children}</>;

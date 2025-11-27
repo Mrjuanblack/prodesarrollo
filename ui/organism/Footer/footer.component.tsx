@@ -1,22 +1,31 @@
+import Link from "next/link";
 import Image from "next/image";
 import { Container } from "@/ui/molecules";
 import { Phone, MapPin } from "lucide-react";
 import gov_logo from "@/public/gov-co-logo.svg";
 import { socialLinks } from "./footer.properties";
+import { IconType } from "../Header/header.properties";
 import pro_desarrollo_logo from "@/public/pro-desarrollo-logo-white.svg";
-import Link from "next/link";
 
 const SocialLinks = () => {
   return (
     <div className="flex gap-4">
-      {socialLinks.map(({ icon: Icon, label, href }) => (
+      {socialLinks.map(({ icon: Icon, label, href, iconType }) => (
         <a
           key={label}
           href={href}
           aria-label={label}
           className="h-[32px] w-[32px] lg:h-[50px] lg:w-[50px] flex justify-center items-center bg-white text-primary rounded-full p-2 hover:bg-gray-200 transition"
         >
-          <Icon size={25} />
+          {iconType === IconType.IMG ? (
+            <Image
+              src={Icon as string}
+              alt="icon social network"
+              className="max-h-20 w-auto object-contain"
+            />
+          ) : (
+            <Icon size={25} />
+          )}
         </a>
       ))}
     </div>
@@ -25,7 +34,7 @@ const SocialLinks = () => {
 
 export const FooterComponent = () => {
   return (
-    <footer className="bg-primary md:h-[400px] relative overflow-hidden rounded-tr-[150px] md:rounded-tr-[200px] lg:rounded-tr-full flex items-center -mt-[400px]">
+    <footer className="bg-primary md:h-[400px] relative overflow-hidden rounded-tr-[90px] md:rounded-tr-[200px] lg:rounded-tr-full flex items-center -mt-[400px]">
       <Container className="relative z-10 flex flex-col md:flex-row md:items-center gap-10 md:gap-20 xl:gap-30 py-15 md:py-10 lg:py-0">
         <div className="flex flex-col gap-3">
           <Image

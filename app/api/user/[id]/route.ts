@@ -2,12 +2,19 @@ import { z } from "zod/v4";
 import { NextResponse } from "next/server";
 import { updateUserFormSchema } from "@/domain/user";
 import { UserService } from "@/backend/services/user-service";
+import { validateUser } from "@/backend/utilities/auth/validateUser";
 
 export async function GET(
   request: Request,
   context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const result = await validateUser();
+
+    if (result instanceof NextResponse) {
+      return result;
+    }
+
     const { id } = await context.params;
     const user = await UserService.getUserById(id);
     return NextResponse.json(user);
@@ -24,6 +31,12 @@ export async function PUT(
   context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const result = await validateUser();
+
+    if (result instanceof NextResponse) {
+      return result;
+    }
+
     const { id } = await context.params;
     const body = await request.json();
     const validatedBody = updateUserFormSchema.parse(body);

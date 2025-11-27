@@ -52,9 +52,7 @@ export default function Donations() {
   const [isEconomicDonation, setIsEconomicDonation] = useState(false);
   const [donationValue, setDonationValue] = useState<number | null>(null);
 
-  const [activeType, setActiveType] = useState<ProjectType>(
-    ProjectType.INTERVENTORY
-  );
+  const [activeType, setActiveType] = useState<ProjectType>();
 
   const { items, hasMore, isLoading, isFetchingNextPage, onLoadMore } =
     useProjectsInfinite({
@@ -62,6 +60,7 @@ export default function Donations() {
       year: undefined,
       type: activeType,
       search: undefined,
+      donationProject: true,
     });
 
   const [, scrollerRef] = useInfiniteScroll({

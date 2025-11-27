@@ -12,8 +12,5 @@ const login = async (login: LoginFormType): Promise<LoginResponse> => {
 export const useLogin = () => {
   return useMutation({
     mutationFn: login,
-    onError: (error) => {
-      console.error(error);
-    },
   });
 };
