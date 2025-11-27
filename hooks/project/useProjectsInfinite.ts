@@ -9,6 +9,7 @@ interface UseProjectsInfiniteProps {
   year?: number;
   type?: ProjectType;
   search?: string;
+  donationProject?: boolean;
 }
 
 const fetchProjects = async (
@@ -16,7 +17,8 @@ const fetchProjects = async (
   size: number,
   year?: number,
   type?: ProjectType,
-  search?: string
+  search?: string,
+  donationProject?: boolean
 ): Promise<PaginationResponse<Project>> => {
   const response = await apiClient.get("/project", {
     params: {
@@ -25,6 +27,7 @@ const fetchProjects = async (
       year: year || undefined,
       type: type || undefined,
       search: search || undefined,
+      donationProject: donationProject || undefined,
     },
   });
   return response.data;
@@ -35,11 +38,12 @@ export const useProjectsInfinite = ({
   year,
   type,
   search,
+  donationProject,
 }: UseProjectsInfiniteProps) => {
   const query = useInfiniteQuery({
-    queryKey: ["projects-infinite", year, type, search, size],
+    queryKey: ["projects-infinite", year, type, search, size, donationProject],
     queryFn: ({ pageParam = 0 }) =>
-      fetchProjects(pageParam, size, year, type, search),
+      fetchProjects(pageParam, size, year, type, search, donationProject),
     getNextPageParam: (lastPage, allPages) => {
       // Calculate if there are more pages
       const loadedItems = allPages.reduce(

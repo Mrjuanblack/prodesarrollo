@@ -60,6 +60,7 @@ export default function Donations() {
       year: undefined,
       type: activeType,
       search: undefined,
+      donationProject: true,
     });
 
   const [, scrollerRef] = useInfiniteScroll({

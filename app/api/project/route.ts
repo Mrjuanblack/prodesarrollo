@@ -29,14 +29,34 @@ export async function GET(request: Request) {
 
     if (highlight) {
       const parsedBoolean = Boolean(highlight);
+
       if (parsedBoolean) {
         const projects = await ProjectService.getHighlightedProjects();
+
         const paginationResponse: PaginationResponse<Project> = {
           data: projects,
           page: 0,
           size: 10,
           total: projects.length,
         };
+
+        return NextResponse.json(paginationResponse);
+      }
+    }
+
+    if (donationProject) {
+      const parsedBoolean = Boolean(donationProject);
+
+      if (parsedBoolean) {
+        const projects = await ProjectService.getDonationProjects();
+
+        const paginationResponse: PaginationResponse<Project> = {
+          page: 0,
+          size: 10,
+          data: projects,
+          total: projects.length,
+        };
+
         return NextResponse.json(paginationResponse);
       }
     }

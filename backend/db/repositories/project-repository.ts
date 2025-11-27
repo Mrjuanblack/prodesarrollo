@@ -292,12 +292,33 @@ export class ProjectRepository {
         where: eq(projects.highlight, true),
       });
       // No need to fetch extra data for this query
-      return result.map((project) => ProjectRepository.mapToDomain({
-        ...project,
-        photos: null,
-        documents: null,
-        relatedProjects: null,
-      }));
+      return result.map((project) =>
+        ProjectRepository.mapToDomain({
+          ...project,
+          photos: null,
+          documents: null,
+          relatedProjects: null,
+        })
+      );
+    } catch (error) {
+      throw errorHandler.handleError(RepositoryErrorType.GET, error);
+    }
+  }
+
+  public static async getDonationProjects(): Promise<Project[]> {
+    try {
+      const result = await db.query.projects.findMany({
+        where: eq(projects.donationProject, true),
+      });
+
+      return result.map((project) =>
+        ProjectRepository.mapToDomain({
+          ...project,
+          photos: null,
+          documents: null,
+          relatedProjects: null,
+        })
+      );
     } catch (error) {
       throw errorHandler.handleError(RepositoryErrorType.GET, error);
     }
