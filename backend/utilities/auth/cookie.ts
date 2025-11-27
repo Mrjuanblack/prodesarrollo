@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 
 export enum CookieKey {
   TOKEN = "token",
+  META_DATA_USER = "meta_data_user",
 }
 
 export const setCookie = async (name: string, value: string, days = 7) => {
@@ -34,15 +35,16 @@ export const removeCookie = async (name: string) => {
 
 export const removeAllCookies = async () => {
   const all = (await cookies()).getAll();
+  const cookieJar = await cookies();
 
-  all.forEach((c) => {
-    (async () => {
-      (await cookies()).set({
+  await Promise.all(
+    all.map(async (c) => {
+      cookieJar.set({
         name: c.name,
         value: "",
         maxAge: 0,
         path: "/",
       });
-    })();
-  });
+    })
+  );
 };

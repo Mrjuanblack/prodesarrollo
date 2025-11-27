@@ -8,13 +8,13 @@ import {
 } from "@/ui/atoms";
 import Image from "next/image";
 import hero_simple from "@/public/hero-simple.svg";
-import { Carousel, Container, Section } from "@/ui/molecules";
 import { HeroSimple, SectionHeader } from "@/ui/organism";
 import { infos, transparencies } from "./page.properties";
+import { Carousel, Container, Section } from "@/ui/molecules";
 import pro_desarrollo_logo from "@/public/pro-desarrollo-logo.svg";
+import { ICarouselProps } from "@/ui/molecules/Carousel/carousel.properties";
 import { AboutSection } from "../../home/components/about-section.component";
 import { CallToActionSection } from "@/ui/organism/CallToActionSection/CallToActionSection";
-import { ICarouselProps } from "@/ui/molecules/Carousel/carousel.properties";
 
 const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
   base: "basis-1/2",

@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { createUserSchema } from "@/domain/user";
 import { PaginationRequest } from "@/domain/Pagination";
 import { UserService } from "@/backend/services/user-service";
+import { validateUser } from "@/backend/utilities/auth/validateUser";
 
 export async function GET(request: Request) {
   try {
@@ -28,13 +29,14 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
+    await validateUser();
+
     const body = await request.json();
     const validatedBody = createUserSchema.parse(body);
     const user = await UserService.createUser(validatedBody);
 
     return NextResponse.json(user);
   } catch (error) {
-    console.error(error);
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { error: z.treeifyError(error) },

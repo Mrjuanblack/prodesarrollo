@@ -11,8 +11,11 @@ export class AuthService {
 
     const token = await generateToken(
       {
-        sub: user.id,
+        id: user.id,
         email: user.email,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+        username: user.username,
       },
       process.env.JWT_EXPIRES_IN ?? "15m"
     );
