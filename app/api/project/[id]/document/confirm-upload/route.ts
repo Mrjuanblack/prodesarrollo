@@ -9,7 +9,11 @@ export async function POST(
   context: { params: Promise<{ id: string }> }
 ) {
   try {
-    await validateUser();
+    const result = await validateUser();
+
+    if (result instanceof NextResponse) {
+      return result;
+    }
 
     const { id } = await context.params;
 

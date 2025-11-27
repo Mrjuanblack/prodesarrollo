@@ -35,7 +35,11 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    await validateUser();
+    const result = await validateUser();
+
+    if (result instanceof NextResponse) {
+      return result;
+    }
 
     const body = await request.json();
     const validatedBody = createNewsSchema.parse(body);

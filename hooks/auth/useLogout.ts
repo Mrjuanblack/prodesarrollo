@@ -11,8 +11,5 @@ const logout = async (): Promise<void> => {
 export const useLogout = () => {
   return useMutation({
     mutationFn: logout,
-    onError: (error) => {
-      console.error(error);
-    },
   });
 };

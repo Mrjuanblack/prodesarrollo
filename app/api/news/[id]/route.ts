@@ -25,7 +25,11 @@ export async function PUT(
   context: { params: Promise<{ id: string }> }
 ) {
   try {
-    await validateUser();
+    const result = await validateUser();
+
+    if (result instanceof NextResponse) {
+      return result;
+    }
 
     const { id } = await context.params;
     const body = await request.json();

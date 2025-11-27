@@ -3,13 +3,13 @@ import { validateUser } from "@/backend/utilities/auth/validateUser";
 
 export async function POST() {
   try {
-    const sessionDataOrResponse = await validateUser();
+    const result = await validateUser();
 
-    if (sessionDataOrResponse instanceof NextResponse) {
-      return sessionDataOrResponse;
+    if (result instanceof NextResponse) {
+      return result;
     }
 
-    const parsed = sessionDataOrResponse;
+    const parsed = result;
 
     return NextResponse.json(parsed);
   } catch {

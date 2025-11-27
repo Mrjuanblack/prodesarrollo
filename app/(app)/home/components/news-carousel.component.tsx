@@ -28,7 +28,9 @@ export const NewsCarousel = () => {
         <div className="w-full">
           <Carousel slideSizeClasses={customSlideClasses}>
             {news?.data?.map((news) => (
-              <NewsCard key={news.id} item={news} />
+              <div className="py-5" key={news.id}>
+                <NewsCard item={news} />
+              </div>
             ))}
           </Carousel>
         </div>

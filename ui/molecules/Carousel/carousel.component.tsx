@@ -66,17 +66,21 @@ export const CarouselComponent: React.FC<ICarouselProps> = (props) => {
         </div>
       </div>
 
-      <PrevButton
-        onClick={onPrevButtonClick}
-        disabled={prevBtnDisabled}
-        className="cursor-pointer absolute top-1/2 left-1 lg:left-0 transform -translate-y-1/2 -translate-x-1/2 z-10 p-1 md:p-2 lg:p-3 bg-white/70 hover:bg-white rounded-full shadow-lg disabled:opacity-30 transition"
-      />
+      {!prevBtnDisabled && (
+        <PrevButton
+          onClick={onPrevButtonClick}
+          disabled={prevBtnDisabled}
+          className="cursor-pointer absolute top-1/2 left-1 lg:left-0 transform -translate-y-1/2 -translate-x-1/2 z-10 p-1 md:p-2 lg:p-3 bg-white/70 hover:bg-white rounded-full shadow-lg disabled:opacity-30 transition"
+        />
+      )}
 
-      <NextButton
-        onClick={onNextButtonClick}
-        disabled={nextBtnDisabled}
-        className="cursor-pointer absolute top-1/2 right-1 lg:right-0 transform -translate-y-1/2 translate-x-1/2 z-10 p-1 md:p-2 lg:p-3 bg-secondary-200 hover:bg-secondary-300 rounded-full shadow-lg disabled:opacity-30 transition"
-      />
+      {!nextBtnDisabled && (
+        <NextButton
+          onClick={onNextButtonClick}
+          disabled={nextBtnDisabled}
+          className="cursor-pointer absolute top-1/2 right-1 lg:right-0 transform -translate-y-1/2 translate-x-1/2 z-10 p-1 md:p-2 lg:p-3 bg-secondary-200 hover:bg-secondary-300 rounded-full shadow-lg disabled:opacity-30 transition"
+        />
+      )}
 
       {showDots && scrollSnaps.length > 1 && (
         <div

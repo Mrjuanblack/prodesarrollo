@@ -22,6 +22,7 @@ export async function validateUser(): Promise<User | NextResponse> {
   }
 
   let parsed;
+
   try {
     parsed = JSON.parse(cookie);
   } catch {

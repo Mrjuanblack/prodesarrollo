@@ -11,15 +11,15 @@ import {
   DropdownTrigger,
   NavbarMenuToggle,
 } from "@heroui/react";
-import Image, { StaticImageData } from "next/image";
-import { useEffect, useState } from "react";
-import { ChevronDown } from "lucide-react";
+import Image from "next/image";
 import { Container } from "@/ui/molecules";
-import colombia_logo from "@/public/gov-co-logo.svg";
-import { IconType, menuItems, socialItems } from "./header.properties";
-import pro_desarrollo_logo from "@/public/pro-desarrollo-logo.svg";
-import { usePathname, useRouter } from "next/navigation";
+import { ChevronDown } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Button as MyButton } from "@/ui/atoms";
+import colombia_logo from "@/public/gov-co-logo.svg";
+import { usePathname, useRouter } from "next/navigation";
+import pro_desarrollo_logo from "@/public/pro-desarrollo-logo.svg";
+import { IconType, menuItems, socialItems } from "./header.properties";
 
 export const HeaderHomeComponent = () => {
   const router = useRouter();
@@ -86,14 +86,15 @@ export const HeaderHomeComponent = () => {
                 <Button
                   disableRipple
                   variant="solid"
+                  disableAnimation
                   onClick={() => setActiveItem(item.key)}
                   className={`text-[15px] md:text-[18px] p-0 font-semibold relative bg-transparent flex items-center gap-1 ${
                     activeItem === item.key
-                      ? "text-primary font-bold after:content-[''] after:absolute after:-bottom-1.5 after:left-1/2 after:-translate-x-1/2 after:w-3 after:h-3 after:bg-secondary after:rounded-full"
+                      ? "text-primary"
                       : "text-gray-600 hover:text-primary"
                   }`}
                 >
-                  {item.label}
+                  <p className="text-center">{item.label}</p>
 
                   <ChevronDown
                     size={18}
@@ -103,6 +104,18 @@ export const HeaderHomeComponent = () => {
                         : "text-gray-600"
                     }`}
                   />
+
+                  {activeItem === item.key && (
+                    <div
+                      className={`
+                    absolute -bottom-1.5 left-1/2 
+                    -translate-x-1/2 
+                    w-3 h-3 bg-secondary 
+                    rounded-full 
+                    transition-transform 
+                  `}
+                    />
+                  )}
                 </Button>
               </DropdownTrigger>
 
@@ -131,24 +144,37 @@ export const HeaderHomeComponent = () => {
             <Button
               disableRipple
               variant="solid"
+              disableAnimation
               onClick={() => {
                 setActiveItem(item.key);
                 if (item.href) router.push(item.href);
                 if (isMobile) setIsMenuOpen(false);
               }}
-              className={`p-0 text-[15px] md:text-[18px] font-semibold relative bg-transparent hover:bg-transparent after:transition-transform ${
+              className={`p-0 text-[15px] md:text-[18px] font-semibold relative bg-transparent hover:bg-transparent ${
                 isMobile
                   ? `w-full justify-start py-3 text-left ${
                       activeItem === item.key
-                        ? "text-primary font-bold"
+                        ? "text-primary"
                         : "text-gray-700 hover:text-primary"
                     }`
                   : activeItem === item.key
-                  ? "text-primary font-bold after:absolute after:-bottom-1.5 after:left-1/2 after:-translate-x-1/2 after:w-3 after:h-3 after:bg-secondary after:rounded-full"
+                  ? "text-primary"
                   : "text-gray-600 hover:text-primary"
               }`}
             >
-              {item.label}
+              <p className="text-center">{item.label}</p>
+
+              {activeItem === item.key && !isMobile && (
+                <div
+                  className={`
+                    absolute -bottom-1.5 left-1/2 
+                    -translate-x-1/2 
+                    w-3 h-3 bg-secondary 
+                    rounded-full 
+                    transition-transform 
+                  `}
+                />
+              )}
             </Button>
           </NavbarItem>
         )
@@ -230,14 +256,22 @@ export const HeaderHomeComponent = () => {
           <div className="flex flex-col">{renderMenuItems(true)}</div>
 
           <div className="mt-6 pt-8 border-t border-gray-100 flex gap-2 justify-start">
-            {socialItems.map(({ icon: Icon, label, href }) => (
+            {socialItems.map(({ icon: Icon, label, href, iconType }) => (
               <a
                 key={label}
                 href={href}
                 aria-label={label}
                 className="rounded-full h-[50px] w-[50px] bg-primary-50 hover:bg-primary-200 flex items-center justify-center"
               >
-                <Icon className="h-6 w-6 text-primary" strokeWidth="2" />
+                {iconType === IconType.IMG ? (
+                  <Image
+                    src={Icon as string}
+                    alt="icon social network"
+                    className="max-h-20 w-auto object-contain"
+                  />
+                ) : (
+                  <Icon className="h-6 w-6 text-primary" strokeWidth="2" />
+                )}
               </a>
             ))}
           </div>

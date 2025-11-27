@@ -15,8 +15,5 @@ export const useCreateProject = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] });
     },
-    onError: (error) => {
-      console.error(error);
-    },
   });
 };

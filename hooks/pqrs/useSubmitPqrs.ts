@@ -12,8 +12,5 @@ const submitPqrs = async (pqrs: SubmitParticipateFormType): Promise<void> => {
 export const useSubmitPqrs = () => {
   return useMutation({
     mutationFn: submitPqrs,
-    onError: (error) => {
-      console.error(error);
-    },
   });
 };

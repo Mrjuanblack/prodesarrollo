@@ -8,7 +8,11 @@ export async function DELETE(
   context: { params: Promise<{ id: string; photoId: string }> }
 ) {
   try {
-    await validateUser();
+    const result = await validateUser();
+
+    if (result instanceof NextResponse) {
+      return result;
+    }
 
     const { id, photoId } = await context.params;
     await NewsPhotosService.deleteNewsPhoto(id, photoId);

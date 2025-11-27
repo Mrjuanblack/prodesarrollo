@@ -8,9 +8,13 @@ export async function DELETE(
   context: { params: Promise<{ id: string; documentId: string }> }
 ) {
   try {
-    await validateUser();
+    const result = await validateUser();
 
-    const { id, documentId } = await context.params;
+    if (result instanceof NextResponse) {
+      return result;
+    }
+
+    const { documentId } = await context.params;
     await ProjectDocumentService.deleteProjectDocument(documentId);
     return NextResponse.json({
       message: "Project document deleted successfully",
