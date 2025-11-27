@@ -1,4 +1,6 @@
-import { Instagram, FacebookIcon, LucideYoutube, Twitter } from "lucide-react";
+import X from "@/public/x-twiter-icono.svg";
+import { Instagram, FacebookIcon, LucideYoutube } from "lucide-react";
+import { StaticImageData } from "next/image";
 
 interface SubMenuItem {
   key: string;
@@ -74,16 +76,22 @@ export const menuItems: MenuItem[] = [
   },
 ];
 
+export enum IconType {
+  IMG = "img",
+  ICON = "icon",
+}
 export interface SocialItem {
   label: string;
   href: string;
+  iconType?: IconType;
   icon: React.ElementType;
 }
 
 export const socialItems: SocialItem[] = [
   {
-    icon: Twitter,
+    icon: X,
     label: "Twitter",
+    iconType: IconType.IMG,
     href: "https://twitter.com",
   },
   {

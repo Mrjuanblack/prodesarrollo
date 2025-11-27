@@ -1,9 +1,11 @@
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { Button, Text, Title } from "@/ui/atoms";
 import { Container, Section } from "@/ui/molecules";
 import manos_unidas from "@/public/haz-parte-cambio.svg";
 
 export const CallToActionSection = () => {
+  const router = useRouter();
   return (
     <Section fadeIn={true} className="bg-default-100 lg:bg-default-100">
       <Container className="flex flex-row items-center justify-center gap-10 md:gap-16">
@@ -31,6 +33,7 @@ export const CallToActionSection = () => {
 
           <Button
             variant="solid"
+            onClick={() => router.push("/donations")}
             text="Ver proyectos y donar"
             className="bg-secondary w-fit hover:bg-secondary-400 font-bold transition-colors duration-200 shadow-md"
           />

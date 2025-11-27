@@ -11,12 +11,12 @@ import {
   DropdownTrigger,
   NavbarMenuToggle,
 } from "@heroui/react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { Container } from "@/ui/molecules";
 import colombia_logo from "@/public/gov-co-logo.svg";
-import { menuItems, socialItems } from "./header.properties";
+import { IconType, menuItems, socialItems } from "./header.properties";
 import pro_desarrollo_logo from "@/public/pro-desarrollo-logo.svg";
 import { usePathname, useRouter } from "next/navigation";
 import { Button as MyButton } from "@/ui/atoms";
@@ -197,14 +197,22 @@ export const HeaderHomeComponent = () => {
         </NavbarContent>
 
         <NavbarContent justify="end" className="gap-2 hidden xl:flex">
-          {socialItems.map(({ icon: Icon, label, href }) => (
+          {socialItems.map(({ icon: Icon, label, href, iconType }) => (
             <a
               key={label}
               href={href}
               aria-label={label}
               className="flex justify-center items-center rounded-full h-[35px] w-[35px] lg:h-[50px] lg:w-[50px] bg-primary-50 hover:bg-primary-200"
             >
-              <Icon className="h-6 w-6 text-primary" strokeWidth="2" />
+              {iconType === IconType.IMG ? (
+                <Image
+                  src={Icon as string}
+                  alt="icon social network"
+                  className="max-h-20 w-auto object-contain"
+                />
+              ) : (
+                <Icon className="h-6 w-6 text-primary" strokeWidth="2" />
+              )}
             </a>
           ))}
         </NavbarContent>
@@ -213,8 +221,8 @@ export const HeaderHomeComponent = () => {
           <MyButton
             variant="solid"
             text="Quiero donar"
+            onClick={() => router.push("/donations")}
             className="font-semibold w-fit bg-secondary shadow-lg"
-            onClick={() => console.log("Navegar a noticias")}
           />
         </NavbarContent>
 

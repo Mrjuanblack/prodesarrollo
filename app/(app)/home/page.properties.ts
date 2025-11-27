@@ -8,7 +8,6 @@ import header from "@/public/header-home.svg";
 import presidencia from "@/public/presidencia-logo.svg";
 import contraloria from "@/public/contraloria-logo.svg";
 import procuraduria from "@/public/procuraduria-logo.svg";
-import proyectoExample from "@/public/proyecto-example.svg";
 import alcaldia from "@/public/alcaldia-san-alberto-logo.svg";
 import gobierno_digital from "@/public/gobierno-digital-logo.svg";
 import cecop from "@/public/secop-logo.svg";
