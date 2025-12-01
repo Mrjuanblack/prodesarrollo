@@ -83,7 +83,7 @@ const UserList = () => {
               {(item) => (
                 <TableRow
                   key={item.id}
-                  className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  className="cursor-pointer hover:bg-gray-100 transition-colors"
                 >
                   <TableCell>{item.username}</TableCell>
                   <TableCell>{item.email}</TableCell>

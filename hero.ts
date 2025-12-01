@@ -50,31 +50,31 @@ export default heroui({
         },
       },
     },
-    dark: {
-      colors: {
-        primary: {
-          DEFAULT: COLOR_BLUE,
-          foreground: "#FFFFFF",
-        },
-        secondary: {
-          DEFAULT: COLOR_LILAC,
-          foreground: "#FFFFFF",
-        },
-        background: "#0A1A33",
-        foreground: "#FFFFFF",
-        focus: COLOR_LILAC,
-        default: {
-          100: "#1A2A45",
-          200: "#22365A",
-          300: "#2A4270",
-          400: "#324E85",
-          500: "#3A5A9A",
-          600: "#4266AF",
-          700: "#4A72C4",
-          800: "#527EDA",
-          900: "#5A8AEF",
-        },
-      },
-    },
+    // dark: {
+    //   colors: {
+    //     primary: {
+    //       DEFAULT: COLOR_BLUE,
+    //       foreground: "#FFFFFF",
+    //     },
+    //     secondary: {
+    //       DEFAULT: COLOR_LILAC,
+    //       foreground: "#FFFFFF",
+    //     },
+    //     background: "#0A1A33",
+    //     foreground: "#FFFFFF",
+    //     focus: COLOR_LILAC,
+    //     default: {
+    //       100: "#1A2A45",
+    //       200: "#22365A",
+    //       300: "#2A4270",
+    //       400: "#324E85",
+    //       500: "#3A5A9A",
+    //       600: "#4266AF",
+    //       700: "#4A72C4",
+    //       800: "#527EDA",
+    //       900: "#5A8AEF",
+    //     },
+    //   },
+    // },
   },
 });
