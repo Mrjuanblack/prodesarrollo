@@ -28,7 +28,7 @@ export const HeroSectionComponent: FC<HeroSectionProperties> = ({
     lastSpaceIndex === -1 ? "" : titleString.slice(lastSpaceIndex + 1);
 
   return (
-    <section className="px-7 py-24 flex justify-center bg-white dark:bg-gray-900 relative overflow-hidden">
+    <section className="px-7 py-24 flex justify-center bg-white relative overflow-hidden">
       <div className="absolute top-20 left-20 w-64 h-64 bg-teal-100 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob" />
       <div className="absolute bottom-20 right-20 w-80 h-80 bg-blue-100 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-blob animation-delay-2000" />
       <div className="absolute top-20 right-20 w-40 h-40 bg-indigo-100 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000 hidden md:block" />

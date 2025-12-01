@@ -87,7 +87,7 @@ export default function ProjectsPage() {
               {(item) => (
                 <TableRow
                   key={item.id}
-                  className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  className="cursor-pointer hover:bg-gray-100 transition-colors"
                 >
                   <TableCell className="flex gap-2">
                     <span>{item.code}</span>
