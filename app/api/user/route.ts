@@ -7,6 +7,12 @@ import { validateUser } from "@/backend/utilities/auth/validateUser";
 
 export async function GET(request: Request) {
   try {
+    const result = await validateUser();
+
+    if (result instanceof NextResponse) {
+      return result;
+    }
+
     const { searchParams } = new URL(request.url);
     const page = Number(searchParams.get("page")) || 0;
     const size = Number(searchParams.get("size")) || 10;
