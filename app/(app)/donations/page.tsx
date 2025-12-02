@@ -1,64 +1,28 @@
 "use client";
 
-import {
-  Text,
-  Title,
-  Input,
-  Button,
-  Select,
-  CallCard,
-  FormCard,
-  TextArea,
-  RadioGroup,
-  BackgroundSection,
-} from "@/ui/atoms";
-import {
-  personTypes,
-  donationTypes,
-  donationOptions,
-  anonymousDonation,
-} from "./page.properties";
-import {
-  PersonTypeOptions,
-  DonationTypeOptions,
-  CreateDonationFormType,
-  createDonationFormSchema,
-} from "@/domain/donation";
-import {
-  Divider,
-  Spinner,
-  addToast,
-  ButtonGroup,
-  NumberInput,
-  Button as ButtonEconomic,
-} from "@heroui/react";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { HeroSimple } from "@/ui/organism";
-import { useForm } from "@tanstack/react-form";
-import { ProjectType } from "@/domain/Projects";
-import { IdTypeOptions } from "@/domain/shared";
-import { idTypes } from "../participate/page.properties";
+import { Divider, Spinner } from "@heroui/react";
+import { DonationTypeOptions } from "@/domain/donation";
 import { Container, IconTitle, Section } from "@/ui/molecules";
 import { useInfiniteScroll } from "@heroui/use-infinite-scroll";
 import hero_donaciones_img from "@/public/hero-donaciones-img.svg";
 import { FilterByState } from "../calls/components/filter-by-state";
-import { useCreateDonation } from "@/hooks/donation/useCreateDonation";
+import EconomicDonationForm from "./components/EconomicDonationForm";
+import MaterialDonationForm from "./components/MaterialDonationForm";
+import { Text, Title, CallCard, BackgroundSection } from "@/ui/atoms";
 import { useProjectsInfinite } from "@/hooks/project/useProjectsInfinite";
 
 export default function Donations() {
-  const createDonationMutation = useCreateDonation();
-
-  const [isJuridicPerson, setIsJuridicPerson] = useState(false);
-  const [isEconomicDonation, setIsEconomicDonation] = useState(false);
-  const [donationValue, setDonationValue] = useState<number | null>(null);
-
-  const [activeType, setActiveType] = useState<ProjectType>();
+  const [donationType, setDonationType] = useState<DonationTypeOptions>(
+    DonationTypeOptions.ESPECIE
+  );
 
   const { items, hasMore, isLoading, isFetchingNextPage, onLoadMore } =
     useProjectsInfinite({
       size: 10,
       year: undefined,
-      type: activeType,
+      type: undefined,
       search: undefined,
       donationProject: true,
     });
@@ -69,53 +33,7 @@ export default function Donations() {
     onLoadMore,
   });
 
-  const defaultValues: CreateDonationFormType = {
-    email: "",
-    phone: "",
-    fullName: "",
-    idNumber: "",
-    anonymousDonation: "no",
-    personType: PersonTypeOptions.NATURAL,
-    idType: IdTypeOptions.CEDULA_CIUDADANIA,
-    donatioType: DonationTypeOptions.ECONOMICA,
-  };
-
-  const form = useForm({
-    defaultValues,
-    validators: {
-      onSubmit: createDonationFormSchema,
-      onBlur: createDonationFormSchema,
-      onChange: createDonationFormSchema,
-    },
-    onSubmit: ({ value }) => {
-      createDonationMutation.mutate(value, {
-        onError: () => {
-          addToast({
-            title: "Toast Title error",
-            description: "Toast Description error",
-            color: "danger",
-          });
-        },
-        onSuccess: () => {
-          setDonationValue(null);
-          setIsJuridicPerson(false);
-          setIsEconomicDonation(false);
-          setActiveType(ProjectType.INTERVENTORY);
-
-          form.reset();
-          addToast({
-            title: "Toast Title",
-            description: "Toast Description",
-            color: "success",
-          });
-        },
-      });
-    },
-  });
-
-  const isOtherValueDonation = useMemo(() => {
-    return !donationOptions.some((option) => option.value === donationValue);
-  }, [donationValue]);
+  const isEconomicDonation = donationType === DonationTypeOptions.ECONOMICA;
 
   return (
     <>
@@ -129,338 +47,18 @@ export default function Donations() {
           </div>
 
           <div className="flex flex-col lg:flex-row gap-7 lg:gap-10 mt-7 lg:mt-15">
-            <FormCard
-              onSubmit={form.handleSubmit}
-              className="rounded-2xl lg:rounded-none lg:rounded-l-2xl"
-              title="Ingresa la siguiente información para  realizar tu donación"
-              form={
-                <>
-                  <form.Field name="donatioType">
-                    {(field) => (
-                      <Select
-                        id="donatioType"
-                        name="donatioType"
-                        options={donationTypes}
-                        onBlur={field.handleBlur}
-                        label="Tipo de donación"
-                        selectedKeys={[field.state.value]}
-                        placeholder="Selecciona una opción"
-                        errorMessage={field.state.meta.errors[0]?.message}
-                        onChange={(e) => {
-                          const value: DonationTypeOptions = e.target
-                            .value as DonationTypeOptions;
-
-                          field.handleChange(value);
-
-                          const validDonation =
-                            value === DonationTypeOptions.ECONOMICA;
-
-                          setIsEconomicDonation(validDonation);
-
-                          if (!validDonation) {
-                            setDonationValue(null);
-                            form.setFieldValue("donateValue", undefined);
-                          } else {
-                            form.setFieldValue("description", undefined);
-                          }
-                        }}
-                        isInvalid={
-                          field.state.meta.errors.length > 0 &&
-                          field.state.meta.isTouched
-                        }
-                      />
-                    )}
-                  </form.Field>
-
-                  <form.Field name="personType">
-                    {(field) => (
-                      <RadioGroup
-                        id="personType"
-                        name="personType"
-                        options={personTypes}
-                        onBlur={field.handleBlur}
-                        orientation="horizontal"
-                        value={field.state.value ?? ""}
-                        label="Selecciona que tipo de persona eres"
-                        errorMessage={field.state.meta.errors[0]?.message}
-                        onChange={(e) => {
-                          const value: PersonTypeOptions = e.target
-                            .value as PersonTypeOptions;
-
-                          field.handleChange(value);
-                          setIsJuridicPerson(
-                            value === PersonTypeOptions.JURIDICA
-                          );
-                        }}
-                        isInvalid={
-                          field.state.meta.errors.length > 0 &&
-                          field.state.meta.isTouched
-                        }
-                      />
-                    )}
-                  </form.Field>
-
-                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-2 lg:gap-4">
-                    <form.Field name="idType">
-                      {(field) => (
-                        <Select
-                          id="idType"
-                          name="idType"
-                          options={idTypes}
-                          onBlur={field.handleBlur}
-                          label="Tipo de identificación"
-                          selectedKeys={[field.state.value]}
-                          placeholder="Selecciona una opción"
-                          errorMessage={field.state.meta.errors[0]?.message}
-                          onChange={(e) => {
-                            const value: IdTypeOptions = e.target
-                              .value as IdTypeOptions;
-
-                            field.handleChange(value);
-                          }}
-                          isInvalid={
-                            field.state.meta.errors.length > 0 &&
-                            field.state.meta.isTouched
-                          }
-                        />
-                      )}
-                    </form.Field>
-
-                    <form.Field name="idNumber">
-                      {(field) => (
-                        <Input
-                          id="idNumber"
-                          name="idNumber"
-                          placeholder=""
-                          onBlur={field.handleBlur}
-                          value={field.state.value ?? ""}
-                          label="Número de identificación"
-                          errorMessage={field.state.meta.errors[0]?.message}
-                          onChange={(e) => {
-                            const value: string = e.target.value;
-                            field.handleChange(value);
-                          }}
-                          isInvalid={
-                            field.state.meta.errors.length > 0 &&
-                            field.state.meta.isTouched
-                          }
-                        />
-                      )}
-                    </form.Field>
-                  </div>
-
-                  <form.Field name="fullName">
-                    {(field) => (
-                      <Input
-                        id="fullName"
-                        name="fullName"
-                        placeholder=""
-                        onBlur={field.handleBlur}
-                        label={
-                          isJuridicPerson
-                            ? "Nombre de la empresa"
-                            : "Nombre completo"
-                        }
-                        value={field.state.value ?? ""}
-                        errorMessage={field.state.meta.errors[0]?.message}
-                        onChange={(e) => {
-                          const value: string = e.target.value;
-                          field.handleChange(value);
-                        }}
-                        isInvalid={
-                          field.state.meta.errors.length > 0 &&
-                          field.state.meta.isTouched
-                        }
-                      />
-                    )}
-                  </form.Field>
-
-                  <form.Field name="phone">
-                    {(field) => (
-                      <Input
-                        id="phone"
-                        name="phone"
-                        placeholder=""
-                        label="Teléfono"
-                        onBlur={field.handleBlur}
-                        value={field.state.value ?? ""}
-                        errorMessage={field.state.meta.errors[0]?.message}
-                        onChange={(e) => {
-                          const value: string = e.target.value;
-                          field.handleChange(value);
-                        }}
-                        isInvalid={
-                          field.state.meta.errors.length > 0 &&
-                          field.state.meta.isTouched
-                        }
-                      />
-                    )}
-                  </form.Field>
-
-                  <form.Field name="email">
-                    {(field) => (
-                      <Input
-                        type="email"
-                        id="email"
-                        name="email"
-                        label="Correo electrónico"
-                        onBlur={field.handleBlur}
-                        value={field.state.value ?? ""}
-                        placeholder="ejemplo@correo.com"
-                        errorMessage={field.state.meta.errors[0]?.message}
-                        onChange={(e) => {
-                          const value: string = e.target.value;
-                          field.handleChange(value);
-                        }}
-                        isInvalid={
-                          field.state.meta.errors.length > 0 &&
-                          field.state.meta.isTouched
-                        }
-                      />
-                    )}
-                  </form.Field>
-
-                  {!isEconomicDonation && (
-                    <form.Field name="description">
-                      {(field) => (
-                        <TextArea
-                          placeholder=""
-                          id="description"
-                          name="description"
-                          onBlur={field.handleBlur}
-                          value={field.state.value ?? ""}
-                          label="Descripción de lo que quieres donar"
-                          errorMessage={field.state.meta.errors[0]?.message}
-                          onChange={(e) => {
-                            const value: string = e.target.value;
-                            field.handleChange(value);
-                          }}
-                          isInvalid={
-                            field.state.meta.errors.length > 0 &&
-                            field.state.meta.isTouched
-                          }
-                        />
-                      )}
-                    </form.Field>
-                  )}
-
-                  {isEconomicDonation && (
-                    <form.Field name="donateValue">
-                      {(field) => (
-                        <div id="donateValue" className="space-y-2">
-                          <div className="space-y-2">
-                            <Title
-                              text="¿Cuánto quieres donar?"
-                              highlightFirstLetter={false}
-                              className="text-primary font-normal"
-                            />
-
-                            <ButtonGroup>
-                              {donationOptions.map((option) => (
-                                <ButtonEconomic
-                                  key={option.key}
-                                  onPress={() => {
-                                    setDonationValue(option.value);
-                                    field.handleChange(option.value);
-                                  }}
-                                  color={
-                                    donationValue === option.value
-                                      ? "primary"
-                                      : "default"
-                                  }
-                                  variant={
-                                    donationValue === option.value
-                                      ? "solid"
-                                      : "bordered"
-                                  }
-                                >
-                                  {option.label}
-                                </ButtonEconomic>
-                              ))}
-                            </ButtonGroup>
-                          </div>
-
-                          <NumberInput
-                            size="lg"
-                            minValue={0}
-                            placeholder=""
-                            labelPlacement={"inside"}
-                            label="Quiero donar otro monto"
-                            value={
-                              isOtherValueDonation ? donationValue ?? 0 : 0
-                            }
-                            className="text-[15px] md:text-[18px] lg:text-[20px]"
-                            onValueChange={(value: number) => {
-                              setDonationValue(value);
-                              field.handleChange(value);
-                            }}
-                            classNames={{
-                              inputWrapper: "bg-white",
-                              input: "bg-white text-black",
-                            }}
-                            startContent={
-                              <div className="pointer-events-none flex items-center">
-                                <span className="text-default-400 text-small">
-                                  $
-                                </span>
-                              </div>
-                            }
-                          />
-
-                          {field.state.meta.errors?.length > 0 && (
-                            <p className="text-danger text-sm">
-                              {field.state.meta.errors[0]?.message}
-                            </p>
-                          )}
-                        </div>
-                      )}
-                    </form.Field>
-                  )}
-
-                  <form.Field name="anonymousDonation">
-                    {(field) => (
-                      <RadioGroup
-                        id="anonymousDonation"
-                        name="anonymousDonation"
-                        orientation="horizontal"
-                        onBlur={field.handleBlur}
-                        options={anonymousDonation}
-                        value={field.state.value ?? ""}
-                        label="¿Quieres que la donación sea anónima?"
-                        errorMessage={field.state.meta.errors[0]?.message}
-                        onChange={(e) => {
-                          const value = e.target.value;
-
-                          field.handleChange(value);
-                        }}
-                        isInvalid={
-                          field.state.meta.errors.length > 0 &&
-                          field.state.meta.isTouched
-                        }
-                      />
-                    )}
-                  </form.Field>
-                </>
-              }
-              buttonActions={
-                <>
-                  <Button
-                    type="submit"
-                    variant="solid"
-                    text="Completar donación"
-                    isLoading={createDonationMutation.isPending}
-                    className="bg-secondary w-fit hover:bg-secondary-400 font-bold transition-colors duration-200 shadow-md"
-                    onClick={() => {
-                      form.handleSubmit();
-                    }}
-                    isDisabled={
-                      createDonationMutation.isPending ||
-                      form.state.isSubmitting
-                    }
-                  />
-                </>
-              }
-            />
+            {isEconomicDonation ? (
+              <EconomicDonationForm
+                key="economic"
+                setDonationType={setDonationType}
+              />
+            ) : (
+              <MaterialDonationForm
+                key="material"
+                donationType={donationType}
+                setDonationType={setDonationType}
+              />
+            )}
 
             <div className="w-full 2xl:max-w-xl flex flex-col md:flex-row lg:flex-col gap-7">
               <div className="md:h-full lg:h-fit w-full flex flex-col space-y-3 lg:space-y-5 items-center text-center border-2 border-secondary rounded-2xl lg:rounded-none lg:rounded-r-2xl px-10 py-7">
