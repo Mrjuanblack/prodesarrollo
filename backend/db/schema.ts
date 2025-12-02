@@ -4,17 +4,23 @@ import {
   check,
   pgEnum,
   pgTable,
+  boolean,
+  integer,
   timestamp,
   primaryKey,
-  boolean,
 } from "drizzle-orm/pg-core";
 import { relations, sql } from "drizzle-orm";
-import { ProjectStatus, ProjectType } from "@/domain/Projects";
 import { NewsCategory } from "@/domain/News";
+import { IdTypeOptions } from "@/domain/shared";
+import { ProjectStatus, ProjectType } from "@/domain/Projects";
+import { DonationTypeOptions, PersonTypeOptions } from "@/domain/donation";
 
 export const projectStatusEnum = pgEnum("project_status", ProjectStatus);
 export const projectTypeEnum = pgEnum("project_type", ProjectType);
 export const newsCategoryEnum = pgEnum("news_category", NewsCategory);
+export const donationsTypeEnum = pgEnum("donations_type", DonationTypeOptions);
+export const personsTypeEnum = pgEnum("persons_type", PersonTypeOptions);
+export const idsTypeEnum = pgEnum("ids_type", IdTypeOptions);
 
 export const projects = pgTable("projects", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -166,6 +172,26 @@ export const users = pgTable("users", {
   username: text("username").notNull(),
   email: text("email").notNull().unique(),
   password: text("password").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
+export const donations = pgTable("donations", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  email: text("email").notNull(),
+  phone: text("phone").notNull(),
+  fullName: text("fullName").notNull(),
+  idNumber: text("idNumber").notNull(),
+  idType: idsTypeEnum("idType").notNull(),
+  anonymousDonation: text("anonymousDonation").notNull(),
+  personType: personsTypeEnum("personType").notNull(),
+  donatioType: donationsTypeEnum("donatioType").notNull(),
+  description: text("description"),
+  donateValue: integer("donateValue"),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
     .defaultNow(),
