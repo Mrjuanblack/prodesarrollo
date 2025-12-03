@@ -74,7 +74,7 @@ export default function Participate() {
               <div className="w-full space-y-5 lg:space-y-10">
                 <div>
                   <IconTitle
-                    Icon={Link}
+                    Icon={FileText}
                     className="mb-5 lg:mb-10"
                     highlightFirstLetter={false}
                     classNameTitle="font-medium text-[15px] md:text-[18px] lg:text-[20px]"

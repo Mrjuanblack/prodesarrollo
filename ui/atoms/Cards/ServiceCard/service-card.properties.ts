@@ -1,7 +1,7 @@
 export interface ServiceItem {
   id: number;
   title: string;
-  icon: string;
+  Icon: React.ElementType;
   description: React.ReactNode;
 }
 

@@ -7,6 +7,7 @@ import {
   BackgroundSection,
 } from "@/ui/atoms";
 import Image from "next/image";
+import { Eye, Target } from "lucide-react";
 import hero_simple from "@/public/hero-simple.svg";
 import { HeroSimple, SectionHeader } from "@/ui/organism";
 import { infos, transparencies } from "./page.properties";
@@ -91,9 +92,11 @@ export default function AboutUs() {
           <MissionCardCard
             title="Misión"
             isRoundedLeft={true}
+            Icon={Target}
             missionText="PRO. DESARROLLO tiene la misión de promover, gestionar y ejecutar programas, proyectos y alianzas estratégicas orientadas al desarrollo económico, social y territorial del país. Actuamos como un instrumento técnico y operativo al servicio del sector público y privado, impulsando la inversión responsable, la innovación institucional y la articulación entre los distintos niveles de gobierno y la sociedad civil, con el fin de fortalecer las capacidades locales y asegurar un desarrollo sostenible y equitativo en los territorios."
           />
           <MissionCardCard
+            Icon={Eye}
             title="Visión"
             missionText="Para el año 2035, PRO. DESARROLLO será reconocida como la entidad público-privada líder en Colombia en gestión e inversión para el desarrollo territorial, destacándose por su capacidad para articular recursos nacionales e internacionales, impulsar proyectos de alto impacto social y económico, y consolidar modelos de gobernanza colaborativa que fortalezcan el bienestar, la autonomía y la sostenibilidad de las entidades territoriales del país."
           />
@@ -101,7 +104,7 @@ export default function AboutUs() {
       </Section>
 
       <Section fadeIn={true}>
-        <Container className="mt-7 lg:mt-0 gap-15 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+        <Container className="mt-7 lg:mt-0 gap-15 lg:gap-y-24 xl:gap-y-0 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
           {infos.map((info) => (
             <InfoCard key={info.id} item={info} />
           ))}
