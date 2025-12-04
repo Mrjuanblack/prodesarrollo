@@ -5,8 +5,8 @@ import { IconTitleProps } from "./icon-title.properties";
 export const IconTitleComponent: FC<IconTitleProps> = ({
   Icon,
   title,
-  highlightFirstLetter,
   className = "",
+  highlightFirstLetter,
   iconColor = "text-primary",
   iconBgColor = "bg-secondary-200",
   classNameTitle = "text-primary text-[15px] md:text-[20px] lg:text-[25px]",

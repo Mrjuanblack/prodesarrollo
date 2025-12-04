@@ -1,6 +1,7 @@
 import { StaticImageData } from "next/image";
 import { IdTypeOptions } from "@/domain/shared";
-import noticiaExample from "@/public/noticia-example.svg";
+import personaJuridica from "@/public/persona-juridica.jpg";
+import personaNatural from "@/public/persona-natural.jpg";
 
 export interface LawItem {
   id: number;
@@ -63,12 +64,12 @@ export const profileTypes: ProfileTypeItem[] = [
   {
     id: 1,
     title: "Persona natural",
-    img: noticiaExample,
+    img: personaNatural,
   },
   {
     id: 2,
     title: "Persona jurídica",
-    img: noticiaExample,
+    img: personaJuridica,
   },
 ];
 

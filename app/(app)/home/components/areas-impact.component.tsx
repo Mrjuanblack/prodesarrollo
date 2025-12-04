@@ -1,13 +1,20 @@
-import { Settings } from "lucide-react";
+import {
+  Wallet,
+  Settings,
+  PiggyBank,
+  CheckCircle,
+  Construction,
+} from "lucide-react";
 import { SectionHeader } from "@/ui/organism";
 import { Button, ServiceCard } from "@/ui/atoms";
 import { Carousel, Container, Section } from "@/ui/molecules";
-import { ServiceItem } from "@/ui/atoms/Cards/ServiceCard/service-card.properties";
 import { ICarouselProps } from "@/ui/molecules/Carousel/carousel.properties";
+import { ServiceItem } from "@/ui/atoms/Cards/ServiceCard/service-card.properties";
 
 const services: ServiceItem[] = [
   {
     id: 1,
+    Icon: Construction,
     title: "Gestión integral de infraestructura estratégica",
     description: (
       <>
@@ -20,10 +27,10 @@ const services: ServiceItem[] = [
         <strong> para el desarrollo integral de las comunidades.</strong>
       </>
     ),
-    icon: "Settings",
   },
   {
     id: 2,
+    Icon: CheckCircle,
     title: "Interventoría, supervisión y asistencia técnica",
     description: (
       <>
@@ -34,10 +41,10 @@ const services: ServiceItem[] = [
         relacionados con el objeto social.
       </>
     ),
-    icon: "TrendingUp",
   },
   {
     id: 3,
+    Icon: PiggyBank,
     title: "Movilización y fomento de recursos financieros",
     description: (
       <>
@@ -48,10 +55,10 @@ const services: ServiceItem[] = [
         desarrollo.
       </>
     ),
-    icon: "Scale",
   },
   {
     id: 4,
+    Icon: Wallet,
     title: "Movilización y fomento de recursos financieros",
     description: (
       <>
@@ -62,7 +69,6 @@ const services: ServiceItem[] = [
         desarrollo.
       </>
     ),
-    icon: "Scale",
   },
 ];
 

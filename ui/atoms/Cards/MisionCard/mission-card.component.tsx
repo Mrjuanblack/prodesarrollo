@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { Facebook } from "lucide-react";
 import { IconTitle } from "@/ui/molecules";
 import { Card, CardBody, CardHeader } from "@heroui/react";
 import { MissionCardProps } from "./mission-card.properties";
@@ -7,6 +6,7 @@ import { MissionCardProps } from "./mission-card.properties";
 export const MissionCardComponent: FC<MissionCardProps> = ({
   title,
   missionText,
+  Icon,
   isRoundedLeft = false,
 }) => {
   return (
@@ -18,8 +18,10 @@ export const MissionCardComponent: FC<MissionCardProps> = ({
     >
       <CardHeader className="flex items-center">
         <IconTitle
+          Icon={Icon}
           title={title}
-          Icon={Facebook}
+          iconColor="text-secondary-200"
+          iconBgColor="bg-secondary-400"
           classNameTitle="text-white text-[15px] md:text-[20px] lg:text-[30px]"
         />
       </CardHeader>

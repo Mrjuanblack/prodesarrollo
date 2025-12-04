@@ -17,11 +17,11 @@ import { useForm } from "@tanstack/react-form";
 import { addToast, Divider } from "@heroui/react";
 import { ContactCardProps } from "./page.properties";
 import message_icon from "@/public/message-icono.svg";
-import { sendRequestFormSchema, SendRequestFormType } from "@/domain/contact";
 import message_icon_two from "@/public/message-icono-2.svg";
 import { Container, IconTitle, Section } from "@/ui/molecules";
 import { useSendRequest } from "@/hooks/contact/useSendRequest";
-import { socialItems } from "@/ui/organism/Header/header.properties";
+import { sendRequestFormSchema, SendRequestFormType } from "@/domain/contact";
+import { IconType, socialItems } from "@/ui/organism/Header/header.properties";
 
 const ContactCard: FC<ContactCardProps> = ({ children }) => {
   return (
@@ -237,14 +237,25 @@ const Contacts = () => {
                 />
 
                 <div className="flex flex-wrap justify-center gap-3">
-                  {socialItems.map(({ icon: Icon, label, href }) => (
+                  {socialItems.map(({ icon: Icon, label, href, iconType }) => (
                     <a
                       key={label}
                       href={href}
                       aria-label={label}
                       className="flex justify-center items-center rounded-full h-[50px] w-[50px] bg-primary-50 hover:bg-primary-200"
                     >
-                      <Icon className="h-7 w-7 text-primary" strokeWidth="2" />
+                      {iconType === IconType.IMG ? (
+                        <Image
+                          src={Icon as string}
+                          alt="icon social network"
+                          className="max-h-20 w-auto object-contain"
+                        />
+                      ) : (
+                        <Icon
+                          className="h-7 w-7 text-primary"
+                          strokeWidth="2"
+                        />
+                      )}
                     </a>
                   ))}
                 </div>

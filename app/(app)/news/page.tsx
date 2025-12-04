@@ -1,13 +1,13 @@
 "use client";
 
 import { HeroSimple } from "@/ui/organism";
-import hero_simple from "@/public/hero-simple.svg";
 import { Container, Section } from "@/ui/molecules";
+import hero_simple from "@/public/hero-two-simple.jpg";
+import { useNewsList } from "@/hooks/news/useNewsList";
 import { BackgroundSection, NewsCard } from "@/ui/atoms";
 import { OrderFilter } from "./components/order-filter.component";
 import { CategoryFilter } from "./components/category-filter.component";
 import { CallToActionSection } from "@/ui/organism/CallToActionSection/CallToActionSection";
-import { useNewsList } from "@/hooks/news/useNewsList";
 
 export default function News() {
   const { data: news } = useNewsList({

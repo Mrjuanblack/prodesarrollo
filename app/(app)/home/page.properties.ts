@@ -5,6 +5,7 @@ import {
 import dnp from "@/public/dnp-logo.svg";
 import { StaticImageData } from "next/image";
 import header from "@/public/header-home.svg";
+import header_two from "@/public/header-two-home.jpg";
 import presidencia from "@/public/presidencia-logo.svg";
 import contraloria from "@/public/contraloria-logo.svg";
 import procuraduria from "@/public/procuraduria-logo.svg";
@@ -91,7 +92,7 @@ export const carouselSlides: ContentSlideProps[] = [
   },
   {
     id: 2,
-    img: header,
+    img: header_two,
     items: slideTwoItems,
   },
 ];

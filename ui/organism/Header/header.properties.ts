@@ -49,9 +49,15 @@ export const menuItems: MenuItem[] = [
   {
     key: "calls",
     label: "Convocatorias",
-    type: "link",
-    href: "/calls",
-    items: [],
+    type: "dropdown",
+    items: [
+      { label: "Proyectos", key: "prohects", href: "/calls" },
+      {
+        label: "Proyectos - Donaciones",
+        key: "projects-donations",
+        href: "/donations",
+      },
+    ],
   },
   {
     key: "participate",

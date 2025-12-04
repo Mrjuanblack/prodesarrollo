@@ -4,17 +4,17 @@ import { useState } from "react";
 import { FileText } from "lucide-react";
 import { Divider, Spinner } from "@heroui/react";
 import { HeroSimple } from "@/ui/organism";
-import hero_simple from "@/public/hero-simple.svg";
 import { FilterByState } from "./components/filter-by-state";
 import { Carousel, Container, Section } from "@/ui/molecules";
-import { ProjectTypeCard } from "./components/project-type-card";
-import { BackgroundSection, CallCard, SearchBar } from "@/ui/atoms";
-import { CallToActionSection } from "@/ui/organism/CallToActionSection/CallToActionSection";
-import { useYearsWithProjects } from "@/hooks/project/useYearsWithProjects";
-import { ProjectType, projectTypeList } from "@/domain/Projects";
-import { useProjectsInfinite } from "@/hooks/project/useProjectsInfinite";
 import { useInfiniteScroll } from "@heroui/use-infinite-scroll";
+import { ProjectTypeCard } from "./components/project-type-card";
+import { ProjectType, projectTypeList } from "@/domain/Projects";
+import hero_donaciones_img from "@/public/hero-donaciones-img.svg";
+import { BackgroundSection, CallCard, SearchBar } from "@/ui/atoms";
+import { useProjectsInfinite } from "@/hooks/project/useProjectsInfinite";
+import { useYearsWithProjects } from "@/hooks/project/useYearsWithProjects";
 import { ICarouselProps } from "@/ui/molecules/Carousel/carousel.properties";
+import { CallToActionSection } from "@/ui/organism/CallToActionSection/CallToActionSection";
 
 const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
   base: "basis-1/2",
@@ -29,14 +29,17 @@ export default function Calls() {
 
   const { data: years } = useYearsWithProjects();
   const [activeYear, setActiveYear] = useState<number | null>(null);
-  const [activeType, setActiveType] = useState<ProjectType>(ProjectType.INTERVENTORY);
+  const [activeType, setActiveType] = useState<ProjectType>(
+    ProjectType.INTERVENTORY
+  );
 
-  const { items, hasMore, isLoading, isFetchingNextPage, onLoadMore } = useProjectsInfinite({
-    size: 10,
-    year: activeYear ?? undefined,
-    type: activeType,
-    search: query || undefined,
-  });
+  const { items, hasMore, isLoading, isFetchingNextPage, onLoadMore } =
+    useProjectsInfinite({
+      size: 10,
+      year: activeYear ?? undefined,
+      type: activeType,
+      search: query || undefined,
+    });
 
   // Use HeroUI's infinite scroll hook
   const [, scrollerRef] = useInfiniteScroll({
@@ -51,10 +54,7 @@ export default function Calls() {
 
   return (
     <>
-      <HeroSimple
-        title="Convocatorias"
-        backgroundImage={hero_simple}
-      />
+      <HeroSimple title="Convocatorias" backgroundImage={hero_donaciones_img} />
 
       <Section fadeIn={true}>
         <Container className="flex flex-col items-center">
@@ -75,9 +75,10 @@ export default function Calls() {
                   className={`
                     flex items-center gap-2 px-7 py-4 rounded-2xl transition-all duration-300
                     font-semibold text-[25px] cursor-pointer shadow-lg
-                    ${activeYear === year
-                      ? "bg-[#A9BEFF] text-primary shadow-xl"
-                      : "bg-[#F3F6FF] text-primary hover:bg-[#E6EEFF]"
+                    ${
+                      activeYear === year
+                        ? "bg-[#A9BEFF] text-primary shadow-xl"
+                        : "bg-[#F3F6FF] text-primary hover:bg-[#E6EEFF]"
                     }
                   `}
                 >
@@ -128,7 +129,10 @@ export default function Calls() {
             <FilterByState />
           </div>
 
-          <div ref={scrollerRef as React.RefObject<HTMLDivElement>} className="space-y-5">
+          <div
+            ref={scrollerRef as React.RefObject<HTMLDivElement>}
+            className="space-y-5"
+          >
             {items.map((item, index) => (
               <CallCard key={`${items[index]?.id || index}`} item={item} />
             ))}

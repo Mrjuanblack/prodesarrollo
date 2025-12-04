@@ -1,13 +1,13 @@
 "use client";
 
-import { Newspaper } from "lucide-react";
+import { Trophy } from "lucide-react";
 import { Divider } from "@heroui/react";
+import { useRouter } from "next/navigation";
 import { SectionHeader } from "@/ui/organism";
 import { Button, ProjectCard } from "@/ui/atoms";
+import { useProjects } from "@/hooks/project/useProjects";
 import { Carousel, Container, Section } from "@/ui/molecules";
 import { ICarouselProps } from "@/ui/molecules/Carousel/carousel.properties";
-import { useProjects } from "@/hooks/project/useProjects";
-import { useRouter } from "next/navigation";
 
 const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
   base: "basis-full",
@@ -19,7 +19,7 @@ const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
 
 export const FeaturedProjects = () => {
   const router = useRouter();
-  
+
   const { data: projects } = useProjects({
     page: 0,
     size: 10,
@@ -33,7 +33,7 @@ export const FeaturedProjects = () => {
     >
       <Container className="w-full flex flex-col items-center">
         <SectionHeader
-          icon={Newspaper}
+          icon={Trophy}
           title="Proyectos destacados"
           description="Nuestros proyectos reflejan el compromiso con el desarrollo social, económico y ambiental de las comunidades."
         />
