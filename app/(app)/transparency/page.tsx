@@ -2,8 +2,8 @@
 
 import { BackgroundSection } from "@/ui/atoms";
 import { infos, laws } from "./page.properties";
-import hero_simple from "@/public/hero-simple.svg";
 import { Container, Section } from "@/ui/molecules";
+import hero_simple from "@/public/hero-two-simple.jpg";
 import { Accordion, AccordionItem } from "@heroui/react";
 import { HeroSimple, SectionHeader } from "@/ui/organism";
 import { Download, FileText, Link, Monitor } from "lucide-react";

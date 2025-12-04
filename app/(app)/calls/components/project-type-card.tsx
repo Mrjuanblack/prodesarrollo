@@ -1,7 +1,12 @@
 import React from "react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { getProjectTypeLabel, ProjectType } from "@/domain/Projects";
-import noticiaExample from "@/public/noticia-example.svg";
+
+import obras from "@/public/obras.jpg";
+import interventorias from "@/public/interventorias.jpg";
+import procesosConsultoria from "@/public/procesos-de-consultoria.jpg";
+import procesosSuministros from "@/public/procesos-de-suministros.jpg";
+import prestacionServicios from "@/public/prestacion-de-servicios.jpg";
 
 interface ProjectTypeCardProps {
   type: ProjectType;
@@ -9,20 +14,20 @@ interface ProjectTypeCardProps {
   onClick?: (value: ProjectType) => void;
 }
 
-const getProjectTypeImagePath = (type: ProjectType): string => {
-  switch(type) {
+const getProjectTypeImagePath = (type: ProjectType): StaticImageData => {
+  switch (type) {
     case ProjectType.INTERVENTORY:
-      return noticiaExample;
+      return interventorias;
     case ProjectType.CIVIL_WORKS:
-      return noticiaExample;
+      return obras;
     case ProjectType.SUPPLY_PROCESSES:
-      return noticiaExample;
+      return procesosSuministros;
     case ProjectType.SERVICE_DELIVERY_PROCESSES:
-      return noticiaExample;
+      return prestacionServicios;
     case ProjectType.CONSULTING_PROCESSES:
-      return noticiaExample;
+      return procesosConsultoria;
   }
-}
+};
 
 export const ProjectTypeCard: React.FC<ProjectTypeCardProps> = ({
   type,
