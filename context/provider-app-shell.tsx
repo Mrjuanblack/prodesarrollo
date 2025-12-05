@@ -16,13 +16,15 @@ export default function ProviderAppShell({ children }: ProviderAppShellProps) {
   const isInternal = pathname.startsWith("/internal");
   const isAuth = pathname.startsWith("/auth");
 
-  return isInternal ? (
+  return (
     <AuthProvider>
-      <PrivateLayout>{children}</PrivateLayout>
+      {isInternal ? (
+        <PrivateLayout>{children}</PrivateLayout>
+      ) : isAuth ? (
+        <AuthLayout>{children}</AuthLayout>
+      ) : (
+        <PublicLayout>{children}</PublicLayout>
+      )}
     </AuthProvider>
-  ) : isAuth ? (
-    <AuthLayout>{children}</AuthLayout>
-  ) : (
-    <PublicLayout>{children}</PublicLayout>
   );
 }
