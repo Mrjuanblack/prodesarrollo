@@ -28,7 +28,7 @@ export default function ProjectsPage() {
 
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const [selectProjectId, setSelectProjectId] = useState<string>();
+  const [selectProjectId, setSelectProjectId] = useState<string>("");
 
   const [pagination, setPagination] = useState({
     page: 0,
@@ -54,6 +54,7 @@ export default function ProjectsPage() {
               Agregar proyecto
             </Button>
           </div>
+
           <Table
             bottomContent={
               totalPages > 0 ? (
@@ -82,6 +83,7 @@ export default function ProjectsPage() {
               <TableColumn key="updatedAt">Fecha de actualización</TableColumn>
               <TableColumn key="actions">Acciones</TableColumn>
             </TableHeader>
+
             <TableBody
               items={projects?.data ?? []}
               loadingContent={<Spinner />}
@@ -143,13 +145,14 @@ export default function ProjectsPage() {
         onClose={() => setIsCreateOpen(false)}
       />
 
-      {selectProjectId && (
-        <DeleteProjectModal
-          isOpen={isDeleteOpen}
-          projectId={selectProjectId}
-          onClose={() => setIsDeleteOpen(false)}
-        />
-      )}
+      <DeleteProjectModal
+        isOpen={isDeleteOpen}
+        projectId={selectProjectId}
+        onClose={() => {
+          setIsDeleteOpen(false);
+          setSelectProjectId("");
+        }}
+      />
     </div>
   );
 }

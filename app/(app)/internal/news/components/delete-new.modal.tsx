@@ -9,57 +9,55 @@ import {
 } from "@heroui/react";
 import React from "react";
 import { GlobalLoader } from "@/ui/atoms";
-import useProject from "@/hooks/project/useProject";
-import { useDeleteProject } from "@/hooks/project/useDeleteProject";
+import useNew from "@/hooks/news/useNew";
+import { useDeleteNew } from "@/hooks/news/useDeleteNew";
 
-export interface DeleteProjectModalProps {
+export interface DeleteNewModalProps {
   isOpen: boolean;
-  projectId: string;
+  newId: string;
   onClose: () => void;
 }
 
-const DeleteProjectModal: React.FC<DeleteProjectModalProps> = ({
+const DeleteNewModal: React.FC<DeleteNewModalProps> = ({
   isOpen,
-  projectId,
+  newId,
   onClose,
 }) => {
-  const { data: project, isLoading } = useProject(projectId);
-  const deleteProjectMutation = useDeleteProject(projectId);
-
-  if (!project || !isOpen) {
-    return null;
-  }
+  const { data, isLoading } = useNew(newId);
+  const deleteNewMutation = useDeleteNew(newId);
 
   if (isLoading) {
     return <GlobalLoader />;
   }
 
-  const projectName = project.title;
-  const photosCount = project.photos.length;
-  const documentsCount = project.documents.length;
+  if (!data || !isOpen) {
+    return null;
+  }
+
+  const newName = data.title;
+  const photosCount = data.photos.length;
 
   const onSubmit = () => {
-    deleteProjectMutation.mutate(undefined, {
+    deleteNewMutation.mutate(undefined, {
       onError: () => {
         addToast({
           color: "danger",
-          title: "Error al eliminar el proyecto",
+          title: "Error al eliminar la noticia",
           description: "Por favor verifica tus datos.",
         });
       },
       onSuccess: () => {
         onClose();
-
         addToast({
           color: "success",
           title: "Eliminación exitosa",
-          description: "El proyecto ha sido eliminado correctamente.",
+          description: "La noticia ha sido eliminada correctamente.",
         });
       },
     });
   };
 
-  const isDeleting = deleteProjectMutation.isPending;
+  const isDeleting = deleteNewMutation.isPending;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -73,8 +71,8 @@ const DeleteProjectModal: React.FC<DeleteProjectModalProps> = ({
         <ModalBody>
           <div className="flex flex-col gap-4">
             <p className="text-lg font-semibold text-gray-800">
-              ¿Estás seguro que deseas eliminar el proyecto:
-              <span className="font-bold text-gray-900"> {projectName}</span>?
+              ¿Estás seguro que deseas eliminar la noticia:
+              <span className="font-bold text-gray-900"> {newName}</span>?
             </p>
             <p className="text-md text-gray-600">
               Esta acción es irreversible. Se eliminarán los siguientes
@@ -83,9 +81,6 @@ const DeleteProjectModal: React.FC<DeleteProjectModalProps> = ({
             <ul className="list-disc list-inside ml-4 text-gray-700">
               <li>
                 <span className="font-bold">{photosCount}</span> fotos
-              </li>
-              <li>
-                <span className="font-bold">{documentsCount}</span> documentos
               </li>
             </ul>
           </div>
@@ -102,7 +97,7 @@ const DeleteProjectModal: React.FC<DeleteProjectModalProps> = ({
           </Button>
 
           <Button color="danger" onPress={onSubmit} isLoading={isDeleting}>
-            Eliminar Proyecto
+            Eliminar Noticia
           </Button>
         </ModalFooter>
       </ModalContent>
@@ -110,4 +105,4 @@ const DeleteProjectModal: React.FC<DeleteProjectModalProps> = ({
   );
 };
 
-export default DeleteProjectModal;
+export default DeleteNewModal;

@@ -13,7 +13,7 @@ export const useDeleteProject = (projectId: string) => {
   return useMutation({
     mutationFn: () => deleteProject(projectId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["project", projectId] });
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
     },
   });
 };
