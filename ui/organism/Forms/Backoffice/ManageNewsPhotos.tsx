@@ -164,3 +164,4 @@ const ManageNewsPhotos: React.FC<ManageNewsPhotosProps> = ({ news }) => {
 
 export default ManageNewsPhotos;
 
+
