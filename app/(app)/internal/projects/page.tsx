@@ -12,20 +12,23 @@ import {
   TableHeader,
 } from "@heroui/react";
 import { useState } from "react";
-import { PencilIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Container, Section } from "@/ui/molecules";
+import { DeleteIcon, PencilIcon } from "lucide-react";
 import { useProjects } from "@/hooks/project/useProjects";
-import ProjectStatusChip from "@/ui/atoms/Chips/project-status-chip";
 import ProjectTypeChip from "@/ui/atoms/Chips/project-type-chip";
-import CreateProjectForm from "@/ui/organism/Forms/Backoffice/CreateProjectForm";
-import ProjectHighlightChip from "@/ui/atoms/Chips/project-highlight-chip";
+import DeleteProjectModal from "./components/delete-project.modal";
+import ProjectStatusChip from "@/ui/atoms/Chips/project-status-chip";
 import ProjectDonationChip from "@/ui/atoms/Chips/project-donation-chip";
+import ProjectHighlightChip from "@/ui/atoms/Chips/project-highlight-chip";
+import CreateProjectForm from "@/ui/organism/Forms/Backoffice/CreateProjectForm";
 
 export default function ProjectsPage() {
   const router = useRouter();
 
   const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [selectProjectId, setSelectProjectId] = useState<string>();
 
   const [pagination, setPagination] = useState({
     page: 0,
@@ -104,7 +107,7 @@ export default function ProjectsPage() {
                   </TableCell>
                   <TableCell>{item.createdAt.toLocaleDateString()}</TableCell>
                   <TableCell>{item.updatedAt.toLocaleDateString()}</TableCell>
-                  <TableCell>
+                  <TableCell className="flex space-x-1">
                     <Button
                       size="sm"
                       color="primary"
@@ -114,6 +117,18 @@ export default function ProjectsPage() {
                       }
                     >
                       <PencilIcon className="w-5 h-5" />
+                    </Button>
+
+                    <Button
+                      size="sm"
+                      isIconOnly
+                      color="danger"
+                      onPress={() => {
+                        setIsDeleteOpen(true);
+                        setSelectProjectId(item.id);
+                      }}
+                    >
+                      <DeleteIcon className="w-5 h-5" />
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -127,6 +142,14 @@ export default function ProjectsPage() {
         isOpen={isCreateOpen}
         onClose={() => setIsCreateOpen(false)}
       />
+
+      {selectProjectId && (
+        <DeleteProjectModal
+          isOpen={isDeleteOpen}
+          projectId={selectProjectId}
+          onClose={() => setIsDeleteOpen(false)}
+        />
+      )}
     </div>
   );
 }
