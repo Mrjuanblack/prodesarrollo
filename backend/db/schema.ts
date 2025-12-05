@@ -44,10 +44,10 @@ export const projectsToProjects = pgTable(
   "projects_to_projects",
   {
     projectOneId: uuid("project_one_id")
-      .references(() => projects.id)
+      .references(() => projects.id, { onDelete: "cascade" })
       .notNull(),
     projectTwoId: uuid("project_two_id")
-      .references(() => projects.id)
+      .references(() => projects.id, { onDelete: "cascade" })
       .notNull(),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
@@ -68,7 +68,7 @@ export const projectsToProjects = pgTable(
 export const projectPhotos = pgTable("project_photos", {
   id: uuid("id").primaryKey().defaultRandom(),
   projectId: uuid("project_id")
-    .references(() => projects.id)
+    .references(() => projects.id, { onDelete: "cascade" })
     .notNull(),
   url: text("url").notNull(),
   createdAt: timestamp("created_at", { withTimezone: true })
@@ -79,7 +79,7 @@ export const projectPhotos = pgTable("project_photos", {
 export const projectDocuments = pgTable("project_documents", {
   id: uuid("id").primaryKey().defaultRandom(),
   projectId: uuid("project_id")
-    .references(() => projects.id)
+    .references(() => projects.id, { onDelete: "cascade" })
     .notNull(),
   name: text("name").notNull(),
   url: text("url").notNull(),
@@ -104,7 +104,7 @@ export const news = pgTable("news", {
 export const newsPhotos = pgTable("news_photos", {
   id: uuid("id").primaryKey().defaultRandom(),
   newsId: uuid("news_id")
-    .references(() => news.id)
+    .references(() => news.id, { onDelete: "cascade" })
     .notNull(),
   url: text("url").notNull(),
   createdAt: timestamp("created_at", { withTimezone: true })
