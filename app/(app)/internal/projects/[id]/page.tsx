@@ -20,7 +20,7 @@ import {
   Switch,
 } from "@heroui/react";
 import { GlobalLoader } from "@/ui/atoms";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useForm } from "@tanstack/react-form";
 import { I18nProvider } from "@react-aria/i18n";
 import { Container, Section } from "@/ui/molecules";
@@ -34,6 +34,7 @@ import { ProjectAutocomplete } from "@/ui/organism/ProjectAutocomplete/ProjectAu
 export default function ProjectPage() {
   const { id } = useParams();
   const { data: project } = useProject(id as string);
+  const router = useRouter();
 
   const updateProjectMutation = useUpdateProject(id as string);
 
@@ -44,7 +45,8 @@ export default function ProjectPage() {
     type: project?.type ?? ProjectType.INTERVENTORY,
     status: project?.status ?? ProjectStatus.STARTED,
     date: project?.date ?? new Date(),
-    relatedProjects: project?.relatedProjects?.map((project) => project.id) ?? null,
+    relatedProjects:
+      project?.relatedProjects?.map((project) => project.id) ?? null,
     highlight: project?.highlight ?? false,
     donationProject: project?.donationProject ?? false,
   };
@@ -193,10 +195,10 @@ export default function ProjectPage() {
                         value={
                           field.state.value
                             ? new CalendarDate(
-                              field.state.value.getFullYear(),
-                              field.state.value.getMonth() + 1,
-                              field.state.value.getDate()
-                            )
+                                field.state.value.getFullYear(),
+                                field.state.value.getMonth() + 1,
+                                field.state.value.getDate()
+                              )
                             : null
                         }
                         onChange={(e) => {
@@ -297,7 +299,19 @@ export default function ProjectPage() {
                   )}
                 </form.Field>
               </div>
-              <div className="col-span-2">
+              <div className="col-span-2 space-x-2">
+                <Button
+                  type="submit"
+                  color="default"
+                  onPress={() => router.back()}
+                  isLoading={updateProjectMutation.isPending}
+                  isDisabled={
+                    updateProjectMutation.isPending || form.state.isSubmitting
+                  }
+                >
+                  Volver
+                </Button>
+
                 <Button
                   color="primary"
                   type="submit"

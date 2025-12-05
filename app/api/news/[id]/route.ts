@@ -49,3 +49,35 @@ export async function PUT(
     );
   }
 }
+
+export async function DELETE(
+  request: Request,
+  context: { params: Promise<{ id: string }> }
+) {
+  try {
+    const result = await validateUser();
+
+    if (result instanceof NextResponse) {
+      return result;
+    }
+
+    const { id } = await context.params;
+
+    await NewsService.deleteNew(id);
+
+    return NextResponse.json({
+      message: "Project deleted successfully",
+    });
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { error: z.treeifyError(error) },
+        { status: 400 }
+      );
+    }
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { GlobalLoader } from "@/ui/atoms";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import useUser from "@/hooks/users/useUser";
 import { useForm } from "@tanstack/react-form";
 import { Container, Section } from "@/ui/molecules";
@@ -14,6 +14,7 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 const UserEdit = () => {
   const { id } = useParams();
   const { data: user } = useUser(id as string);
+  const router = useRouter();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -156,7 +157,19 @@ const UserEdit = () => {
                   />
                 )}
               </form.Field>
-              <div className="col-span-2">
+              <div className="col-span-2 space-x-2">
+                <Button
+                  type="submit"
+                  color="default"
+                  onPress={() => router.back()}
+                  isLoading={updateUserMutation.isPending}
+                  isDisabled={
+                    updateUserMutation.isPending || form.state.isSubmitting
+                  }
+                >
+                  Volver
+                </Button>
+
                 <Button
                   type="submit"
                   color="primary"
