@@ -8,7 +8,10 @@ export const InfoCardComponent: React.FC<InfoCardProps> = ({ item }) => {
   return (
     <div className="h-full flex flex-col items-center text-center bg-white border border-secondary rounded-2xl p-4 lg:p-6 pt-0 shadow-md hover:shadow-lg transition-shadow duration-300">
       <div className="text-primary rounded-full bg-white border border-secondary h-[75px] w-[75px] lg:h-[124px] lg:w-[124px] flex items-center justify-center shadow-lg -mt-9 lg:-mt-22">
-        <Icon strokeWidth="1" className="w-[70%] h-[70%]" />
+        <Icon
+          strokeWidth="0.5"
+          className="w-[60%] h-[60%] lg:w-[70%] lg:h-[70%]"
+        />
       </div>
 
       <Title

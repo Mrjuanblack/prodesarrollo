@@ -23,11 +23,4 @@ export const infos: InfoItem[] = [
     description:
       "Promover las actividades necesarias para la consecución y ejecución de recursos económicos, aportes e ingresos lícitos. Esta gestión estratégica se enfoca en captar fondos nacionales e internacionales para aumentar la competitividad y financiar los planes de desarrollo.",
   },
-  {
-    id: 4,
-    title: "Participación comunitaria",
-    Icon: Users,
-    description:
-      "Fomentamos la colaboración ciudadana para fortalecer la cohesión social y el desarrollo equitativo.",
-  },
 ];
