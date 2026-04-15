@@ -3,35 +3,19 @@ import dotenv from "dotenv";
 import { eq } from "drizzle-orm";
 import { users } from "./backend/db/schema";
 import * as schema from "./backend/db/schema";
-import { drizzle } from "drizzle-orm/neon-http";
-import type { NeonHttpDatabase } from "drizzle-orm/neon-http";
-import type { NodePgDatabase } from "drizzle-orm/node-postgres";
-import { drizzle as drizzlePg } from "drizzle-orm/node-postgres";
+import { drizzle } from "drizzle-orm/node-postgres";
 
 dotenv.config();
 
-const isDev = process.env.NODE_ENV === "development";
 const connectionString = process.env.DATABASE_URL;
 if (!connectionString) {
   throw new Error("DATABASE_URL environment variable is not set");
 }
 
-let db:
-  | NeonHttpDatabase<typeof schema>
-  | (NodePgDatabase<typeof schema> & { $client: Pool });
-
-if (isDev) {
-  // Use pg driver for local PostgreSQL
-  const pool = new Pool({
-    connectionString: connectionString,
-  });
-  db = drizzlePg(pool, { schema });
-} else {
-  db = drizzle(connectionString, { schema });
-}
+const pool = new Pool({ connectionString });
+const db = drizzle(pool, { schema });
 
 async function seed() {
-  // Check if default user already exists
   const existingUser = await db
     .select()
     .from(users)
@@ -42,7 +26,6 @@ async function seed() {
     return;
   }
 
-  // Create default user
   await db.insert(users).values({
     username: "admin",
     email: "informacion.prodesarrollo@gmail.com",
@@ -53,4 +36,11 @@ async function seed() {
   console.log("Default user created");
 }
 
-seed().catch(console.error);
+seed()
+  .catch((err) => {
+    console.error(err);
+    process.exitCode = 1;
+  })
+  .finally(async () => {
+    await pool.end();
+  });

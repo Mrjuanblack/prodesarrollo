@@ -1,0 +1,14 @@
+node_modules
+.next
+.git
+.env
+.env.local
+*.log
+.planning
+.claude
+.tmp-capture
+.tmp-frames
+capture-animation.mjs
+video logo.mp4
+playwright-report
+test-results

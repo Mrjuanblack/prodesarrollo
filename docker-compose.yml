@@ -1,0 +1,89 @@
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: prodesarrollo-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-admin}
+      POSTGRES_DB: ${POSTGRES_DB:-prodesarrollo}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - internal
+
+  app:
+    build:
+      context: .
+      args:
+        # NEXT_PUBLIC_* vars must be baked in at build time (Next.js inlines
+        # them into the client bundle). Compose reads them from .env.
+        NEXT_PUBLIC_STORAGE_URL: ${NEXT_PUBLIC_STORAGE_URL}
+    container_name: prodesarrollo-app
+    restart: unless-stopped
+    # Loads secrets (JWT_SECRET, S3 credentials, etc.) from .env on the VPS.
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-admin}@db:5432/${POSTGRES_DB:-prodesarrollo}
+    depends_on:
+      db:
+        condition: service_healthy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-network"
+
+      # --- HTTP ROUTER → REDIRECT TO HTTPS ---
+      - "traefik.http.routers.prodesarrollo-web.entrypoints=web"
+      - "traefik.http.routers.prodesarrollo-web.rule=Host(`${APP_DOMAIN}`)"
+      - "traefik.http.routers.prodesarrollo-web.middlewares=prodesarrollo-redirect-https"
+
+      # --- HTTPS ROUTER ---
+      - "traefik.http.routers.prodesarrollo-web-secure.entrypoints=websecure"
+      - "traefik.http.routers.prodesarrollo-web-secure.rule=Host(`${APP_DOMAIN}`)"
+      - "traefik.http.routers.prodesarrollo-web-secure.tls=true"
+      - "traefik.http.routers.prodesarrollo-web-secure.tls.certresolver=letsencrypt"
+
+      # --- BOTH ROUTERS POINT AT THE SAME SERVICE ---
+      - "traefik.http.routers.prodesarrollo-web.service=prodesarrollo-web"
+      - "traefik.http.routers.prodesarrollo-web-secure.service=prodesarrollo-web"
+
+      # --- SERVICE → Next.js port 3000 ---
+      - "traefik.http.services.prodesarrollo-web.loadbalancer.server.port=3000"
+
+      # --- HTTP → HTTPS REDIRECT MIDDLEWARE ---
+      - "traefik.http.middlewares.prodesarrollo-redirect-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.prodesarrollo-redirect-https.redirectscheme.permanent=true"
+
+      # --- www → APEX REDIRECT ---
+      - "traefik.http.routers.prodesarrollo-www.entrypoints=web"
+      - "traefik.http.routers.prodesarrollo-www.rule=Host(`www.${APP_DOMAIN}`)"
+      - "traefik.http.routers.prodesarrollo-www.middlewares=prodesarrollo-redirect-apex"
+
+      - "traefik.http.routers.prodesarrollo-www-secure.entrypoints=websecure"
+      - "traefik.http.routers.prodesarrollo-www-secure.rule=Host(`www.${APP_DOMAIN}`)"
+      - "traefik.http.routers.prodesarrollo-www-secure.tls=true"
+      - "traefik.http.routers.prodesarrollo-www-secure.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.prodesarrollo-www-secure.middlewares=prodesarrollo-redirect-apex"
+
+      - "traefik.http.middlewares.prodesarrollo-redirect-apex.redirectregex.regex=^https?://www\\.(.*)"
+      - "traefik.http.middlewares.prodesarrollo-redirect-apex.redirectregex.replacement=https://$$1"
+      - "traefik.http.middlewares.prodesarrollo-redirect-apex.redirectregex.permanent=true"
+    networks:
+      - traefik-network
+      - internal
+
+networks:
+  traefik-network:
+    external: true
+  internal:
+    driver: bridge
+
+volumes:
+  pgdata:

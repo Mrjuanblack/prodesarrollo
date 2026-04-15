@@ -1,7 +1,7 @@
 import { CreateNews, News, NewsCategory, UpdateNews } from "@/domain/News";
 import { NewsRepository } from "../db/repositories/news-repository";
 import { PaginationRequest, PaginationResponse } from "@/domain/Pagination";
-import { GoogleStorageManager } from "../google-storage/google-storage-manager";
+import { StorageManager } from "../storage/storage-manager";
 
 export class NewsService {
   public static async createNews(news: CreateNews): Promise<News> {
@@ -28,7 +28,7 @@ export class NewsService {
     const photos = newData.photos;
 
     const deletePhotoPromises = photos.map((photo) =>
-      GoogleStorageManager.deleteFile(photo.url)
+      StorageManager.deleteFile(photo.url)
     );
 
     const allDeletePromises = [deletePhotoPromises];

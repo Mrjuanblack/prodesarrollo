@@ -6,7 +6,7 @@ import {
 } from "@/domain/Projects";
 import { ProjectRepository } from "../db/repositories/project-repository";
 import { PaginationRequest, PaginationResponse } from "@/domain/Pagination";
-import { GoogleStorageManager } from "../google-storage/google-storage-manager";
+import { StorageManager } from "../storage/storage-manager";
 
 export class ProjectService {
   public static async createProject(project: CreateProject): Promise<Project> {
@@ -51,11 +51,11 @@ export class ProjectService {
     const documents = project.documents;
 
     const deletePhotoPromises = photos.map((photo) =>
-      GoogleStorageManager.deleteFile(photo.url)
+      StorageManager.deleteFile(photo.url)
     );
 
     const deleteDocumentPromises = documents.map((document) =>
-      GoogleStorageManager.deleteFile(document.url)
+      StorageManager.deleteFile(document.url)
     );
 
     const allDeletePromises = [
