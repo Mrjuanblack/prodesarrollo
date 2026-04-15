@@ -1,11 +1,12 @@
 import {
-  CreateProject,
   Project,
   ProjectType,
   UpdateProject,
+  CreateProject,
 } from "@/domain/Projects";
 import { ProjectRepository } from "../db/repositories/project-repository";
 import { PaginationRequest, PaginationResponse } from "@/domain/Pagination";
+import { GoogleStorageManager } from "../google-storage/google-storage-manager";
 
 export class ProjectService {
   public static async createProject(project: CreateProject): Promise<Project> {
@@ -42,5 +43,27 @@ export class ProjectService {
     project: UpdateProject
   ): Promise<Project> {
     return await ProjectRepository.updateProject(id, project);
+  }
+
+  public static async deleteProject(projectId: string): Promise<void> {
+    const project = await ProjectRepository.getProjectById(projectId);
+    const photos = project.photos;
+    const documents = project.documents;
+
+    const deletePhotoPromises = photos.map((photo) =>
+      GoogleStorageManager.deleteFile(photo.url)
+    );
+
+    const deleteDocumentPromises = documents.map((document) =>
+      GoogleStorageManager.deleteFile(document.url)
+    );
+
+    const allDeletePromises = [
+      ...deletePhotoPromises,
+      ...deleteDocumentPromises,
+    ];
+
+    await Promise.all(allDeletePromises);
+    await ProjectRepository.deleteProject(project.id);
   }
 }

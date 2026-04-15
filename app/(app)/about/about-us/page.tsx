@@ -118,7 +118,7 @@ export default function AboutUs() {
             description="En PRO. DESARROLLO orientamos nuestra gestión bajo principios éticos y técnicos que fortalecen la confianza pública, la cooperación y el desarrollo territorial. Nuestros valores guían cada acción, decisión y alianza institucional, promoviendo una cultura basada en la transparencia, la eficiencia y el compromiso con el bienestar colectivo."
           />
 
-          <div className="mt-7 grid-cols-1 hidden lg:grid lg:grid-cols-3 lg:gap-15">
+          <div className="mt-7 grid-cols-1 hidden lg:grid lg:grid-cols-3 lg:gap-9 xl:gap-15">
             {transparencies.map((transparency) => {
               return (
                 <TransparencyCard key={transparency.id} item={transparency} />

@@ -7,24 +7,19 @@ import {
   getNewsCategoryLabel,
   updateNewsFormSchema,
 } from "@/domain/News";
-import {
-  Input,
-  Button,
-  Select,
-  Textarea,
-  SelectItem,
-} from "@heroui/react";
 import { GlobalLoader } from "@/ui/atoms";
-import { useParams } from "next/navigation";
 import { useForm } from "@tanstack/react-form";
-import { Container, Section } from "@/ui/molecules";
 import { useNews } from "@/hooks/news/useNews";
+import { Container, Section } from "@/ui/molecules";
+import { useParams, useRouter } from "next/navigation";
 import { useUpdateNews } from "@/hooks/news/useUpdateNews";
+import { Input, Button, Select, Textarea, SelectItem } from "@heroui/react";
 import ManageNewsPhotos from "@/ui/organism/Forms/Backoffice/ManageNewsPhotos";
 
 export default function NewsPage() {
   const { id } = useParams();
   const { data: news } = useNews(id as string);
+  const router = useRouter();
 
   const updateNewsMutation = useUpdateNews(id as string);
 
@@ -140,7 +135,19 @@ export default function NewsPage() {
                   )}
                 </form.Field>
               </div>
-              <div className="col-span-2">
+              <div className="col-span-2 space-x-2">
+                <Button
+                  type="submit"
+                  color="default"
+                  onPress={() => router.back()}
+                  isLoading={updateNewsMutation.isPending}
+                  isDisabled={
+                    updateNewsMutation.isPending || form.state.isSubmitting
+                  }
+                >
+                  Volver
+                </Button>
+
                 <Button
                   color="primary"
                   type="submit"
@@ -160,4 +167,3 @@ export default function NewsPage() {
     </div>
   );
 }
-

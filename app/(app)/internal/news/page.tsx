@@ -1,27 +1,30 @@
 "use client";
 
-import { getNewsCategoryLabel } from "@/domain/News";
-import { useNewsList } from "@/hooks/news/useNewsList";
 import {
-  Button,
-  Pagination,
-  Spinner,
   Table,
+  Button,
+  Spinner,
+  TableRow,
   TableBody,
   TableCell,
+  Pagination,
   TableColumn,
   TableHeader,
-  TableRow,
 } from "@heroui/react";
-import { PencilIcon } from "lucide-react";
-import { Section, Container } from "@/ui/molecules";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Section, Container } from "@/ui/molecules";
+import { getNewsCategoryLabel } from "@/domain/News";
+import { DeleteIcon, PencilIcon } from "lucide-react";
+import { useNewsList } from "@/hooks/news/useNewsList";
+import DeleteNewModal from "./components/delete-new.modal";
 import CreateNewsForm from "@/ui/organism/Forms/Backoffice/CreateNewsForm";
 
 export default function NewsPage() {
   const router = useRouter();
 
+  const [selectNewId, setSelectNewId] = useState<string>("");
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
 
   const [pagination, setPagination] = useState({
@@ -88,14 +91,26 @@ export default function NewsPage() {
                   <TableCell>{getNewsCategoryLabel(item.category)}</TableCell>
                   <TableCell>{item.createdAt.toLocaleDateString()}</TableCell>
                   <TableCell>{item.updatedAt.toLocaleDateString()}</TableCell>
-                  <TableCell>
+                  <TableCell className="flex space-x-1">
                     <Button
                       size="sm"
-                      color="primary"
                       isIconOnly
+                      color="primary"
                       onPress={() => router.push(`/internal/news/${item.id}`)}
                     >
                       <PencilIcon className="w-5 h-5" />
+                    </Button>
+
+                    <Button
+                      size="sm"
+                      isIconOnly
+                      color="danger"
+                      onPress={() => {
+                        setIsDeleteOpen(true);
+                        setSelectNewId(item.id);
+                      }}
+                    >
+                      <DeleteIcon className="w-5 h-5" />
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -108,6 +123,15 @@ export default function NewsPage() {
       <CreateNewsForm
         isOpen={isCreateOpen}
         onClose={() => setIsCreateOpen(false)}
+      />
+
+      <DeleteNewModal
+        newId={selectNewId}
+        isOpen={isDeleteOpen}
+        onClose={() => {
+          setIsDeleteOpen(false);
+          setSelectNewId("");
+        }}
       />
     </div>
   );

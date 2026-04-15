@@ -420,6 +420,14 @@ export class ProjectRepository {
     }
   }
 
+  public static async deleteProject(id: string): Promise<void> {
+    try {
+      await db.delete(projects).where(eq(projects.id, id));
+    } catch (error) {
+      throw errorHandler.handleError(RepositoryErrorType.DELETE, error);
+    }
+  }
+
   public static mapToDomain(
     project: typeof projects.$inferSelect & {
       photos: ProjectPhoto[] | null;

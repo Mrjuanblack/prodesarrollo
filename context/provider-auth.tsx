@@ -17,6 +17,8 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   const { setUser, logout } = useAuth();
   const validateMutation = useValidateUser();
 
+  const isInternal = pathname.startsWith("/internal");
+
   const { isLoading, setLoading } = useLoader();
 
   useEffect(() => {
@@ -24,18 +26,24 @@ export default function AuthProvider({ children }: AuthProviderProps) {
 
     validateMutation.mutate(undefined, {
       onError: () => {
-        addToast({
-          title: "Sesión Expirada",
-          description:
-            "Tu sesión ha expirado o es inválida. Inicia sesión nuevamente.",
-          color: "danger",
-        });
+        if (isInternal) {
+          addToast({
+            color: "danger",
+            title: "Sesión Expirada",
+            description:
+              "Tu sesión ha expirado o es inválida. Inicia sesión nuevamente.",
+          });
 
-        logout();
-        router.replace("/auth/login");
+          logout();
+          router.replace("/auth/login");
+        }
       },
       onSuccess: (user) => {
         setUser(user);
+
+        if (!isInternal) {
+          router.replace("/internal");
+        }
       },
       onSettled: () => {
         setLoading(false);
