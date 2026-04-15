@@ -15,14 +15,16 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# NEXT_PUBLIC_* variables are inlined into the client bundle at build time.
-# docker-compose passes these via build args.
+# Build-time args. docker-compose reads these from .env and passes them here.
+# NEXT_PUBLIC_* get inlined into the client bundle by Next.js.
+# DATABASE_URL is only needed so module-level validation in backend/db/config.ts
+# doesn't throw during page data collection. It is scoped to this RUN only,
+# so it does not persist into the final image.
 ARG NEXT_PUBLIC_STORAGE_URL
+ARG DATABASE_URL
 ENV NEXT_PUBLIC_STORAGE_URL=$NEXT_PUBLIC_STORAGE_URL
 
-# Run Next.js build only — migrations and seed run at container start, not
-# at image build time (no DB available here).
-RUN npx next build
+RUN DATABASE_URL="$DATABASE_URL" npx next build
 
 # --- Runtime ---
 FROM base AS runner
