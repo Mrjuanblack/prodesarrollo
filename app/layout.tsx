@@ -21,6 +21,7 @@ import LoaderProvider from "@/context/provider-loader";
 import ProviderAppShell from "@/context/provider-app-shell";
 import QueryProvider from "@/context/provider-query";
 import AuthProvider from "@/context/provider-auth";
+import SplashOverlay from "@/ui/organism/splash-overlay/splash-overlay";
 
 export const metadata: Metadata = {
   title: "Prodesarrollo",
@@ -42,6 +43,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
+        <SplashOverlay />
         <QueryProvider>
           <ProviderHeroUi>
             <LoaderProvider>

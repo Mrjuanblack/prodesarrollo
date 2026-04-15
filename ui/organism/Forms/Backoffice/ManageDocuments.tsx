@@ -8,7 +8,7 @@ import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader
 import { useForm } from "@tanstack/react-form";
 import { useEffect, useState } from "react";
 import { EyeIcon, TrashIcon } from "@heroicons/react/24/solid";
-import { getProdOrDevSuffix } from "@/utils/utils";
+import { buildStorageUrl } from "@/lib/storage-url";
 import { useDeleteDocument } from "@/hooks/document/useDeleteDocument";
 import GenericConfirmAction from "./GenericConfirmAction";
 
@@ -105,7 +105,7 @@ const ManageDocuments: React.FC<ManageDocumentsProps> = ({ project }) => {
                                 <TableCell>{item.name}</TableCell>
                                 <TableCell>{item.createdAt.toLocaleDateString()}</TableCell>
                                 <TableCell>
-                                    <Button isLoading={deleteDocumentMutation.isPending} isDisabled={deleteDocumentMutation.isPending} size="sm" color="primary" isIconOnly onPress={() => window.open(`https://storage.googleapis.com/${process.env.NEXT_PUBLIC_GOOGLE_STORAGE_BUCKET_NAME}/${getProdOrDevSuffix()}/${item.url}`, '_blank')}>
+                                    <Button isLoading={deleteDocumentMutation.isPending} isDisabled={deleteDocumentMutation.isPending} size="sm" color="primary" isIconOnly onPress={() => window.open(buildStorageUrl(item.url), '_blank')}>
                                         <EyeIcon className="w-5 h-5" />
                                     </Button>
                                     <Button className="ml-2" isLoading={deleteDocumentMutation.isPending} isDisabled={deleteDocumentMutation.isPending} size="sm" color="danger" isIconOnly onPress={() => {

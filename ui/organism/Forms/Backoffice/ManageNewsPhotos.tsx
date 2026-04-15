@@ -15,7 +15,7 @@ import {
 import { useState } from "react";
 import { News } from "@/domain/News";
 import { useForm } from "@tanstack/react-form";
-import { getProdOrDevSuffix } from "@/utils/utils";
+import { buildStorageUrl } from "@/lib/storage-url";
 import { Container, Section } from "@/ui/molecules";
 import GenericConfirmAction from "./GenericConfirmAction";
 import { useCreateNewsPhoto } from "@/hooks/newsPhoto/useCreateNewsPhoto";
@@ -68,9 +68,7 @@ const ManageNewsPhotos: React.FC<ManageNewsPhotosProps> = ({ news }) => {
                 className="relative rounded-lg overflow-hidden"
               >
                 <img
-                  src={`https://storage.googleapis.com/${
-                    process.env.NEXT_PUBLIC_GOOGLE_STORAGE_BUCKET_NAME
-                  }/${getProdOrDevSuffix()}/${photo.url}`}
+                  src={buildStorageUrl(photo.url)}
                   alt={photo.url}
                 />
                 <Button

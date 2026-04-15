@@ -2,22 +2,20 @@ interface UserReadableError {
   getError(): string;
 }
 
-export enum GoogleStorageErrorType {
+export enum StorageErrorType {
   GET_UPLOAD_URL_FAILED = "1",
   UPLOAD_FILE_FAILED = "2",
   DELETE_FILE_FAILED = "3",
 }
 
-const GOOGLE_STORAGE_PREFIX = "GS";
-export class GoogleStorageError extends Error implements UserReadableError {
+const STORAGE_PREFIX = "S3";
+export class StorageError extends Error implements UserReadableError {
   constructor(
-    public readonly type: GoogleStorageErrorType,
+    public readonly type: StorageErrorType,
     public readonly cause?: unknown
   ) {
-    super(`Google Storage error: ${GOOGLE_STORAGE_PREFIX} - ${type}`);
-    // Log code
-    console.error(`Google Storage error: ${this.getError()}`);
-    // Log original error
+    super(`Storage error: ${STORAGE_PREFIX} - ${type}`);
+    console.error(`Storage error: ${this.getError()}`);
     if (this.cause) {
       console.error("Details:");
       console.error(this.cause);
@@ -25,7 +23,7 @@ export class GoogleStorageError extends Error implements UserReadableError {
   }
 
   getError(): string {
-    return `${GOOGLE_STORAGE_PREFIX} - ${this.type}`;
+    return `${STORAGE_PREFIX} - ${this.type}`;
   }
 }
 

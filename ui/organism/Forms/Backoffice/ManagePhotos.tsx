@@ -15,7 +15,7 @@ import {
 import { useState } from "react";
 import { Project } from "@/domain/Projects";
 import { useForm } from "@tanstack/react-form";
-import { getProdOrDevSuffix } from "@/utils/utils";
+import { buildStorageUrl } from "@/lib/storage-url";
 import { Container, Section } from "@/ui/molecules";
 import GenericConfirmAction from "./GenericConfirmAction";
 import { useCreateProjectPhoto } from "@/hooks/projectPhoto/useCreateProjectPhoto";
@@ -68,9 +68,7 @@ const ManagePhotos: React.FC<ManagePhotosProps> = ({ project }) => {
                 className="relative rounded-lg overflow-hidden"
               >
                 <img
-                  src={`https://storage.googleapis.com/${
-                    process.env.NEXT_PUBLIC_GOOGLE_STORAGE_BUCKET_NAME
-                  }/${getProdOrDevSuffix()}/${photo.url}`}
+                  src={buildStorageUrl(photo.url)}
                   alt={photo.url}
                 />
                 <Button

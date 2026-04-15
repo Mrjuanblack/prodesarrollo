@@ -11,7 +11,7 @@ import { ICarouselProps } from "@/ui/molecules/Carousel/carousel.properties";
 import { useParams } from "next/navigation";
 import useNews from "@/hooks/news/useNews";
 import { getNewsCategoryLabel } from "@/domain/News";
-import { getProdOrDevSuffix } from "@/utils/utils";
+import { buildStorageUrl } from "@/lib/storage-url";
 
 const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
   base: "basis-1/2",
@@ -74,7 +74,7 @@ export default function New() {
                 >
                   <Image
                     fill
-                    src={`https://storage.googleapis.com/${process.env.NEXT_PUBLIC_GOOGLE_STORAGE_BUCKET_NAME}/${getProdOrDevSuffix()}/${photo.url}`}
+                    src={buildStorageUrl(photo.url)}
                     alt={photo.url}
                     className="object-cover"
                   />

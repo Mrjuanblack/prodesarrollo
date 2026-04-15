@@ -5,7 +5,7 @@ import { Button } from "../..";
 import { useRouter } from "next/navigation";
 import { NewsCardProps } from "./news-card.properties";
 import noticiaExample from "@/public/noticia-example.svg";
-import { getProdOrDevSuffix } from "@/utils/utils";
+import { buildStorageUrl } from "@/lib/storage-url";
 import { getNewsCategoryLabel } from "@/domain/News";
 
 export const NewsCardComponent: React.FC<NewsCardProps> = ({ item, showImage = false }) => {
@@ -13,9 +13,7 @@ export const NewsCardComponent: React.FC<NewsCardProps> = ({ item, showImage = f
 
   const hasImage = showImage  && item.photos.length > 0;
   const image = item.photos[0]?.url;
-  const imageUrl = `https://storage.googleapis.com/${
-    process.env.NEXT_PUBLIC_GOOGLE_STORAGE_BUCKET_NAME
-  }/${getProdOrDevSuffix()}/${image}`
+  const imageUrl = buildStorageUrl(image);
 
   const handleClick = () => {
     if(!hasImage) {

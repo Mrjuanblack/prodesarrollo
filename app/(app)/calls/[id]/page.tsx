@@ -19,7 +19,7 @@ const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
 import useProject from "@/hooks/project/useProject";
 import { useParams } from "next/navigation";
 import { getProjectStatusLabel, getProjectTypeLabel, ProjectStatus } from "@/domain/Projects";
-import { getProdOrDevSuffix } from "@/utils/utils";
+import { buildStorageUrl } from "@/lib/storage-url";
 
 const Call = () => {
   const { id } = useParams();
@@ -65,7 +65,7 @@ const Call = () => {
 
             <div>
               <Title
-                text={project.id}
+                text={project.code}
                 highlightFirstLetter={false}
                 className="lg:text-[20px]"
               />
@@ -115,7 +115,7 @@ const Call = () => {
               {project.documents.map((d) => (
                 <div
                   key={d.id}
-                  onClick={() => window.open(`https://storage.googleapis.com/${process.env.NEXT_PUBLIC_GOOGLE_STORAGE_BUCKET_NAME}/${getProdOrDevSuffix()}/${d.url}`, '_blank')}
+                  onClick={() => window.open(buildStorageUrl(d.url), '_blank')}
                   className="flex items-center gap-3 text-black hover:text-primary cursor-pointer transition-colors"
                 >
                   <div className="bg-[#D9E0FF] p-2 rounded-lg">
@@ -146,7 +146,7 @@ const Call = () => {
                 >
                   <Image
                     fill
-                    src={`https://storage.googleapis.com/${process.env.NEXT_PUBLIC_GOOGLE_STORAGE_BUCKET_NAME}/${getProdOrDevSuffix()}/${photo.url}`}
+                    src={buildStorageUrl(photo.url)}
                     alt={photo.url}
                     className="object-cover"
                   />
