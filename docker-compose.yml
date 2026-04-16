@@ -18,14 +18,7 @@ services:
       - internal
 
   app:
-    build:
-      context: .
-      args:
-        # Values read from .env. NEXT_PUBLIC_* is baked into the client bundle.
-        # DATABASE_URL is only used to satisfy module-level validation during
-        # `next build` — it does NOT persist into the final image.
-        NEXT_PUBLIC_STORAGE_URL: ${NEXT_PUBLIC_STORAGE_URL}
-        DATABASE_URL: ${DATABASE_URL}
+    image: ghcr.io/mrjuanblack/prodesarrollo:latest
     container_name: prodesarrollo-app
     restart: unless-stopped
     # Loads secrets (JWT_SECRET, S3 credentials, etc.) from .env on the VPS.
