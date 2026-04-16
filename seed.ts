@@ -1,11 +1,16 @@
 import { Pool } from "pg";
 import dotenv from "dotenv";
 import { eq } from "drizzle-orm";
+import argon2 from "argon2";
 import { users } from "./backend/db/schema";
 import * as schema from "./backend/db/schema";
 import { drizzle } from "drizzle-orm/node-postgres";
 
 dotenv.config();
+
+const ADMIN_EMAIL = "admin@prodesarrollo.org.co";
+const ADMIN_USERNAME = "admin";
+const ADMIN_PASSWORD = "Prdsrrll_2025!";
 
 const connectionString = process.env.DATABASE_URL;
 if (!connectionString) {
@@ -19,21 +24,22 @@ async function seed() {
   const existingUser = await db
     .select()
     .from(users)
-    .where(eq(users.email, "informacion.prodesarrollo@gmail.com"));
+    .where(eq(users.email, ADMIN_EMAIL));
 
   if (existingUser.length > 0) {
-    console.log("Default user already exists");
+    console.log(`Admin user ${ADMIN_EMAIL} already exists — skipping.`);
     return;
   }
 
+  const passwordHash = await argon2.hash(ADMIN_PASSWORD);
+
   await db.insert(users).values({
-    username: "admin",
-    email: "informacion.prodesarrollo@gmail.com",
-    password:
-      "$argon2id$v=19$m=19456,t=2,p=1$XiwPR9t2WRyP9WrbAjfAdg$9XLZLrMo5B21VcfIizEYcz+SZztetxGGXeNVvguSnbY",
+    username: ADMIN_USERNAME,
+    email: ADMIN_EMAIL,
+    password: passwordHash,
   });
 
-  console.log("Default user created");
+  console.log(`Admin user ${ADMIN_EMAIL} created.`);
 }
 
 seed()
