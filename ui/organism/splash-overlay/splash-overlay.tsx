@@ -15,13 +15,16 @@ export default function SplashOverlay() {
   const overlayRef = useRef<HTMLDivElement>(null);
   const triggeredRef = useRef(false);
 
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
+    // SSR hydration guard: overlay must only render client-side to avoid mismatch.
     setMounted(true);
     if (shouldShowSplash()) {
       markSplashShown();
       setVisible(true);
     }
   }, []);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const handleAnimationComplete = useCallback(() => {
     if (triggeredRef.current) return;

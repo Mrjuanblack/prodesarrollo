@@ -52,16 +52,17 @@ const Contacts = () => {
       sendRequestMutation.mutate(value, {
         onError: () => {
           addToast({
-            title: "Toast Title error",
-            description: "Toast Description error",
+            title: "No pudimos enviar tu solicitud",
+            description: "Intenta nuevamente en unos minutos.",
             color: "danger",
           });
         },
         onSuccess: () => {
           form.reset();
           addToast({
-            title: "Toast Title",
-            description: "Toast Description",
+            title: "Solicitud enviada",
+            description:
+              "Gracias por contactarnos. Te responderemos al correo registrado.",
             color: "success",
           });
         },
@@ -212,13 +213,10 @@ const Contacts = () => {
                 <>
                   <Button
                     text="Enviar"
-                    type="submit"
                     variant="solid"
                     isLoading={sendRequestMutation.isPending}
                     className="bg-secondary w-fit hover:bg-secondary-400 font-bold transition-colors duration-200 shadow-md"
-                    onClick={() => {
-                      form.handleSubmit();
-                    }}
+                    onClick={() => form.handleSubmit()}
                     isDisabled={
                       sendRequestMutation.isPending || form.state.isSubmitting
                     }

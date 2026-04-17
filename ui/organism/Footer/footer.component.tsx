@@ -5,7 +5,7 @@ import { Phone, MapPin } from "lucide-react";
 import gov_logo from "@/public/gov-co-logo.svg";
 import { socialLinks } from "./footer.properties";
 import { IconType } from "../Header/header.properties";
-import pro_desarrollo_logo from "@/public/pro-desarrollo-logo-white.svg";
+import pro_desarrollo_logo from "@/public/pro-desarrollo-logo.svg";
 
 const SocialLinks = () => {
   return (
@@ -40,7 +40,7 @@ export const FooterComponent = () => {
           <Image
             alt="ProDesarrollo"
             src={pro_desarrollo_logo}
-            className="h-[37px] lg:h-[69px] w-fit"
+            className="h-[45px] lg:h-[100px] xl:h-[120px] 2xl:h-[145px] w-fit brightness-0 invert"
           />
 
           <Image

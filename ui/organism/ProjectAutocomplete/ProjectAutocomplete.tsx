@@ -2,8 +2,7 @@ import { Autocomplete, AutocompleteItem, Chip } from "@heroui/react";
 import { useInfiniteScroll } from "@heroui/use-infinite-scroll";
 import { useProjectsAutocomplete } from "@/hooks/project/useProjectsAutocomplete";
 import { Project, SimpleProject } from "@/domain/Projects";
-import { useState, useMemo, useEffect } from "react";
-import apiClient from "@/hooks/api-client";
+import { useState, useEffect } from "react";
 
 interface ProjectAutocompleteProps {
     label?: string;
@@ -56,17 +55,22 @@ export const ProjectAutocomplete: React.FC<ProjectAutocompleteProps> = ({
         onLoadMore,
     });
 
-    // Update cache whenever new items are loaded
-    useMemo(() => {
-        const newCache = new Map(projectCache);
-        items.forEach(project => {
-            if (!newCache.has(project.id)) {
-                newCache.set(project.id, project);
-            }
+    // Update cache whenever new items are loaded.
+    // Functional setState with early-return (same ref when unchanged) is safe here:
+    // it doesn't cascade renders and matches the official React pattern.
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setProjectCache(prev => {
+            let changed = false;
+            const next = new Map(prev);
+            items.forEach(project => {
+                if (!next.has(project.id)) {
+                    next.set(project.id, project);
+                    changed = true;
+                }
+            });
+            return changed ? next : prev;
         });
-        if (newCache.size > projectCache.size) {
-            setProjectCache(newCache);
-        }
     }, [items]);
 
     const handleRemoveProject = (projectId: string) => {

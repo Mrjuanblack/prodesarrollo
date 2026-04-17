@@ -3,10 +3,27 @@ import { TransparencyCardProps } from "./transparency-card.properties";
 
 export const TransparencyCardComponent: React.FC<TransparencyCardProps> = ({
   item,
+  active = false,
+  onClick,
 }) => {
   const { title, description, Icon } = item;
-  return (
-    <div className="h-full flex flex-col items-center text-center bg-default-100 rounded-2xl p-4 md:p-6 lg:p-8 rounded-tl-[40px] lg:rounded-tl-[60px] shadow-sm hover:shadow-md transition-shadow duration-300">
+  const isInteractive = typeof onClick === "function";
+
+  const baseClasses =
+    "h-full flex flex-col items-center text-center bg-default-100 rounded-2xl p-4 md:p-6 lg:p-8 rounded-tl-[40px] lg:rounded-tl-[60px] shadow-sm transition-all duration-300";
+
+  const interactiveClasses = isInteractive
+    ? "cursor-pointer hover:shadow-md hover:-translate-y-1 hover:bg-default-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+    : "hover:shadow-md";
+
+  const activeClasses = active
+    ? "ring-2 ring-primary bg-default-200 shadow-md -translate-y-1"
+    : "";
+
+  const className = `${baseClasses} ${interactiveClasses} ${activeClasses}`;
+
+  const body = (
+    <>
       <div className="flex w-full justify-between gap-4 mb-3">
         <div className="text-primary">
           {Icon && (
@@ -24,6 +41,21 @@ export const TransparencyCardComponent: React.FC<TransparencyCardProps> = ({
         text={description}
         className="text-black text-[14px] md:text-[16px] lg:text-[18px] leading-relaxed text-right"
       />
-    </div>
+    </>
   );
+
+  if (isInteractive) {
+    return (
+      <button
+        type="button"
+        aria-pressed={active}
+        onClick={() => onClick?.(item)}
+        className={`${className} text-left`}
+      >
+        {body}
+      </button>
+    );
+  }
+
+  return <div className={className}>{body}</div>;
 };

@@ -1,6 +1,5 @@
 import X from "@/public/x-twiter-icono.svg";
 import { Instagram, FacebookIcon, LucideYoutube } from "lucide-react";
-import { StaticImageData } from "next/image";
 
 interface SubMenuItem {
   key: string;
@@ -31,11 +30,12 @@ export const menuItems: MenuItem[] = [
     items: [
       { label: "Quiénes somos", key: "about-us", href: "/about/about-us" },
       { label: "Qué hacemos", key: "what-we-do", href: "/about/what-we-do" },
-      {
-        label: "Estructura organizacional",
-        key: "structure-team",
-        href: "/about/structure-team",
-      },
+      // Deshabilitado temporalmente — restaurar cuando se rehabilite estructura organizacional
+      // {
+      //   label: "Estructura organizacional",
+      //   key: "structure-team",
+      //   href: "/about/structure-team",
+      // },
       { label: "Contactos", key: "contacts", href: "/about/contacts" },
     ],
   },
@@ -52,11 +52,12 @@ export const menuItems: MenuItem[] = [
     type: "dropdown",
     items: [
       { label: "Proyectos", key: "prohects", href: "/calls" },
-      {
-        label: "Proyectos - Donaciones",
-        key: "projects-donations",
-        href: "/donations",
-      },
+      // Deshabilitado temporalmente — restaurar cuando se rehabilite donaciones
+      // {
+      //   label: "Proyectos - Donaciones",
+      //   key: "projects-donations",
+      //   href: "/donations",
+      // },
     ],
   },
   {

@@ -12,7 +12,7 @@ const apiClient = axios.create({
 const ISO_DATE_REGEX = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z?$/;
 
 // Recursively convert ISO date strings to Date objects
-const parseDates = (data: any): any => {
+const parseDates = (data: unknown): unknown => {
   if (data === null || data === undefined) {
     return data;
   }
@@ -26,10 +26,10 @@ const parseDates = (data: any): any => {
   }
 
   if (typeof data === 'object') {
-    return Object.keys(data).reduce((acc, key) => {
-      acc[key] = parseDates(data[key]);
+    return Object.keys(data as Record<string, unknown>).reduce<Record<string, unknown>>((acc, key) => {
+      acc[key] = parseDates((data as Record<string, unknown>)[key]);
       return acc;
-    }, {} as any);
+    }, {});
   }
 
   return data;

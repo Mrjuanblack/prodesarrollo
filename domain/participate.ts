@@ -1,7 +1,16 @@
 import { z } from "zod/v4";
 import { IdTypeOptions } from "./shared";
 
+export enum ParticipateProfileType {
+  NATURAL = "Persona natural",
+  JURIDICA = "Persona jurídica",
+}
+
 export const submitParticipateFormSchema = z.object({
+  profileType: z.enum(ParticipateProfileType, {
+    message: "Debes seleccionar un tipo de persona.",
+  }),
+
   idType: z.enum(IdTypeOptions, {
     message:
       "El tipo de identificación es requerido y debe ser una opción válida.",
@@ -26,6 +35,7 @@ export const submitParticipateFormSchema = z.object({
 });
 
 export type SubmitParticipateFormType = {
+  profileType: ParticipateProfileType;
   idType: IdTypeOptions;
   idNumber: string;
   fullName: string;

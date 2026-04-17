@@ -21,17 +21,18 @@ export const FileUploadButtonComponent = (
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
+  // Sync external value prop into internal state (controlled/uncontrolled bridge).
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (value === null || value === undefined) {
       setSelectedFiles([]);
     } else if (multiple) {
-      // When multiple is true, value is File[] | null
       setSelectedFiles((value as File[]) || []);
     } else {
-      // When multiple is false, value is File | null
       setSelectedFiles(value ? [value as File] : []);
     }
   }, [value, multiple]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const handleButtonClick = () => {
     fileInputRef.current?.click();

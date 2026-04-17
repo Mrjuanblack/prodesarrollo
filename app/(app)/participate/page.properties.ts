@@ -1,5 +1,6 @@
 import { StaticImageData } from "next/image";
 import { IdTypeOptions } from "@/domain/shared";
+import { ParticipateProfileType } from "@/domain/participate";
 import personaJuridica from "@/public/persona-juridica.jpg";
 import personaNatural from "@/public/persona-natural.jpg";
 
@@ -54,10 +55,26 @@ export const projects: ProjectItem[] = [
   },
 ];
 
+export const naturalDocuments: ProjectItem[] = [
+  { id: 1, name: "Fotocopia del documento de identidad" },
+  { id: 2, name: "Hoja de vida con soportes" },
+  { id: 3, name: "Certificación bancaria vigente" },
+  { id: 4, name: "RUT actualizado" },
+];
+
+export const juridicaDocuments: ProjectItem[] = [
+  { id: 1, name: "Certificado de existencia y representación legal" },
+  { id: 2, name: "RUT de la empresa" },
+  { id: 3, name: "Fotocopia del documento del representante legal" },
+  { id: 4, name: "Certificación bancaria vigente" },
+  { id: 5, name: "Estados financieros del último periodo" },
+];
+
 export interface ProfileTypeItem {
   id: number;
   title: string;
   img: StaticImageData;
+  profileType: ParticipateProfileType;
 }
 
 export const profileTypes: ProfileTypeItem[] = [
@@ -65,11 +82,13 @@ export const profileTypes: ProfileTypeItem[] = [
     id: 1,
     title: "Persona natural",
     img: personaNatural,
+    profileType: ParticipateProfileType.NATURAL,
   },
   {
     id: 2,
     title: "Persona jurídica",
     img: personaJuridica,
+    profileType: ParticipateProfileType.JURIDICA,
   },
 ];
 

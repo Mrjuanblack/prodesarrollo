@@ -1,3 +1,12 @@
+// === DONACIONES DESHABILITADO TEMPORALMENTE ===
+// Para restaurar: eliminar este stub y descomentar el bloque original de abajo.
+import { notFound } from "next/navigation";
+
+export default function Donations() {
+  notFound();
+}
+
+/* --- ORIGINAL (restaurar cuando se habilite donaciones) ---
 "use client";
 
 import { useState } from "react";
@@ -119,3 +128,4 @@ export default function Donations() {
     </>
   );
 }
+--- FIN ORIGINAL --- */

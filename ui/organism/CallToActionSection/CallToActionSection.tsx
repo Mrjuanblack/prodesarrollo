@@ -1,5 +1,13 @@
 "use client";
 
+// === CTA "Haz parte del cambio" DESHABILITADO TEMPORALMENTE ===
+// Este CTA invita a donar y enlaza a /donations, que está deshabilitado.
+// Para restaurar: eliminar el return null y descomentar el bloque original.
+export const CallToActionSection = () => {
+  return null;
+};
+
+/* --- ORIGINAL (restaurar cuando se habilite donaciones) ---
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Button, Text, Title } from "@/ui/atoms";
@@ -45,3 +53,4 @@ export const CallToActionSection = () => {
     </Section>
   );
 };
+--- FIN ORIGINAL --- */

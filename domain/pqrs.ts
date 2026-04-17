@@ -1,7 +1,20 @@
 import { z } from "zod/v4";
 import { IdTypeOptions } from "./shared";
 
+export enum PqrsRequestType {
+  PETICION = "Petición",
+  QUEJA = "Queja",
+  RECLAMO = "Reclamo",
+  SUGERENCIA = "Sugerencia",
+  DENUNCIA = "Denuncia",
+  FELICITACION = "Felicitación",
+}
+
 export const submitPqrsFormSchema = z.object({
+  requestType: z.enum(PqrsRequestType, {
+    message: "Debes seleccionar un tipo de solicitud.",
+  }),
+
   idType: z.enum(IdTypeOptions, {
     message:
       "El tipo de identificación es requerido y debe ser una opción válida.",
@@ -30,6 +43,7 @@ export const submitPqrsFormSchema = z.object({
 });
 
 export type SubmitPqrsFormType = {
+  requestType: PqrsRequestType;
   idType: IdTypeOptions;
   idNumber: string;
   fullName: string;

@@ -7,4 +7,6 @@ export interface TransparencyItem {
 
 export interface TransparencyCardProps {
   item: TransparencyItem;
+  active?: boolean;
+  onClick?: (item: TransparencyItem) => void;
 }

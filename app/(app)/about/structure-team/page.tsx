@@ -1,3 +1,12 @@
+// === ESTRUCTURA ORGANIZACIONAL DESHABILITADO TEMPORALMENTE ===
+// Para restaurar: eliminar este stub y descomentar el bloque original de abajo.
+import { notFound } from "next/navigation";
+
+export default function StructureTeam() {
+  notFound();
+}
+
+/* --- ORIGINAL (restaurar cuando se habilite estructura organizacional) ---
 import { HeroSimple } from "@/ui/organism";
 import { teamMembers } from "./page.properties";
 import hero_simple from "@/public/hero-simple.svg";
@@ -30,3 +39,4 @@ export default function StructureTeam() {
     </>
   );
 }
+--- FIN ORIGINAL --- */

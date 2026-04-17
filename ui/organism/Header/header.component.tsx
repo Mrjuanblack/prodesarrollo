@@ -15,7 +15,7 @@ import Image from "next/image";
 import { Container } from "@/ui/molecules";
 import { ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Button as MyButton } from "@/ui/atoms";
+// import { Button as MyButton } from "@/ui/atoms"; // restaurar junto con botón "Quiero donar"
 import colombia_logo from "@/public/gov-co-logo.svg";
 import { usePathname, useRouter } from "next/navigation";
 import pro_desarrollo_logo from "@/public/pro-desarrollo-logo.svg";
@@ -206,11 +206,11 @@ export const HeaderHomeComponent = () => {
             aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
           />
 
-          <NavbarBrand className="h-[35px] lg:h-[62px]">
+          <NavbarBrand className="h-[42px] lg:h-[90px] xl:h-[110px] 2xl:h-[130px]">
             <Image
               alt="ProDesarrollo"
               src={pro_desarrollo_logo}
-              className="h-[35px] lg:h-[62px]"
+              className="h-[42px] lg:h-[90px] xl:h-[110px] 2xl:h-[130px] w-auto"
             />
           </NavbarBrand>
         </NavbarContent>
@@ -243,6 +243,7 @@ export const HeaderHomeComponent = () => {
           ))}
         </NavbarContent>
 
+        {/* Deshabilitado temporalmente — restaurar cuando se rehabilite donaciones
         <NavbarContent justify="end" className="gap-2 md:hidden">
           <MyButton
             variant="solid"
@@ -251,6 +252,7 @@ export const HeaderHomeComponent = () => {
             className="font-semibold w-fit bg-secondary shadow-lg"
           />
         </NavbarContent>
+        */}
 
         <NavbarMenu className="pt-10 bg-white">
           <div className="flex flex-col">{renderMenuItems(true)}</div>
