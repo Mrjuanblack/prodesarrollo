@@ -41,12 +41,46 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: appleboy/ssh-action@v1
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            docker pull ${{ env.IMAGE }}:latest
+            set -e
             cd /projects/prodesarrollo
+            # Keep the repo clone on the VPS in sync so docker-compose.yml,
+            # Traefik labels and any infra config change flow automatically.
+            # Source code is also updated but unused at runtime — the app
+            # runs from the GHCR image, not from these files.
+            git pull --ff-only
+            docker pull ${{ env.IMAGE }}:latest
             docker compose up -d app
+
+            # Local health check — confirm container is up and Next.js responds
+            echo "Waiting for container to be ready..."
+            for i in 1 2 3 4 5 6 7 8 9 10; do
+              if docker exec prodesarrollo-app node -e "require('http').get('http://localhost:3000/', r => process.exit(r.statusCode < 500 ? 0 : 1)).on('error', () => process.exit(1))" > /dev/null 2>&1; then
+                echo "Container is responding on :3000"
+                exit 0
+              fi
+              echo "Attempt $i/10..."
+              sleep 3
+            done
+            echo "Container did not respond after 30s — check logs"
+            docker logs prodesarrollo-app --tail 50
+            exit 1
+
+      - name: Smoke test public URL
+        run: |
+          for i in 1 2 3 4 5; do
+            if curl -sfL -o /dev/null https://prodesarrollo.org.co; then
+              echo "Public site is up"
+              exit 0
+            fi
+            echo "Attempt $i/5..."
+            sleep 10
+          done
+          echo "Public site did not respond"
+          exit 1
