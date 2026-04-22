@@ -7,7 +7,7 @@ import { useLogout } from "@/hooks/auth/useLogout";
 import { usePathname, useRouter } from "next/navigation";
 import { DocumentDuplicateIcon } from "@heroicons/react/24/solid";
 import pro_desarrollo_logo from "@/public/pro-desarrollo-logo.svg";
-import { NewspaperIcon, UsersIcon } from "@heroicons/react/24/outline";
+import { HomeIcon, NewspaperIcon, UsersIcon } from "@heroicons/react/24/outline";
 
 const PrivateLayout: FC<{ children: React.ReactNode }> = ({ children }) => {
   const router = useRouter();
@@ -20,6 +20,11 @@ const PrivateLayout: FC<{ children: React.ReactNode }> = ({ children }) => {
   const internalPrefix = "/internal";
 
   const routes = [
+    {
+      label: "Dashboard",
+      icon: HomeIcon,
+      href: internalPrefix,
+    },
     {
       label: "Proyectos",
       icon: DocumentDuplicateIcon,
@@ -66,9 +71,14 @@ const PrivateLayout: FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <div className="flex h-screen">
       <div className="w-70 h-full border-r border-gray-200">
-        <div className="flex justify-center items-center py-4">
+        <button
+          type="button"
+          aria-label="Ir al dashboard"
+          onClick={() => router.push(internalPrefix)}
+          className="w-full flex justify-center items-center py-4 cursor-pointer hover:bg-default-50 transition-colors"
+        >
           <Image alt="logo" width={200} height={0} src={pro_desarrollo_logo} />
-        </div>
+        </button>
 
         <div className="flex flex-col gap-2 px-4">
           {routes.map((route) => (

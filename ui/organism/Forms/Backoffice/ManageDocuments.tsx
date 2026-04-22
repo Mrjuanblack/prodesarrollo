@@ -1,12 +1,12 @@
-import { ConfirmUploadProjectDocument, CreateProjectDocumentFrontendSchema, createProjectDocumentFrontendSchema, CreateProjectDocumentRequest, MakeProjectDocumentPublicRequest } from "@/domain/ProjectDocument";
+import { ConfirmUploadProjectDocument, CreateProjectDocumentFrontendSchema, createProjectDocumentFrontendSchema, CreateProjectDocumentRequest } from "@/domain/ProjectDocument";
 import { Project } from "@/domain/Projects";
 import { useConfirmUpload } from "@/hooks/document/useConfirmUpload";
 import { useGetUploadUrl } from "@/hooks/document/useGetUploadUrl";
 import { FileUploadButtonComponent } from "@/ui/atoms/FileUploadButton/file-upload-button.component";
 import { Container, Section } from "@/ui/molecules";
-import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/react";
+import { addToast, Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/react";
 import { useForm } from "@tanstack/react-form";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { EyeIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { buildStorageUrl } from "@/lib/storage-url";
 import { useDeleteDocument } from "@/hooks/document/useDeleteDocument";
@@ -22,10 +22,7 @@ const ManageDocuments: React.FC<ManageDocumentsProps> = ({ project }) => {
     const [documentToDelete, setDocumentToDelete] = useState<string | null>(null);
 
     const [progress, setProgress] = useState(0);
-
-    useEffect(() => {
-        console.log(progress);
-    }, [progress]);
+    const [isUploading, setIsUploading] = useState(false);
 
     const getUploadUrlMutation = useGetUploadUrl(project.id);
     const confirmUploadMutation = useConfirmUpload(project.id);
@@ -42,47 +39,68 @@ const ManageDocuments: React.FC<ManageDocumentsProps> = ({ project }) => {
             onChange: createProjectDocumentFrontendSchema,
         },
         onSubmit: async (values) => {
-            // Request the upload session
-            const request: CreateProjectDocumentRequest = {
-                name: values.value.name,
-                fileExtension: values.value.file?.name.split('.').pop() ?? '',
-                mimeType: values.value.file?.type ?? '',
+            const file = values.value.file;
+            if (!file) return;
+
+            setIsUploading(true);
+            setProgress(0);
+
+            try {
+                const request: CreateProjectDocumentRequest = {
+                    name: values.value.name,
+                    fileExtension: file.name.split('.').pop() ?? '',
+                    mimeType: file.type,
+                };
+                const uploadUrlResponse = await getUploadUrlMutation.mutateAsync(request);
+
+                await new Promise<void>((resolve, reject) => {
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('PUT', uploadUrlResponse.url, true);
+                    xhr.setRequestHeader('Content-Type', file.type);
+                    xhr.upload.onprogress = (evt) => {
+                        if (evt.lengthComputable) {
+                            setProgress(Math.round((evt.loaded / evt.total) * 100));
+                        }
+                    };
+                    xhr.onload = () => {
+                        if (xhr.status >= 200 && xhr.status < 300) {
+                            resolve();
+                        } else {
+                            reject(new Error(`Upload falló con status ${xhr.status}. ${xhr.responseText?.slice(0, 200) ?? ''}`));
+                        }
+                    };
+                    xhr.onerror = () => reject(new Error('Error de red al subir el archivo. Revisa CORS del bucket o la conexión.'));
+                    xhr.ontimeout = () => reject(new Error('La subida del archivo tardó demasiado.'));
+                    xhr.onabort = () => reject(new Error('Subida cancelada.'));
+                    xhr.send(file);
+                });
+
+                const confirmRequest: ConfirmUploadProjectDocument = {
+                    name: values.value.name,
+                    filePath: uploadUrlResponse.filePath,
+                };
+                await confirmUploadMutation.mutateAsync(confirmRequest);
+
+                addToast({
+                    color: 'success',
+                    title: 'Documento subido',
+                    description: `"${values.value.name}" se agregó al proyecto.`,
+                });
+
+                formCreateFrontend.reset();
+                setIsCreateOpen(false);
+            } catch (error) {
+                const message = error instanceof Error ? error.message : 'Error desconocido al subir el documento.';
+                console.error('[ManageDocuments] upload failed:', error);
+                addToast({
+                    color: 'danger',
+                    title: 'No pudimos subir el documento',
+                    description: message,
+                });
+            } finally {
+                setIsUploading(false);
+                setProgress(0);
             }
-            const uploadUrlResponse = await getUploadUrlMutation.mutateAsync(request);
-
-            console.log(uploadUrlResponse.url);
-
-            // Upload directly to Google Drive
-            const xhr = new XMLHttpRequest();
-            console.log('xhr created');
-
-            xhr.open('PUT', uploadUrlResponse.url, true);
-            console.log('xhr opened');
-            xhr.setRequestHeader('Content-Type', values.value.file?.type ?? '');
-            console.log('xhr setRequestHeader');
-            xhr.upload.onprogress = (evt) => {
-                if (evt.lengthComputable) {
-                    setProgress(Math.round((evt.loaded / evt.total) * 100));
-                }
-            };
-            console.log('xhr onprogress');
-
-            xhr.onload = async () => {
-                // Make the file public
-                if (xhr.status === 200 || xhr.status === 201) {
-                    const makePublicRequest: ConfirmUploadProjectDocument = {
-                        name: values.value.name,
-                        filePath: uploadUrlResponse.filePath,
-                    }
-                    const confirmUploadResponse = await confirmUploadMutation.mutateAsync(makePublicRequest);
-                    console.log(confirmUploadResponse);
-
-                    formCreateFrontend.reset();
-                    setIsCreateOpen(false);
-                }
-            }
-
-            xhr.send(values.value.file);
         },
     });
 
@@ -93,7 +111,7 @@ const ManageDocuments: React.FC<ManageDocumentsProps> = ({ project }) => {
                     <h1 className="text-2xl font-bold">Documentos</h1>
                     <Button color="primary" onPress={() => setIsCreateOpen(true)}>Agregar documento</Button>
                 </div>
-                <Table>
+                <Table aria-label="Documentos del proyecto">
                     <TableHeader>
                         <TableColumn key="name">Nombre</TableColumn>
                         <TableColumn key="createdAt">Fecha de creación</TableColumn>
@@ -105,10 +123,10 @@ const ManageDocuments: React.FC<ManageDocumentsProps> = ({ project }) => {
                                 <TableCell>{item.name}</TableCell>
                                 <TableCell>{item.createdAt.toLocaleDateString()}</TableCell>
                                 <TableCell>
-                                    <Button isLoading={deleteDocumentMutation.isPending} isDisabled={deleteDocumentMutation.isPending} size="sm" color="primary" isIconOnly onPress={() => window.open(buildStorageUrl(item.url), '_blank')}>
+                                    <Button aria-label="Ver documento" isLoading={deleteDocumentMutation.isPending} isDisabled={deleteDocumentMutation.isPending} size="sm" color="primary" isIconOnly onPress={() => window.open(buildStorageUrl(item.url), '_blank')}>
                                         <EyeIcon className="w-5 h-5" />
                                     </Button>
-                                    <Button className="ml-2" isLoading={deleteDocumentMutation.isPending} isDisabled={deleteDocumentMutation.isPending} size="sm" color="danger" isIconOnly onPress={() => {
+                                    <Button aria-label="Eliminar documento" className="ml-2" isLoading={deleteDocumentMutation.isPending} isDisabled={deleteDocumentMutation.isPending} size="sm" color="danger" isIconOnly onPress={() => {
                                         setDocumentToDelete(item.id);
                                         setIsDeleteConfirmOpen(true);
                                     }}>
@@ -171,7 +189,10 @@ const ManageDocuments: React.FC<ManageDocumentsProps> = ({ project }) => {
                     </form>
                 </ModalBody>
                 <ModalFooter>
-                    <Button onPress={() => formCreateFrontend.handleSubmit()} type="submit" color="primary" isLoading={getUploadUrlMutation.isPending || confirmUploadMutation.isPending} isDisabled={getUploadUrlMutation.isPending || confirmUploadMutation.isPending || formCreateFrontend.state.isSubmitting}>Agregar documento</Button>
+                    {isUploading && progress > 0 && progress < 100 && (
+                        <span className="text-sm text-default-500 mr-2">Subiendo… {progress}%</span>
+                    )}
+                    <Button onPress={() => formCreateFrontend.handleSubmit()} type="submit" color="primary" isLoading={isUploading || getUploadUrlMutation.isPending || confirmUploadMutation.isPending} isDisabled={isUploading || getUploadUrlMutation.isPending || confirmUploadMutation.isPending || formCreateFrontend.state.isSubmitting}>Agregar documento</Button>
                 </ModalFooter>
             </ModalContent>
         </Modal>
