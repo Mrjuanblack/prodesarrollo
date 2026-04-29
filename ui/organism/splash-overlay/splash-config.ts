@@ -2,11 +2,15 @@ export const SPLASH_CONFIG = {
   alwaysShow: false,
   revisitThresholdMs: 3 * 24 * 60 * 60 * 1000,
   storageKey: "prodesarrollo:lastSplashShown",
-  postAnimationHoldMs: 1000,
+  // Animation timeline (spin + slide + letters + tagline) ends around ~2940ms.
+  // Hold + fadeOut bring the total on-screen time to ~4000ms.
+  postAnimationHoldMs: 460,
   fadeOutMs: 600,
   fadeOutEase: "inOutQuad",
   backgroundColor: "#FAF4F1",
-  zIndex: 9999,
+  // Above GlobalLoader (z-9999) so the splash always covers it during the
+  // initial auth-validate flash.
+  zIndex: 10000,
   logoMaxWidthPx: 860,
   triangleSpinMs: 1100,
   triangleSlideMs: 700,

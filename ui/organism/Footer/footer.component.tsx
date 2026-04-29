@@ -99,6 +99,7 @@ export const FooterComponent = () => {
               <a href="/participate">Participa</a>
               <Link href="/news">Noticias</Link>
               <a href="/pqrs">PQRS</a>
+              <Link href="/auth/login">Ingreso administrador</Link>
             </div>
           </div>
         </div>

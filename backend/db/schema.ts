@@ -2,6 +2,7 @@ import {
   text,
   uuid,
   check,
+  bigint,
   pgEnum,
   pgTable,
   boolean,
@@ -30,6 +31,13 @@ export const projects = pgTable("projects", {
   type: projectTypeEnum("type").notNull(),
   status: projectStatusEnum("status").notNull(),
   date: timestamp("date", { withTimezone: true }).notNull().defaultNow(),
+  // Stored as raw COP integer (e.g. 1_500_000_000). bigint covers project
+  // budgets that exceed INT4_MAX (~2.1B). Mode "number" stays under JS
+  // Number.MAX_SAFE_INTEGER (~9.0 × 10^15) for any realistic COP amount.
+  cost: bigint("cost", { mode: "number" }).notNull(),
+  finalDate: timestamp("final_date", { withTimezone: true }).notNull(),
+  clientEntity: text("client_entity").notNull(),
+  signatureDate: timestamp("signature_date", { withTimezone: true }).notNull(),
   highlight: boolean("highlight").notNull().default(false),
   donationProject: boolean("donation_project").notNull(),
   createdAt: timestamp("created_at", { withTimezone: true })

@@ -19,7 +19,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
 
   const isInternal = pathname.startsWith("/internal");
 
-  const { isLoading, setLoading } = useLoader();
+  const { setLoading } = useLoader();
 
   useEffect(() => {
     setLoading(true);
@@ -49,11 +49,15 @@ export default function AuthProvider({ children }: AuthProviderProps) {
         setLoading(false);
       },
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  if (isLoading === false) {
-    return <>{children}</>;
-  }
-
-  return null;
+  // Render children unconditionally. The GlobalLoader from LoaderProvider
+  // already covers the screen while validation is in flight, so the user
+  // doesn't see flashes of unauthenticated content. Returning null here
+  // (the previous behavior) caused the entire app subtree to mount/unmount
+  // every time `isLoading` flipped, which in Next 16's app router triggers
+  // "Rendered more hooks than during the previous render" inside the Router
+  // component as it re-evaluates memoized segments.
+  return <>{children}</>;
 }

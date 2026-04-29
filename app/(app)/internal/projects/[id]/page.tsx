@@ -30,6 +30,7 @@ import ManagePhotos from "@/ui/organism/Forms/Backoffice/ManagePhotos";
 import { getLocalTimeZone, CalendarDate } from "@internationalized/date";
 import ManageDocuments from "@/ui/organism/Forms/Backoffice/ManageDocuments";
 import { ProjectAutocomplete } from "@/ui/organism/ProjectAutocomplete/ProjectAutocomplete";
+import { formatCOP, parseCOP } from "@/lib/format-currency";
 
 export default function ProjectPage() {
   const { id } = useParams();
@@ -45,6 +46,10 @@ export default function ProjectPage() {
     type: project?.type ?? ProjectType.INTERVENTORY,
     status: project?.status ?? ProjectStatus.STARTED,
     date: project?.date ?? new Date(),
+    cost: project?.cost ?? 0,
+    finalDate: project?.finalDate ?? new Date(),
+    clientEntity: project?.clientEntity ?? "",
+    signatureDate: project?.signatureDate ?? new Date(),
     relatedProjects:
       project?.relatedProjects?.map((project) => project.id) ?? null,
     highlight: project?.highlight ?? false,
@@ -192,6 +197,122 @@ export default function ProjectPage() {
                         label="Fecha"
                         id="date"
                         name="date"
+                        value={
+                          field.state.value
+                            ? new CalendarDate(
+                                field.state.value.getFullYear(),
+                                field.state.value.getMonth() + 1,
+                                field.state.value.getDate()
+                              )
+                            : null
+                        }
+                        onChange={(e) => {
+                          field.handleChange(
+                            e?.toDate(getLocalTimeZone()) ?? new Date()
+                          );
+                        }}
+                        onBlur={field.handleBlur}
+                        isInvalid={
+                          field.state.meta.errors.length > 0 &&
+                          field.state.meta.isTouched
+                        }
+                        errorMessage={field.state.meta.errors[0]?.message}
+                      />
+                    </I18nProvider>
+                  )}
+                </form.Field>
+              </div>
+              <div className="col-span-2">
+                <form.Field name="cost">
+                  {(field) => (
+                    <Input
+                      label="Costo (COP)"
+                      id="cost"
+                      name="cost"
+                      inputMode="numeric"
+                      placeholder="$ 0"
+                      value={
+                        field.state.value > 0
+                          ? formatCOP(field.state.value)
+                          : ""
+                      }
+                      onChange={(e) => {
+                        field.handleChange(parseCOP(e.target.value));
+                      }}
+                      onBlur={field.handleBlur}
+                      isInvalid={
+                        field.state.meta.errors.length > 0 &&
+                        field.state.meta.isTouched
+                      }
+                      errorMessage={field.state.meta.errors[0]?.message}
+                    />
+                  )}
+                </form.Field>
+              </div>
+              <div className="col-span-2">
+                <form.Field name="finalDate">
+                  {(field) => (
+                    <I18nProvider locale="es-CO">
+                      <DatePicker
+                        label="Fecha final"
+                        id="finalDate"
+                        name="finalDate"
+                        value={
+                          field.state.value
+                            ? new CalendarDate(
+                                field.state.value.getFullYear(),
+                                field.state.value.getMonth() + 1,
+                                field.state.value.getDate()
+                              )
+                            : null
+                        }
+                        onChange={(e) => {
+                          field.handleChange(
+                            e?.toDate(getLocalTimeZone()) ?? new Date()
+                          );
+                        }}
+                        onBlur={field.handleBlur}
+                        isInvalid={
+                          field.state.meta.errors.length > 0 &&
+                          field.state.meta.isTouched
+                        }
+                        errorMessage={field.state.meta.errors[0]?.message}
+                      />
+                    </I18nProvider>
+                  )}
+                </form.Field>
+              </div>
+              <div className="col-span-2">
+                <form.Field name="clientEntity">
+                  {(field) => (
+                    <Input
+                      label="Entidad cliente"
+                      id="clientEntity"
+                      name="clientEntity"
+                      type="text"
+                      placeholder="Ingresa la entidad cliente"
+                      value={field.state.value ?? ""}
+                      onChange={(e) => {
+                        field.handleChange(e.target.value);
+                      }}
+                      onBlur={field.handleBlur}
+                      isInvalid={
+                        field.state.meta.errors.length > 0 &&
+                        field.state.meta.isTouched
+                      }
+                      errorMessage={field.state.meta.errors[0]?.message}
+                    />
+                  )}
+                </form.Field>
+              </div>
+              <div className="col-span-2">
+                <form.Field name="signatureDate">
+                  {(field) => (
+                    <I18nProvider locale="es-CO">
+                      <DatePicker
+                        label="Fecha de firma"
+                        id="signatureDate"
+                        name="signatureDate"
                         value={
                           field.state.value
                             ? new CalendarDate(

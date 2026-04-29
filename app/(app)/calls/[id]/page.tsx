@@ -20,6 +20,7 @@ import useProject from "@/hooks/project/useProject";
 import { useParams } from "next/navigation";
 import { getProjectStatusLabel, getProjectTypeLabel, ProjectStatus } from "@/domain/Projects";
 import { buildStorageUrl } from "@/lib/storage-url";
+import { formatCOP } from "@/lib/format-currency";
 
 const Call = () => {
   const { id } = useParams();
@@ -72,6 +73,26 @@ const Call = () => {
 
               <Text
                 text={`Fecha : ${project.date.toLocaleDateString('es-CO')}`}
+                className="text-primary font-normal text-[20px]"
+              />
+
+              <Text
+                text={`Entidad cliente : ${project.clientEntity}`}
+                className="text-primary font-normal text-[20px]"
+              />
+
+              <Text
+                text={`Fecha de firma : ${project.signatureDate.toLocaleDateString('es-CO')}`}
+                className="text-primary font-normal text-[20px]"
+              />
+
+              <Text
+                text={`Fecha final : ${project.finalDate.toLocaleDateString('es-CO')}`}
+                className="text-primary font-normal text-[20px]"
+              />
+
+              <Text
+                text={`Costo : ${formatCOP(project.cost)}`}
                 className="text-primary font-normal text-[20px]"
               />
             </div>

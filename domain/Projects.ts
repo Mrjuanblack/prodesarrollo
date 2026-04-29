@@ -49,6 +49,17 @@ export const getProjectTypeLabel = (type: ProjectType): string => {
   }
 };
 
+// Cost is a raw COP integer (e.g. 1_500_000_000). The frontend formats it
+// for display, but stores and submits the raw number.
+const costField = z
+  .number({ message: "El costo debe ser numérico" })
+  .int("El costo debe ser un número entero (en pesos)")
+  .nonnegative("El costo no puede ser negativo");
+
+const clientEntityField = z
+  .string({ message: "La entidad cliente debe ser textual" })
+  .min(1, "La entidad cliente es requerida");
+
 // Frontend schema - validates form input (Date objects)
 export const createProjectFormSchema = z.object({
   code: z
@@ -65,6 +76,14 @@ export const createProjectFormSchema = z.object({
     message: "El estado debe ser un estado válido",
   }),
   date: z.date({ message: "La fecha debe ser una fecha válida" }),
+  cost: costField,
+  finalDate: z.date({
+    message: "La fecha final debe ser una fecha válida",
+  }),
+  clientEntity: clientEntityField,
+  signatureDate: z.date({
+    message: "La fecha de firma debe ser una fecha válida",
+  }),
   donationProject: z.boolean({ message: "Debe ser booleano" }),
   relatedProjects: z
     .array(z.string({ message: "El proyecto relacionado debe ser textual" }))
@@ -87,6 +106,14 @@ export const createProjectSchema = z.object({
     message: "El estado debe ser un estado válido",
   }),
   date: z.coerce.date({ message: "La fecha debe ser una fecha válida" }),
+  cost: costField,
+  finalDate: z.coerce.date({
+    message: "La fecha final debe ser una fecha válida",
+  }),
+  clientEntity: clientEntityField,
+  signatureDate: z.coerce.date({
+    message: "La fecha de firma debe ser una fecha válida",
+  }),
   donationProject: z.boolean({ message: "Debe ser booleano" }),
   relatedProjects: z
     .array(z.string({ message: "El proyecto relacionado debe ser textual" }))
@@ -111,6 +138,14 @@ export const updateProjectFormSchema = z.object({
     message: "El estado debe ser un estado válido",
   }),
   date: z.date({ message: "La fecha debe ser una fecha válida" }),
+  cost: costField,
+  finalDate: z.date({
+    message: "La fecha final debe ser una fecha válida",
+  }),
+  clientEntity: clientEntityField,
+  signatureDate: z.date({
+    message: "La fecha de firma debe ser una fecha válida",
+  }),
   relatedProjects: z
     .array(z.string({ message: "El proyecto relacionado debe ser textual" }))
     .nullable(),
@@ -131,6 +166,10 @@ export const updateProjectSchema = z.object({
   type: z.enum(ProjectType, { message: "El tipo debe ser un tipo válido" }),
   status: z.enum(ProjectStatus, "El estado debe ser un estado válido"),
   date: z.coerce.date("La fecha debe ser una fecha válida"),
+  cost: costField,
+  finalDate: z.coerce.date("La fecha final debe ser una fecha válida"),
+  clientEntity: clientEntityField,
+  signatureDate: z.coerce.date("La fecha de firma debe ser una fecha válida"),
   relatedProjects: z
     .array(z.string("El proyecto relacionado debe ser textual"))
     .nullable(),

@@ -27,6 +27,7 @@ import { I18nProvider } from "@react-aria/i18n";
 import { useCreateProject } from "@/hooks/project/useCreateProject";
 import { getLocalTimeZone, CalendarDate } from "@internationalized/date";
 import { ProjectAutocomplete } from "@/ui/organism/ProjectAutocomplete/ProjectAutocomplete";
+import { formatCOP, parseCOP } from "@/lib/format-currency";
 
 export interface CreateProjectProps {
   isOpen: boolean;
@@ -45,6 +46,10 @@ const CreateProjectForm: React.FC<CreateProjectProps> = ({
     description: "",
     type: ProjectType.INTERVENTORY,
     date: new Date(),
+    cost: 0,
+    finalDate: new Date(),
+    clientEntity: "",
+    signatureDate: new Date(),
     status: ProjectStatus.STARTED,
     relatedProjects: null,
     donationProject: false,
@@ -178,6 +183,112 @@ const CreateProjectForm: React.FC<CreateProjectProps> = ({
                       label="Fecha"
                       id="date"
                       name="date"
+                      value={
+                        field.state.value
+                          ? new CalendarDate(
+                            field.state.value.getFullYear(),
+                            field.state.value.getMonth() + 1,
+                            field.state.value.getDate()
+                          )
+                          : undefined
+                      }
+                      onChange={(e) => {
+                        field.handleChange(
+                          e?.toDate(getLocalTimeZone()) ?? new Date()
+                        );
+                      }}
+                      onBlur={field.handleBlur}
+                      isInvalid={
+                        field.state.meta.errors.length > 0 &&
+                        field.state.meta.isTouched
+                      }
+                      errorMessage={field.state.meta.errors[0]?.message}
+                    />
+                  </I18nProvider>
+                )}
+              </form.Field>
+              <form.Field name="cost">
+                {(field) => (
+                  <Input
+                    label="Costo (COP)"
+                    id="cost"
+                    name="cost"
+                    inputMode="numeric"
+                    placeholder="$ 0"
+                    value={
+                      field.state.value > 0 ? formatCOP(field.state.value) : ""
+                    }
+                    onChange={(e) => {
+                      field.handleChange(parseCOP(e.target.value));
+                    }}
+                    onBlur={field.handleBlur}
+                    isInvalid={
+                      field.state.meta.errors.length > 0 &&
+                      field.state.meta.isTouched
+                    }
+                    errorMessage={field.state.meta.errors[0]?.message}
+                  />
+                )}
+              </form.Field>
+              <form.Field name="finalDate">
+                {(field) => (
+                  <I18nProvider locale="es-CO">
+                    <DatePicker
+                      label="Fecha final"
+                      id="finalDate"
+                      name="finalDate"
+                      value={
+                        field.state.value
+                          ? new CalendarDate(
+                            field.state.value.getFullYear(),
+                            field.state.value.getMonth() + 1,
+                            field.state.value.getDate()
+                          )
+                          : undefined
+                      }
+                      onChange={(e) => {
+                        field.handleChange(
+                          e?.toDate(getLocalTimeZone()) ?? new Date()
+                        );
+                      }}
+                      onBlur={field.handleBlur}
+                      isInvalid={
+                        field.state.meta.errors.length > 0 &&
+                        field.state.meta.isTouched
+                      }
+                      errorMessage={field.state.meta.errors[0]?.message}
+                    />
+                  </I18nProvider>
+                )}
+              </form.Field>
+              <form.Field name="clientEntity">
+                {(field) => (
+                  <Input
+                    label="Entidad cliente"
+                    id="clientEntity"
+                    name="clientEntity"
+                    type="text"
+                    placeholder="Ingresa la entidad cliente"
+                    value={field.state.value ?? ""}
+                    onChange={(e) => {
+                      field.handleChange(e.target.value);
+                    }}
+                    onBlur={field.handleBlur}
+                    isInvalid={
+                      field.state.meta.errors.length > 0 &&
+                      field.state.meta.isTouched
+                    }
+                    errorMessage={field.state.meta.errors[0]?.message}
+                  />
+                )}
+              </form.Field>
+              <form.Field name="signatureDate">
+                {(field) => (
+                  <I18nProvider locale="es-CO">
+                    <DatePicker
+                      label="Fecha de firma"
+                      id="signatureDate"
+                      name="signatureDate"
                       value={
                         field.state.value
                           ? new CalendarDate(

@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import { addToast } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { useForm } from "@tanstack/react-form";
@@ -55,7 +57,15 @@ const LoginPage = () => {
   });
 
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="relative flex items-center justify-center h-screen">
+      <Link
+        href="/"
+        className="absolute top-6 left-6 flex items-center gap-2 text-sm text-primary hover:underline"
+      >
+        <ArrowLeft size={16} />
+        Volver al inicio
+      </Link>
+
       <FormCard
         onSubmit={form.handleSubmit}
         title="Inicia sesión en tu cuenta"
