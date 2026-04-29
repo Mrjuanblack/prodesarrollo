@@ -1,7 +1,8 @@
 import { z } from "zod/v4";
 import { NextResponse } from "next/server";
 import { ProjectService } from "@/backend/services/project-service";
-import { validateUser } from "@/backend/utilities/auth/validateUser";
+import { requireRole } from "@/backend/utilities/auth/requireRole";
+import { UserRole } from "@/domain/user";
 import { PaginationRequest, PaginationResponse } from "@/domain/Pagination";
 import { createProjectSchema, Project, ProjectType } from "@/domain/Projects";
 
@@ -79,7 +80,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const result = await validateUser();
+    const result = await requireRole([UserRole.ADMIN, UserRole.ADMIN_PROJECTS]);
 
     if (result instanceof NextResponse) {
       return result;

@@ -4,6 +4,8 @@ import {
   Modal,
   Input,
   Button,
+  Select,
+  SelectItem,
   addToast,
   ModalBody,
   ModalFooter,
@@ -14,7 +16,13 @@ import { FC, useState } from "react";
 import { useForm } from "@tanstack/react-form";
 import { useCreateUser } from "@/hooks/users/useCreateUser";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
-import { createUserFormSchema, CreateUserFormType } from "@/domain/user";
+import {
+  createUserFormSchema,
+  CreateUserFormType,
+  getUserRoleLabel,
+  UserRole,
+  userRoleList,
+} from "@/domain/user";
 
 export interface CreateUserProps {
   isOpen: boolean;
@@ -32,6 +40,7 @@ const CreateUserForm: FC<CreateUserProps> = ({ isOpen, onClose }) => {
     username: "",
     password: "",
     confirmPassword: "",
+    role: UserRole.ADMIN,
   };
 
   const form = useForm({
@@ -47,6 +56,7 @@ const CreateUserForm: FC<CreateUserProps> = ({ isOpen, onClose }) => {
           email: value.email,
           password: value.password,
           username: value.username,
+          role: value.role,
         },
         {
           onError: () => {
@@ -174,6 +184,33 @@ const CreateUserForm: FC<CreateUserProps> = ({ isOpen, onClose }) => {
                       field.state.meta.isTouched
                     }
                   />
+                )}
+              </form.Field>
+
+              <form.Field name="role">
+                {(field) => (
+                  <Select
+                    id="role"
+                    name="role"
+                    label="Rol"
+                    selectedKeys={[field.state.value]}
+                    onChange={(e) =>
+                      field.handleChange(e.target.value as UserRole)
+                    }
+                    onBlur={field.handleBlur}
+                    isInvalid={
+                      field.state.meta.errors.length > 0 &&
+                      field.state.meta.isTouched
+                    }
+                    errorMessage={field.state.meta.errors[0]?.message}
+                    disallowEmptySelection
+                  >
+                    {userRoleList.map((role) => (
+                      <SelectItem key={role}>
+                        {getUserRoleLabel(role)}
+                      </SelectItem>
+                    ))}
+                  </Select>
                 )}
               </form.Field>
             </div>

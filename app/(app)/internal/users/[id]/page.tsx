@@ -6,9 +6,15 @@ import { useParams, useRouter } from "next/navigation";
 import useUser from "@/hooks/users/useUser";
 import { useForm } from "@tanstack/react-form";
 import { Container, Section } from "@/ui/molecules";
-import { addToast, Button, Input } from "@heroui/react";
+import { addToast, Button, Input, Select, SelectItem } from "@heroui/react";
 import { useUpdateUser } from "@/hooks/users/useUpdateCreate";
-import { UpdateFormUser, updateUserFormSchema } from "@/domain/user";
+import {
+  UpdateFormUser,
+  UserRole,
+  getUserRoleLabel,
+  updateUserFormSchema,
+  userRoleList,
+} from "@/domain/user";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 
 const UserEdit = () => {
@@ -25,12 +31,14 @@ const UserEdit = () => {
     user: {
       email: user?.email ?? "",
       username: user?.username ?? "",
+      role: (user?.role as UserRole | undefined) ?? UserRole.ADMIN,
     } satisfies UpdateFormUser,
   });
 
   const defaultValues: UpdateFormUser = {
     email: user?.email ?? "",
     username: user?.username ?? "",
+    role: (user?.role as UserRole | undefined) ?? UserRole.ADMIN,
   };
 
   const form = useForm({
@@ -157,6 +165,34 @@ const UserEdit = () => {
                   />
                 )}
               </form.Field>
+
+              <form.Field name="role">
+                {(field) => (
+                  <Select
+                    id="role"
+                    name="role"
+                    label="Rol"
+                    selectedKeys={[field.state.value]}
+                    onChange={(e) =>
+                      field.handleChange(e.target.value as UserRole)
+                    }
+                    onBlur={field.handleBlur}
+                    isInvalid={
+                      field.state.meta.errors.length > 0 &&
+                      field.state.meta.isTouched
+                    }
+                    errorMessage={field.state.meta.errors[0]?.message}
+                    disallowEmptySelection
+                  >
+                    {userRoleList.map((role) => (
+                      <SelectItem key={role}>
+                        {getUserRoleLabel(role)}
+                      </SelectItem>
+                    ))}
+                  </Select>
+                )}
+              </form.Field>
+
               <div className="col-span-2 space-x-2">
                 <Button
                   type="submit"

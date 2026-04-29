@@ -64,6 +64,20 @@
       "when": 1777486221383,
       "tag": "0008_warm_fabian_cortez",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1777490056277,
+      "tag": "0009_early_namorita",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1777492282209,
+      "tag": "0010_even_jackpot",
+      "breakpoints": true
     }
   ]
 }

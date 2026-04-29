@@ -16,6 +16,7 @@ export class AuthService {
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
         username: user.username,
+        role: user.role,
       },
       process.env.JWT_EXPIRES_IN ?? "15m"
     );

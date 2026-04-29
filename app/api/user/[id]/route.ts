@@ -2,14 +2,15 @@ import { z } from "zod/v4";
 import { NextResponse } from "next/server";
 import { updateUserFormSchema } from "@/domain/user";
 import { UserService } from "@/backend/services/user-service";
-import { validateUser } from "@/backend/utilities/auth/validateUser";
+import { requireRole } from "@/backend/utilities/auth/requireRole";
+import { UserRole } from "@/domain/user";
 
 export async function GET(
   request: Request,
   context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const result = await validateUser();
+    const result = await requireRole([UserRole.ADMIN]);
 
     if (result instanceof NextResponse) {
       return result;
@@ -31,7 +32,7 @@ export async function PUT(
   context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const result = await validateUser();
+    const result = await requireRole([UserRole.ADMIN]);
 
     if (result instanceof NextResponse) {
       return result;

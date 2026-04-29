@@ -2,7 +2,8 @@ import { z } from "zod/v4";
 import { NextResponse } from "next/server";
 import { updateProjectSchema } from "@/domain/Projects";
 import { ProjectService } from "@/backend/services/project-service";
-import { validateUser } from "@/backend/utilities/auth/validateUser";
+import { requireRole } from "@/backend/utilities/auth/requireRole";
+import { UserRole } from "@/domain/user";
 
 export async function GET(
   request: Request,
@@ -25,7 +26,7 @@ export async function PUT(
   context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const result = await validateUser();
+    const result = await requireRole([UserRole.ADMIN, UserRole.ADMIN_PROJECTS]);
 
     if (result instanceof NextResponse) {
       return result;
@@ -55,7 +56,7 @@ export async function DELETE(
   context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const result = await validateUser();
+    const result = await requireRole([UserRole.ADMIN, UserRole.ADMIN_PROJECTS]);
 
     if (result instanceof NextResponse) {
       return result;

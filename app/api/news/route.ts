@@ -1,5 +1,6 @@
 import { NewsService } from "@/backend/services/news-service";
-import { validateUser } from "@/backend/utilities/auth/validateUser";
+import { requireRole } from "@/backend/utilities/auth/requireRole";
+import { UserRole } from "@/domain/user";
 import { createNewsSchema, NewsCategory } from "@/domain/News";
 import { PaginationRequest } from "@/domain/Pagination";
 import { NextResponse } from "next/server";
@@ -35,7 +36,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const result = await validateUser();
+    const result = await requireRole([UserRole.ADMIN, UserRole.ADMIN_NEWS]);
 
     if (result instanceof NextResponse) {
       return result;

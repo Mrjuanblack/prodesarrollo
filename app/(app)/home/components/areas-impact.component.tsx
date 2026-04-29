@@ -56,20 +56,6 @@ const services: ServiceItem[] = [
       </>
     ),
   },
-  {
-    id: 4,
-    Icon: Wallet,
-    title: "Movilización y fomento de recursos financieros",
-    description: (
-      <>
-        Promover las actividades necesarias para la consecución y ejecución de
-        recursos económicos, aportes e ingresos lícitos. Esta gestión
-        estratégica se enfoca en captar fondos nacionales e internacionales para
-        <strong> aumentar la competitividad</strong> y financiar los planes de
-        desarrollo.
-      </>
-    ),
-  },
 ];
 
 const customSlideClasses: ICarouselProps["slideSizeClasses"] = {

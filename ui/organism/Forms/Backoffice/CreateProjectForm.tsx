@@ -70,7 +70,7 @@ const CreateProjectForm: React.FC<CreateProjectProps> = ({
   });
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} size="3xl" scrollBehavior="inside">
       <ModalContent>
         <ModalHeader>
           <h2 className="text-2xl font-bold">Crear proyecto</h2>
@@ -84,7 +84,7 @@ const CreateProjectForm: React.FC<CreateProjectProps> = ({
               form.handleSubmit();
             }}
           >
-            <div className="flex flex-col gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <form.Field name="code">
                 {(field) => (
                   <Input
@@ -127,28 +127,30 @@ const CreateProjectForm: React.FC<CreateProjectProps> = ({
                   />
                 )}
               </form.Field>
-              <form.Field name="description">
-                {(field) => (
-                  <Textarea
-                    label="Descripción"
-                    id="description"
-                    name="description"
-                    type="text"
-                    placeholder="Ingresa la descripción del proyecto"
-                    value={field.state.value ?? ""}
-                    onChange={(e) => {
-                      field.handleChange(e.target.value);
-                    }}
-                    onBlur={field.handleBlur}
-                    isInvalid={
-                      field.state.meta.errors.length > 0 &&
-                      field.state.meta.isTouched
-                    }
-                    errorMessage={field.state.meta.errors[0]?.message}
-                    minRows={2}
-                  />
-                )}
-              </form.Field>
+              <div className="md:col-span-2">
+                <form.Field name="description">
+                  {(field) => (
+                    <Textarea
+                      label="Descripción"
+                      id="description"
+                      name="description"
+                      type="text"
+                      placeholder="Ingresa la descripción del proyecto"
+                      value={field.state.value ?? ""}
+                      onChange={(e) => {
+                        field.handleChange(e.target.value);
+                      }}
+                      onBlur={field.handleBlur}
+                      isInvalid={
+                        field.state.meta.errors.length > 0 &&
+                        field.state.meta.isTouched
+                      }
+                      errorMessage={field.state.meta.errors[0]?.message}
+                      minRows={3}
+                    />
+                  )}
+                </form.Field>
+              </div>
               <form.Field name="type">
                 {(field) => (
                   <Select
@@ -176,20 +178,109 @@ const CreateProjectForm: React.FC<CreateProjectProps> = ({
                   </Select>
                 )}
               </form.Field>
+              <form.Field name="status">
+                {(field) => (
+                  <Select
+                    label="Estado"
+                    id="status"
+                    name="status"
+                    value={field.state.value ?? ""}
+                    onChange={(e) => {
+                      field.handleChange(e.target.value as ProjectStatus);
+                    }}
+                    onBlur={field.handleBlur}
+                    isInvalid={
+                      field.state.meta.errors.length > 0 &&
+                      field.state.meta.isTouched
+                    }
+                    errorMessage={field.state.meta.errors[0]?.message}
+                    defaultSelectedKeys={[field.state.value ?? ""]}
+                    disallowEmptySelection
+                  >
+                    {projectStatusList.map((status) => (
+                      <SelectItem key={status}>
+                        {getProjectStatusLabel(status)}
+                      </SelectItem>
+                    ))}
+                  </Select>
+                )}
+              </form.Field>
               <form.Field name="date">
                 {(field) => (
                   <I18nProvider locale="es-CO">
                     <DatePicker
-                      label="Fecha"
+                      label="Fecha inicial"
                       id="date"
                       name="date"
                       value={
                         field.state.value
                           ? new CalendarDate(
-                            field.state.value.getFullYear(),
-                            field.state.value.getMonth() + 1,
-                            field.state.value.getDate()
-                          )
+                              field.state.value.getFullYear(),
+                              field.state.value.getMonth() + 1,
+                              field.state.value.getDate()
+                            )
+                          : undefined
+                      }
+                      onChange={(e) => {
+                        field.handleChange(
+                          e?.toDate(getLocalTimeZone()) ?? new Date()
+                        );
+                      }}
+                      onBlur={field.handleBlur}
+                      isInvalid={
+                        field.state.meta.errors.length > 0 &&
+                        field.state.meta.isTouched
+                      }
+                      errorMessage={field.state.meta.errors[0]?.message}
+                    />
+                  </I18nProvider>
+                )}
+              </form.Field>
+              <form.Field name="finalDate">
+                {(field) => (
+                  <I18nProvider locale="es-CO">
+                    <DatePicker
+                      label="Fecha final"
+                      id="finalDate"
+                      name="finalDate"
+                      value={
+                        field.state.value
+                          ? new CalendarDate(
+                              field.state.value.getFullYear(),
+                              field.state.value.getMonth() + 1,
+                              field.state.value.getDate()
+                            )
+                          : undefined
+                      }
+                      onChange={(e) => {
+                        field.handleChange(
+                          e?.toDate(getLocalTimeZone()) ?? new Date()
+                        );
+                      }}
+                      onBlur={field.handleBlur}
+                      isInvalid={
+                        field.state.meta.errors.length > 0 &&
+                        field.state.meta.isTouched
+                      }
+                      errorMessage={field.state.meta.errors[0]?.message}
+                    />
+                  </I18nProvider>
+                )}
+              </form.Field>
+              <form.Field name="signatureDate">
+                {(field) => (
+                  <I18nProvider locale="es-CO">
+                    <DatePicker
+                      label="Fecha de firma"
+                      id="signatureDate"
+                      name="signatureDate"
+                      value={
+                        field.state.value
+                          ? new CalendarDate(
+                              field.state.value.getFullYear(),
+                              field.state.value.getMonth() + 1,
+                              field.state.value.getDate()
+                            )
                           : undefined
                       }
                       onChange={(e) => {
@@ -230,26 +321,18 @@ const CreateProjectForm: React.FC<CreateProjectProps> = ({
                   />
                 )}
               </form.Field>
-              <form.Field name="finalDate">
-                {(field) => (
-                  <I18nProvider locale="es-CO">
-                    <DatePicker
-                      label="Fecha final"
-                      id="finalDate"
-                      name="finalDate"
-                      value={
-                        field.state.value
-                          ? new CalendarDate(
-                            field.state.value.getFullYear(),
-                            field.state.value.getMonth() + 1,
-                            field.state.value.getDate()
-                          )
-                          : undefined
-                      }
+              <div className="md:col-span-2">
+                <form.Field name="clientEntity">
+                  {(field) => (
+                    <Input
+                      label="Entidad cliente"
+                      id="clientEntity"
+                      name="clientEntity"
+                      type="text"
+                      placeholder="Ingresa la entidad cliente"
+                      value={field.state.value ?? ""}
                       onChange={(e) => {
-                        field.handleChange(
-                          e?.toDate(getLocalTimeZone()) ?? new Date()
-                        );
+                        field.handleChange(e.target.value);
                       }}
                       onBlur={field.handleBlur}
                       isInvalid={
@@ -258,121 +341,46 @@ const CreateProjectForm: React.FC<CreateProjectProps> = ({
                       }
                       errorMessage={field.state.meta.errors[0]?.message}
                     />
-                  </I18nProvider>
-                )}
-              </form.Field>
-              <form.Field name="clientEntity">
-                {(field) => (
-                  <Input
-                    label="Entidad cliente"
-                    id="clientEntity"
-                    name="clientEntity"
-                    type="text"
-                    placeholder="Ingresa la entidad cliente"
-                    value={field.state.value ?? ""}
-                    onChange={(e) => {
-                      field.handleChange(e.target.value);
-                    }}
-                    onBlur={field.handleBlur}
-                    isInvalid={
-                      field.state.meta.errors.length > 0 &&
-                      field.state.meta.isTouched
-                    }
-                    errorMessage={field.state.meta.errors[0]?.message}
-                  />
-                )}
-              </form.Field>
-              <form.Field name="signatureDate">
-                {(field) => (
-                  <I18nProvider locale="es-CO">
-                    <DatePicker
-                      label="Fecha de firma"
-                      id="signatureDate"
-                      name="signatureDate"
-                      value={
-                        field.state.value
-                          ? new CalendarDate(
-                            field.state.value.getFullYear(),
-                            field.state.value.getMonth() + 1,
-                            field.state.value.getDate()
-                          )
-                          : undefined
-                      }
-                      onChange={(e) => {
+                  )}
+                </form.Field>
+              </div>
+              <div className="md:col-span-2">
+                <form.Field name="relatedProjects">
+                  {(field) => (
+                    <ProjectAutocomplete
+                      label="Proyectos relacionados"
+                      placeholder="Buscar proyectos..."
+                      selectedProjects={field.state.value ?? []}
+                      onSelectionChange={(projects) => {
                         field.handleChange(
-                          e?.toDate(getLocalTimeZone()) ?? new Date()
+                          projects.length > 0
+                            ? projects.map((project) => project.id)
+                            : null
                         );
                       }}
-                      onBlur={field.handleBlur}
                       isInvalid={
                         field.state.meta.errors.length > 0 &&
                         field.state.meta.isTouched
                       }
                       errorMessage={field.state.meta.errors[0]?.message}
                     />
-                  </I18nProvider>
-                )}
-              </form.Field>
-              <form.Field name="status">
-                {(field) => (
-                  <Select
-                    label="Estado"
-                    id="status"
-                    name="status"
-                    value={field.state.value ?? ""}
-                    onChange={(e) => {
-                      field.handleChange(e.target.value as ProjectStatus);
-                    }}
-                    onBlur={field.handleBlur}
-                    isInvalid={
-                      field.state.meta.errors.length > 0 &&
-                      field.state.meta.isTouched
-                    }
-                    errorMessage={field.state.meta.errors[0]?.message}
-                    defaultSelectedKeys={[field.state.value ?? ""]}
-                    disallowEmptySelection
-                  >
-                    {projectStatusList.map((status) => (
-                      <SelectItem key={status}>
-                        {getProjectStatusLabel(status)}
-                      </SelectItem>
-                    ))}
-                  </Select>
-                )}
-              </form.Field>
-              <form.Field name="relatedProjects">
-                {(field) => (
-                  <ProjectAutocomplete
-                    label="Proyectos relacionados"
-                    placeholder="Buscar proyectos..."
-                    selectedProjects={field.state.value ?? []}
-                    onSelectionChange={(projects) => {
-                      field.handleChange(
-                        projects.length > 0
-                          ? projects.map((project) => project.id)
-                          : null
-                      );
-                    }}
-                    isInvalid={
-                      field.state.meta.errors.length > 0 &&
-                      field.state.meta.isTouched
-                    }
-                    errorMessage={field.state.meta.errors[0]?.message}
-                  />
-                )}
-              </form.Field>
-              <form.Field name="donationProject">
-                {(field) => (
-                  <Switch
-                    isSelected={field.state.value}
-                    onValueChange={(value) => {
-                      field.handleChange(value);
-                    }}
-                  >
-                    Proyecto de donación
-                  </Switch>
-                )}
-              </form.Field>
+                  )}
+                </form.Field>
+              </div>
+              <div className="md:col-span-2">
+                <form.Field name="donationProject">
+                  {(field) => (
+                    <Switch
+                      isSelected={field.state.value}
+                      onValueChange={(value) => {
+                        field.handleChange(value);
+                      }}
+                    >
+                      Proyecto de donación
+                    </Switch>
+                  )}
+                </form.Field>
+              </div>
             </div>
           </form>
         </ModalBody>

@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { Container, Section } from "@/ui/molecules";
 import { useUsers } from "@/hooks/users/useUsers";
 import CreateUserForm from "@/ui/organism/Forms/Backoffice/CreateUserForm";
+import { getUserRoleLabel, UserRole } from "@/domain/user";
 
 const UserList = () => {
   const router = useRouter();
@@ -70,6 +71,7 @@ const UserList = () => {
             <TableHeader>
               <TableColumn key="name">Nombre</TableColumn>
               <TableColumn key="date">Email</TableColumn>
+              <TableColumn key="role">Rol</TableColumn>
               <TableColumn key="createdAt">Fecha de creación</TableColumn>
               <TableColumn key="updatedAt">Fecha de actualización</TableColumn>
               <TableColumn key="actions">Acciones</TableColumn>
@@ -87,6 +89,9 @@ const UserList = () => {
                 >
                   <TableCell>{item.username}</TableCell>
                   <TableCell>{item.email}</TableCell>
+                  <TableCell>
+                    {getUserRoleLabel(item.role as UserRole)}
+                  </TableCell>
                   <TableCell>{item.createdAt.toLocaleDateString()}</TableCell>
                   <TableCell>{item.updatedAt.toLocaleDateString()}</TableCell>
                   <TableCell>

@@ -29,6 +29,7 @@ export class UserRepository {
           username: user.username,
           email: user.email,
           password: passwordHash,
+          role: user.role,
         })
         .returning();
 
@@ -45,6 +46,7 @@ export class UserRepository {
       const updateData: UpdateUser = {
         email: user.email,
         username: user.username,
+        role: user.role,
         updatedAt: new Date(),
       };
 
@@ -172,6 +174,7 @@ export class UserRepository {
       id: user.id,
       email: user.email,
       username: user.username,
+      role: user.role,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     };
@@ -185,6 +188,7 @@ export class UserRepository {
       email: user.email,
       username: user.username,
       password: user.password,
+      role: user.role,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     };

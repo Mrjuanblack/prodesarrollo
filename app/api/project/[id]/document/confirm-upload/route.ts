@@ -1,6 +1,7 @@
 import z from "zod/v4";
 import { NextResponse } from "next/server";
-import { validateUser } from "@/backend/utilities/auth/validateUser";
+import { requireRole } from "@/backend/utilities/auth/requireRole";
+import { UserRole } from "@/domain/user";
 import { confirmUploadProjectDocumentSchema } from "@/domain/ProjectDocument";
 import { ProjectDocumentService } from "@/backend/services/project-document-service";
 
@@ -9,7 +10,7 @@ export async function POST(
   context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const result = await validateUser();
+    const result = await requireRole([UserRole.ADMIN, UserRole.ADMIN_PROJECTS]);
 
     if (result instanceof NextResponse) {
       return result;

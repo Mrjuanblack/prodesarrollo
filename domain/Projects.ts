@@ -60,6 +60,22 @@ const clientEntityField = z
   .string({ message: "La entidad cliente debe ser textual" })
   .min(1, "La entidad cliente es requerida");
 
+// Shared cross-field validator: finalDate must be on or after date.
+const ensureFinalDateAfterStart = <
+  T extends { date: Date; finalDate: Date }
+>(
+  data: T,
+  ctx: z.RefinementCtx
+): void => {
+  if (data.finalDate < data.date) {
+    ctx.addIssue({
+      code: "custom",
+      message: "La fecha final no puede ser anterior a la fecha inicial",
+      path: ["finalDate"],
+    });
+  }
+};
+
 // Frontend schema - validates form input (Date objects)
 export const createProjectFormSchema = z.object({
   code: z
@@ -88,7 +104,7 @@ export const createProjectFormSchema = z.object({
   relatedProjects: z
     .array(z.string({ message: "El proyecto relacionado debe ser textual" }))
     .nullable(),
-});
+}).superRefine(ensureFinalDateAfterStart);
 
 // Backend schema - validates API input (coerces strings to dates)
 export const createProjectSchema = z.object({
@@ -118,7 +134,7 @@ export const createProjectSchema = z.object({
   relatedProjects: z
     .array(z.string({ message: "El proyecto relacionado debe ser textual" }))
     .nullable(),
-});
+}).superRefine(ensureFinalDateAfterStart);
 
 export type CreateProject = z.infer<typeof createProjectSchema>;
 export type CreateProjectForm = z.infer<typeof createProjectFormSchema>;
@@ -151,7 +167,7 @@ export const updateProjectFormSchema = z.object({
     .nullable(),
   highlight: z.boolean({ message: "El proyecto debe ser destacado" }),
   donationProject: z.boolean({ message: "Debe ser booleano" }),
-});
+}).superRefine(ensureFinalDateAfterStart);
 
 export const updateProjectSchema = z.object({
   code: z
@@ -175,7 +191,7 @@ export const updateProjectSchema = z.object({
     .nullable(),
   highlight: z.boolean({ message: "El proyecto debe ser destacado" }),
   donationProject: z.boolean({ message: "Debe ser booleano" }),
-});
+}).superRefine(ensureFinalDateAfterStart);
 
 export type UpdateProject = z.infer<typeof updateProjectSchema>;
 

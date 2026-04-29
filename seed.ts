@@ -5,6 +5,7 @@ import argon2 from "argon2";
 import { users } from "./backend/db/schema";
 import * as schema from "./backend/db/schema";
 import { drizzle } from "drizzle-orm/node-postgres";
+import { UserRole } from "./domain/user";
 
 dotenv.config();
 
@@ -37,6 +38,7 @@ async function seed() {
     username: ADMIN_USERNAME,
     email: ADMIN_EMAIL,
     password: passwordHash,
+    role: UserRole.ADMIN,
   });
 
   console.log(`Admin user ${ADMIN_EMAIL} created.`);

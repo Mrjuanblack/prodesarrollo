@@ -15,6 +15,7 @@ export enum StorageFolder {
     PROJECTS = "projects",
     IMAGES = "images",
     NEWS = "news",
+    HOME_CAROUSEL = "home-carousel",
 }
 
 const bucketName = process.env.S3_BUCKET_NAME!;

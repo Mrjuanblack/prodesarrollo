@@ -3,11 +3,12 @@ import { NextResponse } from "next/server";
 import { createUserSchema } from "@/domain/user";
 import { PaginationRequest } from "@/domain/Pagination";
 import { UserService } from "@/backend/services/user-service";
-import { validateUser } from "@/backend/utilities/auth/validateUser";
+import { requireRole } from "@/backend/utilities/auth/requireRole";
+import { UserRole } from "@/domain/user";
 
 export async function GET(request: Request) {
   try {
-    const result = await validateUser();
+    const result = await requireRole([UserRole.ADMIN]);
 
     if (result instanceof NextResponse) {
       return result;
@@ -35,7 +36,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const result = await validateUser();
+    const result = await requireRole([UserRole.ADMIN]);
 
     if (result instanceof NextResponse) {
       return result;

@@ -15,6 +15,7 @@ import { NewsCategory } from "@/domain/News";
 import { IdTypeOptions } from "@/domain/shared";
 import { ProjectStatus, ProjectType } from "@/domain/Projects";
 import { DonationTypeOptions, PersonTypeOptions } from "@/domain/donation";
+import { UserRole } from "@/domain/user";
 
 export const projectStatusEnum = pgEnum("project_status", ProjectStatus);
 export const projectTypeEnum = pgEnum("project_type", ProjectType);
@@ -22,6 +23,7 @@ export const newsCategoryEnum = pgEnum("news_category", NewsCategory);
 export const donationsTypeEnum = pgEnum("donations_type", DonationTypeOptions);
 export const personsTypeEnum = pgEnum("persons_type", PersonTypeOptions);
 export const idsTypeEnum = pgEnum("ids_type", IdTypeOptions);
+export const userRoleEnum = pgEnum("user_role", UserRole);
 
 export const projects = pgTable("projects", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -95,6 +97,31 @@ export const projectDocuments = pgTable("project_documents", {
     .notNull()
     .defaultNow(),
 });
+
+export const homeCarouselSlides = pgTable("home_carousel_slides", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  imageUrl: text("image_url").notNull(),
+  // Each slide may show 1 or 2 cards on top of the background image. At
+  // least one card must have content; this constraint is enforced at the
+  // application layer (zod) and via a CHECK in the migration.
+  leftCardTitle: text("left_card_title"),
+  leftCardDescription: text("left_card_description"),
+  rightCardTitle: text("right_card_title"),
+  rightCardDescription: text("right_card_description"),
+  displayOrder: integer("display_order").notNull().default(0),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+}, (table) => [
+  check(
+    "at_least_one_card",
+    sql`(${table.leftCardTitle} IS NOT NULL AND ${table.leftCardDescription} IS NOT NULL)
+        OR (${table.rightCardTitle} IS NOT NULL AND ${table.rightCardDescription} IS NOT NULL)`
+  ),
+]);
 
 export const news = pgTable("news", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -180,6 +207,9 @@ export const users = pgTable("users", {
   username: text("username").notNull(),
   email: text("email").notNull().unique(),
   password: text("password").notNull(),
+  // Role gates which sections of /internal the user can access. Default of
+  // ADMIN keeps existing rows working when this column is added.
+  role: userRoleEnum("role").notNull().default(UserRole.ADMIN),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
     .defaultNow(),

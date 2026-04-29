@@ -50,6 +50,7 @@ export enum RepositoryErrorOrigin {
   NEWS = "006",
   NEWS_PHOTOS = "007",
   DONATIONS = "008",
+  HOME_CAROUSEL = "009",
 }
 
 export class RepositoryError extends Error implements UserReadableError {

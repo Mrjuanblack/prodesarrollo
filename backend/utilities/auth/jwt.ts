@@ -32,6 +32,7 @@ export async function verifyToken(token: string): Promise<VerificationResult> {
       createdAt: payload.createdAt,
       updatedAt: payload.updatedAt,
       username: payload.username,
+      role: payload.role,
     };
 
     return {
