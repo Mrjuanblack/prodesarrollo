@@ -1,14 +1,12 @@
 import {
-  Wallet,
   Settings,
   PiggyBank,
   CheckCircle,
   Construction,
 } from "lucide-react";
 import { SectionHeader } from "@/ui/organism";
-import { Button, ServiceCard } from "@/ui/atoms";
-import { Carousel, Container, Section } from "@/ui/molecules";
-import { ICarouselProps } from "@/ui/molecules/Carousel/carousel.properties";
+import { ServiceCard } from "@/ui/atoms";
+import { Container, Section } from "@/ui/molecules";
 import { ServiceItem } from "@/ui/atoms/Cards/ServiceCard/service-card.properties";
 
 const services: ServiceItem[] = [
@@ -58,13 +56,6 @@ const services: ServiceItem[] = [
   },
 ];
 
-const customSlideClasses: ICarouselProps["slideSizeClasses"] = {
-  base: "basis-full",
-  sm: "sm:basis-1/2",
-  md: "md:basis-1/2",
-  lg: "lg:basis-1/3",
-};
-
 export const AreasImpact = () => {
   return (
     <Section fadeIn={true}>
@@ -75,20 +66,11 @@ export const AreasImpact = () => {
           description="Celebramos y suscribimos convenios y contratos interadministrativos, civiles y comerciales con entidades públicas y privadas, orientados al fortalecimiento de la gestión pública y a la promoción eficiente del desarrollo territorial."
         />
 
-        <div className="w-full">
-          <Carousel slideSizeClasses={customSlideClasses}>
-            {services.map((services) => (
-              <ServiceCard key={services.id} item={services} />
-            ))}
-          </Carousel>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+          {services.map((service) => (
+            <ServiceCard key={service.id} item={service} />
+          ))}
         </div>
-
-        <Button
-          text="Ver más"
-          variant="bordered"
-          className="font-semibold w-fit mt-7 lg:mt-10"
-          onClick={() => console.log("Ver más")}
-        />
       </Container>
     </Section>
   );

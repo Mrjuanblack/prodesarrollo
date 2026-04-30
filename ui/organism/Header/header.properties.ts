@@ -94,26 +94,6 @@ export interface SocialItem {
   icon: React.ElementType;
 }
 
-export const socialItems: SocialItem[] = [
-  {
-    icon: X,
-    label: "Twitter",
-    iconType: IconType.IMG,
-    href: "https://twitter.com",
-  },
-  {
-    icon: Instagram,
-    label: "Instagram",
-    href: "https://www.instagram.com",
-  },
-  {
-    icon: FacebookIcon,
-    label: "Facebook",
-    href: "https://www.facebook.com",
-  },
-  {
-    icon: LucideYoutube,
-    label: "YouTube",
-    href: "https://www.youtube.com",
-  },
-];
+// Vaciado temporalmente — la organización aún no tiene presencia en redes
+// sociales. Restaurar las entradas cuando se publiquen las cuentas oficiales.
+export const socialItems: SocialItem[] = [];

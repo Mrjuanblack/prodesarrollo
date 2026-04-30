@@ -52,7 +52,7 @@ export default function AboutUs() {
             ]}
             description={
               <>
-                PRO. DESARROLLO es una asociación de utilidad común sin ánimo de
+                PRO. DESARROLLO es una asociación gremial de utilidad común sin ánimo de
                 lucro, constituida como entidad público-privada, conforme al
                 artículo 96 de la Ley 489 de 1998.
                 <br />
