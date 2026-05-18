@@ -15,6 +15,7 @@ export enum StorageFolder {
     PROJECTS = "projects",
     IMAGES = "images",
     NEWS = "news",
+    NEWS_INLINE = "news-inline",
     HOME_CAROUSEL = "home-carousel",
 }
 

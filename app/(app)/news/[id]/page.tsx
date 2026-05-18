@@ -52,13 +52,13 @@ export default function New() {
               /> */}
             </div>
 
-            <div className="text-justify text-[15px] md:text-[18px] lg:text-[20px] font-normal text-black space-y-4">
-              {news.content.split('\n\n').filter(paragraph => paragraph.trim()).map((paragraph, index) => (
-                <p key={index} className="mb-4">
-                  {paragraph.trim()}
-                </p>
-              ))}
-            </div>
+            {/* news.content is sanitized HTML produced by the rich-text
+                editor. The backend strips scripts and dangerous attrs via
+                DOMPurify before saving, so it's safe to render here. */}
+            <div
+              className="prose prose-sm md:prose-base lg:prose-lg max-w-none text-justify text-black"
+              dangerouslySetInnerHTML={{ __html: news.content }}
+            />
 
             <IconTitle
               highlightFirstLetter={false}

@@ -2,10 +2,18 @@ import { CreateNews, News, NewsCategory, UpdateNews } from "@/domain/News";
 import { NewsRepository } from "../db/repositories/news-repository";
 import { PaginationRequest, PaginationResponse } from "@/domain/Pagination";
 import { StorageManager } from "../storage/storage-manager";
+import { NewsInlineImageService } from "./news-inline-image-service";
+import { sanitizeRichTextHtml } from "../utilities/sanitizeHtml";
 
 export class NewsService {
   public static async createNews(news: CreateNews): Promise<News> {
-    return await NewsRepository.createNews(news);
+    const sanitized: CreateNews = {
+      ...news,
+      content: sanitizeRichTextHtml(news.content),
+    };
+    const created = await NewsRepository.createNews(sanitized);
+    await NewsInlineImageService.syncWithContent(created.id, sanitized.content);
+    return created;
   }
 
   public static async getNewsById(id: string): Promise<News> {
@@ -20,20 +28,27 @@ export class NewsService {
   }
 
   public static async updateNews(id: string, news: UpdateNews): Promise<News> {
-    return await NewsRepository.updateNews(id, news);
+    const sanitized: UpdateNews = {
+      ...news,
+      content: sanitizeRichTextHtml(news.content),
+    };
+    const updated = await NewsRepository.updateNews(id, sanitized);
+    await NewsInlineImageService.syncWithContent(id, sanitized.content);
+    return updated;
   }
 
   public static async deleteNew(newId: string): Promise<void> {
     const newData = await NewsRepository.getNewsById(newId);
-    const photos = newData.photos;
 
-    const deletePhotoPromises = photos.map((photo) =>
+    const deletePhotoPromises = newData.photos.map((photo) =>
       StorageManager.deleteFile(photo.url)
     );
 
-    const allDeletePromises = [deletePhotoPromises];
+    await Promise.all([
+      ...deletePhotoPromises,
+      NewsInlineImageService.deleteAllForNews(newId),
+    ]);
 
-    await Promise.all(allDeletePromises);
     await NewsRepository.deleteNews(newData.id);
   }
 }

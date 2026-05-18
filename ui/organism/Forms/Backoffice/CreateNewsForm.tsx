@@ -10,7 +10,6 @@ import {
   Modal,
   Select,
   Button,
-  Textarea,
   ModalBody,
   SelectItem,
   ModalHeader,
@@ -19,6 +18,7 @@ import {
 } from "@heroui/react";
 import { useForm } from "@tanstack/react-form";
 import { useCreateNews } from "@/hooks/news/useCreateNews";
+import RichTextEditor from "@/ui/organism/RichTextEditor/rich-text-editor.component";
 
 export interface CreateNewsFormProps {
   isOpen: boolean;
@@ -52,7 +52,7 @@ const CreateNewsForm: React.FC<CreateNewsFormProps> = ({
   });
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} size="3xl" scrollBehavior="inside">
       <ModalContent>
         <ModalHeader>
           <h2 className="text-2xl font-bold">Crear noticia</h2>
@@ -90,24 +90,22 @@ const CreateNewsForm: React.FC<CreateNewsFormProps> = ({
               </form.Field>
               <form.Field name="content">
                 {(field) => (
-                  <Textarea
-                    label="Contenido"
-                    id="content"
-                    name="content"
-                    type="text"
-                    placeholder="Ingresa el contenido de la noticia"
-                    value={field.state.value ?? ""}
-                    onChange={(e) => {
-                      field.handleChange(e.target.value);
-                    }}
-                    onBlur={field.handleBlur}
-                    isInvalid={
-                      field.state.meta.errors.length > 0 &&
-                      field.state.meta.isTouched
-                    }
-                    errorMessage={field.state.meta.errors[0]?.message}
-                    minRows={4}
-                  />
+                  <div className="flex flex-col gap-1">
+                    <label className="text-sm font-medium text-default-700">
+                      Contenido
+                    </label>
+                    <RichTextEditor
+                      value={field.state.value ?? ""}
+                      placeholder="Ingresa el contenido de la noticia"
+                      onChange={(html) => field.handleChange(html)}
+                    />
+                    {field.state.meta.errors.length > 0 &&
+                      field.state.meta.isTouched && (
+                        <p className="text-tiny text-danger">
+                          {field.state.meta.errors[0]?.message}
+                        </p>
+                      )}
+                  </div>
                 )}
               </form.Field>
               <form.Field name="category">

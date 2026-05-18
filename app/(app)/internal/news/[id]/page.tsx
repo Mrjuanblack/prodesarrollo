@@ -13,8 +13,9 @@ import { useNews } from "@/hooks/news/useNews";
 import { Container, Section } from "@/ui/molecules";
 import { useParams, useRouter } from "next/navigation";
 import { useUpdateNews } from "@/hooks/news/useUpdateNews";
-import { Input, Button, Select, Textarea, SelectItem } from "@heroui/react";
+import { Input, Button, Select, SelectItem } from "@heroui/react";
 import ManageNewsPhotos from "@/ui/organism/Forms/Backoffice/ManageNewsPhotos";
+import RichTextEditor from "@/ui/organism/RichTextEditor/rich-text-editor.component";
 
 export default function NewsPage() {
   const { id } = useParams();
@@ -85,24 +86,22 @@ export default function NewsPage() {
               <div className="col-span-2">
                 <form.Field name="content">
                   {(field) => (
-                    <Textarea
-                      label="Contenido"
-                      id="content"
-                      name="content"
-                      type="text"
-                      placeholder="Ingresa el contenido de la noticia"
-                      value={field.state.value ?? ""}
-                      onChange={(e) => {
-                        field.handleChange(e.target.value);
-                      }}
-                      onBlur={field.handleBlur}
-                      isInvalid={
-                        field.state.meta.errors.length > 0 &&
-                        field.state.meta.isTouched
-                      }
-                      errorMessage={field.state.meta.errors[0]?.message}
-                      minRows={4}
-                    />
+                    <div className="flex flex-col gap-1">
+                      <label className="text-sm font-medium text-default-700">
+                        Contenido
+                      </label>
+                      <RichTextEditor
+                        value={field.state.value ?? ""}
+                        placeholder="Ingresa el contenido de la noticia"
+                        onChange={(html) => field.handleChange(html)}
+                      />
+                      {field.state.meta.errors.length > 0 &&
+                        field.state.meta.isTouched && (
+                          <p className="text-tiny text-danger">
+                            {field.state.meta.errors[0]?.message}
+                          </p>
+                        )}
+                    </div>
                   )}
                 </form.Field>
               </div>

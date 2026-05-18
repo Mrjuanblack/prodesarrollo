@@ -147,6 +147,20 @@ export const newsPhotos = pgTable("news_photos", {
     .defaultNow(),
 });
 
+// Images embedded inside the rich-text body of a news article. newsId is
+// nullable so the row can exist briefly between upload and "save news"
+// (when the news row hasn't been created yet); the service then claims
+// the row by setting newsId. Cascade delete cleans the rows when the news
+// is deleted; the R2 objects themselves are removed by the service.
+export const newsInlineImages = pgTable("news_inline_images", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  newsId: uuid("news_id").references(() => news.id, { onDelete: "cascade" }),
+  imageUrl: text("image_url").notNull().unique(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
 export const projectRelations = relations(projects, ({ many }) => ({
   photos: many(projectPhotos),
   documents: many(projectDocuments),
@@ -193,6 +207,7 @@ export const projectsToProjectsRelations = relations(
 
 export const newsRelations = relations(news, ({ many }) => ({
   photos: many(newsPhotos),
+  inlineImages: many(newsInlineImages),
 }));
 
 export const newsPhotosRelations = relations(newsPhotos, ({ one }) => ({
@@ -201,6 +216,16 @@ export const newsPhotosRelations = relations(newsPhotos, ({ one }) => ({
     references: [news.id],
   }),
 }));
+
+export const newsInlineImagesRelations = relations(
+  newsInlineImages,
+  ({ one }) => ({
+    news: one(news, {
+      fields: [newsInlineImages.newsId],
+      references: [news.id],
+    }),
+  })
+);
 
 export const users = pgTable("users", {
   id: uuid("id").primaryKey().defaultRandom(),

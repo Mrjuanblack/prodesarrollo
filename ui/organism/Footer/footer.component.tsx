@@ -40,7 +40,7 @@ export const FooterComponent = () => {
           <Image
             alt="ProDesarrollo"
             src={pro_desarrollo_logo}
-            className="h-[70px] lg:h-[140px] xl:h-[170px] 2xl:h-[200px] w-fit brightness-0 invert"
+            className="h-[110px] lg:h-[200px] xl:h-[240px] 2xl:h-[280px] w-fit brightness-0 invert"
           />
 
           <Image

@@ -3,8 +3,8 @@ export const SPLASH_CONFIG = {
   revisitThresholdMs: 3 * 24 * 60 * 60 * 1000,
   storageKey: "prodesarrollo:lastSplashShown",
   // Animation timeline (spin + slide + letters + tagline) ends around ~2940ms.
-  // Hold + fadeOut bring the total on-screen time to ~4000ms.
-  postAnimationHoldMs: 460,
+  // Hold + fadeOut bring the total on-screen time to ~6000ms.
+  postAnimationHoldMs: 2460,
   fadeOutMs: 600,
   fadeOutEase: "inOutQuad",
   backgroundColor: "#FAF4F1",

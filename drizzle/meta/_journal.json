@@ -78,6 +78,13 @@
       "when": 1777492282209,
       "tag": "0010_even_jackpot",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1777573738736,
+      "tag": "0011_sticky_dagger",
+      "breakpoints": true
     }
   ]
 }
